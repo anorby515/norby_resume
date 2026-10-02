@@ -1,0 +1,4 @@
+# Internal-only content must never be committed to this public repo.
+data/layer-*.js
+!data/layer-public.js
+.DS_Store

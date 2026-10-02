@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-lens="why">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andy Norby</title>
+  <meta name="description" content="Engineering and product leader. Portfolio of apps, agents and automation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="bar">
+    <a class="bar__name" href="#/" id="bar-name">Andy Norby</a>
+    <nav class="bar__nav" id="nav" aria-label="Sections"></nav>
+  </header>
+  <div class="review-banner" id="review-banner" hidden></div>
+  <main id="main"></main>
+  <dialog class="lightbox" id="lightbox" aria-label="Screenshot">
+    <button type="button" class="lightbox__close" data-close-lightbox>Close</button>
+    <img alt=""><p></p>
+  </dialog>
+  <noscript><p class="noscript">This portfolio needs JavaScript to display.</p></noscript>
+  <script src="assets/app.js"></script>
+  <script src="data/layers.js"></script>
+  <script>PORTFOLIO.boot();</script>
+</body>
+</html>
