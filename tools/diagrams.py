@@ -373,7 +373,7 @@ def vibes():
           '<rect x="426" y="146" width="350" height="150" rx="8"/>'
           '<text class="dg-nt" x="601" y="176">Vibes.live for iPhone</text>'
           '<text class="dg-sub" x="601" y="194">React Native + Expo</text>')
-    for r, row in enumerate([['Open-source maps', 'Push alerts'], ['Sentry crashes', 'PostHog analytics']]):
+    for r, row in enumerate([['OpenStreetMap maps', 'Push alerts'], ['Sentry crashes', 'PostHog analytics']]):
         for i, c in enumerate(row):
             cx, cy = 438 + i * 168, 210 + r * 40
             b += (f'<rect class="dg-chip" x="{cx}" y="{cy}" width="158" height="30" rx="15"/>'
@@ -409,10 +409,9 @@ def vibes():
                'Every day: Ticketmaster first, SeatGeek two hours later. One query per artist for all users, not per user, so API limits hold.')
     b += arrow([(995, 172), (995, 138)])
     b += label(1003, 160, ['daily'], 'start')
-    b += group(826, 244, 338, 136, 'Daily sources')
+    b += group(826, 244, 338, 84, 'Daily sources')
     b += node(840, 272, 150, 44, 'Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates.', 'ext')
     b += node(1000, 272, 150, 44, 'SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.', 'ext')
-    b += node(840, 324, 310, 44, 'OpenStreetMap', 'Geocodes venues when Ticketmaster leaves out coordinates.', 'ext')
     b += arrow([(995, 244), (995, 220)])
     b += node2(826, 494, 140, 52, 'Daily emails', 'Analytics + health',
                'Every morning: pipeline health and platform stats, plus an alert if anything failed. No email means something is broken.')
