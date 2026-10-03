@@ -337,17 +337,18 @@ def vibes():
     b += node2(224, 52, 150, 56, 'Digital marketing', 'Future',
                'Next output from Claude Cowork: launch and marketing content.', 'ext')
     b += arrow([(186, 80), (224, 80)], dashed=True)
-    b += node2(36, 146, 150, 52, 'Claude Design', 'UX',
+    b += node2(36, 146, 150, 52, 'Obsidian', 'Spec files',
+               'Where I read and manage the spec Markdown files: the product spec, the roadmap and the Claude Code contract. Linked to the Todoist backlog.')
+    b += arrow([(111, 108), (111, 146)])
+    b += node2(224, 146, 150, 52, 'Claude Design', 'UX',
                'Screens and flows designed before they are built. A major UX revamp is designed and coming in the next App Store version.', 'ai')
-    b += node2(224, 146, 150, 52, 'Obsidian', 'Spec files',
-               'Where I read and manage the spec Markdown files: the product spec, the roadmap and the Claude Code contract.')
-    b += arrow([(150, 108), (150, 127), (299, 127), (299, 146)])
     b += node2(36, 236, 338, 52, 'Claude Code', 'Coding',
                'Writes the app, the Edge Functions and the tests, under a contract file with test-first, reproduce-before-fix and peer-review rules.', 'ai')
     b += arrow([(111, 198), (111, 236)])
-    b += label(119, 222, ['UX'], 'start')
+    b += label(119, 222, ['specs'], 'start')
     b += arrow([(299, 198), (299, 236)])
-    b += label(307, 222, ['specs'], 'start')
+    b += label(307, 222, ['UX'], 'start')
+    b += arrow([(36, 172), (27, 172), (27, 352), (36, 352)], both=True)
     b += node2(36, 326, 150, 52, 'Todoist', 'Backlog',
                'The Vibes.live Backlog project: every feature, bug and idea, prioritized. Claude Code reads it with a script.')
     b += arrow([(111, 326), (111, 288)])
