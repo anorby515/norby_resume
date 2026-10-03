@@ -98,4 +98,4 @@ Never use screenshots that show real players' names or faces. Capture demo build
 
 ## App icons
 
-`icon` names a built-in line glyph: flask, grid, spark, gauge, cycle, coin, toggle, orbit, trophy, tv, plusone, bars, analyze, people, sun, home, bag, car, flame, notebook, folder, music, trend, pie, palm, mountain, disc. To change a row from another layer, register an `appRows` item with the same `id`; its `apps` list replaces the old one.
+`icon` names a built-in line glyph: flask, grid, spark, gauge, cycle, coin, toggle, orbit, trophy, tv, plusone, bars, analyze, people, sun, home, bag, car, flame, notebook, folder, music, trend, pie, palm, mountain, disc. `img` uses a real app icon instead (a square image, e.g. `assets/icons/vibes.webp` at 180px); the rounded corners are applied for you. To change a row from another layer, register an `appRows` item with the same `id`; its `apps` list replaces the old one.

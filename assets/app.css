@@ -517,3 +517,5 @@ a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .app__name { max-width: 100%; }
   .homescreen { padding-left: 14px; padding-right: 14px; border-radius: 22px; }
 }
+.app__icon--img { background: none; overflow: hidden; }
+.app__icon--img img { width: 100%; height: 100%; display: block; object-fit: cover; }

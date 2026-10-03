@@ -201,6 +201,7 @@
   var WORK_GLYPHS = ['flask', 'grid', 'spark', 'gauge', 'cycle', 'coin', 'toggle'];
 
   function appIcon(a, k) {
+    if (a.img) return '<span class="app__icon app__icon--img" aria-hidden="true"><img src="' + esc(a.img) + '" alt="" loading="lazy"></span>';
     var g = GLYPH[a.icon] || (a.placeholder ? GLYPH[WORK_GLYPHS[k % WORK_GLYPHS.length]] : GLYPH.grid);
     return '<span class="app__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="' + g + '"/></svg></span>';
   }
