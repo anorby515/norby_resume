@@ -381,21 +381,22 @@ def vibes():
     b += arrow([(508, 146), (508, 104)], dashed=True)
     b += arrow([(693, 146), (693, 104)], dashed=True)
     b += label(601, 129, ['support'])
-    b += group(426, 332, 350, 134, 'On demand, for each user')
-    b += node(440, 358, 160, 44, 'Spotify',
+    b += group(426, 330, 350, 168, 'On demand, for each user')
+    b += node(440, 354, 160, 40, 'Spotify',
               'Connect Spotify on your phone and Vibes.live suggests the artists you already listen to. The sync runs in Supabase, so keys stay on the server.', 'ext')
-    b += node(616, 358, 146, 44, 'Apple Music',
+    b += node(616, 354, 146, 40, 'Apple Music',
               'Library sync, coming next. Same pattern as Spotify.', 'ext')
-    b += node(440, 410, 124, 44, 'setlist.fm',
+    b += node(440, 402, 124, 40, 'setlist.fm',
               'Open a show you attended and its setlist is looked up, through Supabase, and saved.', 'ext')
-    b += node2(580, 410, 182, 44, 'Buy tickets', 'Ticketmaster, StubHub, more',
+    b += node2(580, 402, 182, 40, 'Buy tickets', 'Ticketmaster, StubHub, more',
                'Tap Get Tickets to buy on Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats. Resale links are affiliate links, and every tap is logged.')
-    b += arrow([(601, 298), (601, 330)], both=True)
-    b += node2(426, 494, 350, 52, 'App Store', 'TestFlight beta, then release',
+    b += node2(440, 450, 322, 40, 'Artist socials', 'YouTube, Instagram, more',
+               'Artist cards link out to the artist’s YouTube, Instagram and other social channels.')
+    b += arrow([(601, 298), (601, 328)], both=True)
+    b += node2(426, 508, 350, 48, 'App Store', 'TestFlight beta, then release',
                'Every build goes to TestFlight testers first, then through App Store review.', 'key')
-    b += arrow([(374, 520), (426, 520)])
-    b += arrow([(776, 520), (786, 520), (786, 250), (776, 250)])
-    b += label(772, 484, ['installs'], 'end')
+    b += arrow([(374, 530), (426, 530)])
+    b += arrow([(776, 532), (786, 532), (786, 250), (776, 250)])
 
     b += zone(810, 20, 370, 560, 'Data and services')
     b += node(826, 52, 338, 86, 'Supabase',
