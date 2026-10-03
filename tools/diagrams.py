@@ -81,6 +81,11 @@ def node2(x, y, w, h, title, sub, tip, kind='n'):
             f'<text class="dg-nt" x="{x+w/2}" y="{y+h/2-2}">{escape(title)}</text>'
             f'<text class="dg-sub" x="{x+w/2}" y="{y+h/2+15}">{escape(sub)}</text></g>')
 
+def group(x, y, w, h, title):
+    """A dashed outline that gathers related boxes under a small heading."""
+    return (f'<rect class="dg-group" x="{x}" y="{y}" width="{w}" height="{h}" rx="10"/>'
+            f'<text class="dg-gl" x="{x+14}" y="{y+18}">{escape(title)}</text>')
+
 def label(x, y, lines, anchor='middle'):
     return ''.join(f'<text class="dg-el" x="{x}" y="{y + i*15}" text-anchor="{anchor}">{escape(t)}</text>' for i, t in enumerate(lines))
 
@@ -376,14 +381,21 @@ def vibes():
     b += arrow([(508, 146), (508, 104)], dashed=True)
     b += arrow([(693, 146), (693, 104)], dashed=True)
     b += label(601, 129, ['support'])
-    b += node2(426, 336, 165, 52, 'Ticket links', 'StubHub, AXS, Vivid',
+    b += group(426, 332, 350, 134, 'On demand, for each user')
+    b += node(440, 358, 160, 44, 'Spotify',
+              'Connect Spotify on your phone and Vibes.live suggests the artists you already listen to. The sync runs in Supabase, so keys stay on the server.', 'ext')
+    b += node(616, 358, 146, 44, 'Apple Music',
+              'Library sync, coming next. Same pattern as Spotify.', 'ext')
+    b += node(440, 410, 160, 44, 'setlist.fm',
+              'Open a show you attended and its setlist is looked up, through Supabase, and saved.', 'ext')
+    b += node2(616, 410, 146, 44, 'Ticket links', 'StubHub, AXS, Vivid',
                'Get Tickets taps go to Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats as affiliate links, and every tap is logged.')
-    b += arrow([(508, 296), (508, 336)])
+    b += arrow([(601, 298), (601, 330)], both=True)
     b += node2(426, 494, 350, 52, 'App Store', 'TestFlight beta, then release',
                'Every build goes to TestFlight testers first, then through App Store review.', 'key')
     b += arrow([(374, 520), (426, 520)])
-    b += arrow([(693, 494), (693, 296)])
-    b += label(701, 410, ['installs'], 'start')
+    b += arrow([(776, 520), (786, 520), (786, 250), (776, 250)])
+    b += label(772, 484, ['installs'], 'end')
 
     b += zone(810, 20, 370, 560, 'Data and services')
     b += node(826, 52, 338, 86, 'Supabase',
@@ -395,16 +407,11 @@ def vibes():
                'Every day: Ticketmaster first, SeatGeek two hours later. One query per artist for all users, not per user, so API limits hold.')
     b += arrow([(995, 172), (995, 138)])
     b += label(1003, 160, ['daily'], 'start')
-    apis = [('Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates.'),
-            ('SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.'),
-            ('setlist.fm', 'Setlists for shows you attended, looked up when you open one.'),
-            ('OpenStreetMap', 'Geocodes venues when Ticketmaster leaves out coordinates.'),
-            ('Spotify', 'Connect Spotify to add the artists you already listen to.'),
-            ('Apple Music', 'Library sync, coming next.')]
-    for i, (t, tp) in enumerate(apis):
-        b += node(826 + (i % 2) * 174, 256 + (i // 2) * 56, 164, 44, t, tp, 'ext')
-    b += arrow([(908, 256), (908, 220)])
-    b += arrow([(1082, 256), (1082, 220)])
+    b += group(826, 244, 338, 136, 'Daily sources')
+    b += node(840, 272, 150, 44, 'Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates.', 'ext')
+    b += node(1000, 272, 150, 44, 'SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.', 'ext')
+    b += node(840, 324, 310, 44, 'OpenStreetMap', 'Geocodes venues when Ticketmaster leaves out coordinates.', 'ext')
+    b += arrow([(995, 244), (995, 220)])
     b += node2(826, 494, 140, 52, 'Daily emails', 'Analytics + health',
                'Every morning: pipeline health and platform stats, plus an alert if anything failed. No email means something is broken.')
     b += node2(1006, 494, 158, 52, 'Resend', 'Email delivery',
