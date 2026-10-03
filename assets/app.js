@@ -213,7 +213,8 @@
         return '<section class="approw approw--' + esc(r.tone || r.id) + '" aria-label="' + esc(r.title) + '">' +
           '<h2 class="approw__title">' + esc(r.title) + '</h2>' +
           '<ul class="approw__apps">' + r.apps.map(function (a, k) {
-            var inner = appIcon(a, k) + '<span class="app__name">' + esc(a.name) + '</span>';
+            var inner = appIcon(a, k) + '<span class="app__name">' + esc(a.name) + '</span>' +
+              (a.note ? '<span class="app__note">' + esc(a.note) + '</span>' : '');
             var cls = 'app' + (a.placeholder ? ' app--placeholder' : '');
             if (a.href && !a.placeholder) {
               var ext = /^https?:/.test(a.href);
