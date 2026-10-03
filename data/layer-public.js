@@ -130,7 +130,7 @@ PORTFOLIO.register({
         { id: 'tourney-tv', name: 'Tourney TV', icon: 'tv', href: '#/portfolio/volleyball' },
         { id: 'tourney-score', name: 'Tourney Score', icon: 'plusone', href: '#/portfolio/volleyball' },
         { id: 'stats', name: 'Stats', img: 'assets/icons/eclipse-stats.webp', href: '#/portfolio/volleyball' },
-        { id: 'stats-analyzer', name: 'Stats Analyzer', icon: 'analyze', href: '#/portfolio/volleyball' },
+        { id: 'stats-analyzer', name: 'Stats Analyzer', img: 'assets/icons/eclipse-stats.webp', href: '#/portfolio/volleyball' },
         { id: 'volunteers', name: 'Volunteers', icon: 'people', href: '#/portfolio/volleyball' }
       ]
     },
