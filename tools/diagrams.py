@@ -55,12 +55,29 @@ def shot(x, y, w, h, src, caption, tip, phone=False, href=None):
     cid = f'dgc{_clip[0]}'
     r = 14 if phone else 6
     img_src = 'assets/work/volleyball/' + src
+    caps = caption if isinstance(caption, list) else [caption]
+    caption = ' '.join(caps)
     s = (f'<g class="dg-node dg-shot" tabindex="0" data-tip="{escape(tip)}"' + (f' data-href="{href}" role="link"' if href else '') + f' aria-label="{escape(caption)}: {escape(tip)}">'
          f'<clipPath id="{cid}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/></clipPath>'
          f'<image href="{img_src}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMin slice" clip-path="url(#{cid})"/>'
          f'<rect class="dg-frame{" dg-frame--phone" if phone else ""}" x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/>'
-         f'<text class="dg-nt" x="{x + w/2}" y="{y + h + 22}">{escape(caption)}</text></g>')
+         + ''.join(f'<text class="dg-nt" x="{x + w/2}" y="{y + h + 22 + i*19}">{escape(c)}</text>' for i, c in enumerate(caps))
+         + '</g>')
     return s
+
+def teamsnap_node(x, y, w, h):
+    """TeamSnap box. Shows the official logo when assets/icons/teamsnap.(svg|png|webp) exists."""
+    tip = 'Where every parent and coach reads the schedule. Kept current by the agents’ CSV imports.'
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+    logo = next((f'assets/icons/teamsnap.{e}' for e in ('svg', 'png', 'webp')
+                 if os.path.exists(os.path.join(root, 'assets', 'icons', f'teamsnap.{e}'))), None)
+    if not logo:
+        return node(x, y, w, h, 'TeamSnap', tip, 'ext')
+    sz = 28
+    return (f'<g class="dg-node dg-ext" tabindex="0" data-tip="{escape(tip)}" aria-label="TeamSnap: {escape(tip)}">'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/>'
+            f'<image href="{logo}" x="{x+40}" y="{y+(h-sz)/2}" width="{sz}" height="{sz}" preserveAspectRatio="xMidYMid meet"/>'
+            f'<text class="dg-nt" x="{x+w/2+18}" y="{y+h/2+5}">TeamSnap</text></g>')
 
 def label(x, y, lines, anchor='middle'):
     return ''.join(f'<text class="dg-el" x="{x}" y="{y + i*15}" text-anchor="{anchor}">{escape(t)}</text>' for i, t in enumerate(lines))
@@ -144,14 +161,13 @@ def suite():
     b = zone(20, 20, 350, 600, 'Stats App')
     b += shot(142, 64, 106, 230, 'st-tracker.webp', 'Stats Tracker',
               'Any parent takes stats on their phone: three taps a play, works with no signal, syncs when it can.', phone=True, href='#/portfolio/volleyball/products/2')
-    b += shot(45, 390, 300, 168, 'an-attack.webp', 'Stats Analyzer',
+    b += shot(45, 390, 300, 168, 'an-attack.webp', 'Stats Analyzer for Coaches',
               'Coaches check stats on game day and analyze players and opponent matchups all season. Exports to Excel.', href='#/portfolio/volleyball/products/2')
     b += arrow([(195, 322), (195, 390)])
     b += label(205, 362, ['every play'], 'start')
 
     b += zone(420, 20, 360, 600, '')
-    b += node(500, 44, 200, 44, 'Club calendar',
-              'The athletic director books every event here, in her own shorthand.', 'ext')
+    b += teamsnap_node(500, 44, 200, 48)
     b += ('<g class="dg-node dg-ai dg-os" tabindex="0" data-href="#/portfolio/volleyball/products/1" role="link" data-tip="Claude agents on a schedule, following the club’s rules in a versioned skill. They plan events, keep TeamSnap current, assign volunteers, chase waivers and send the weekly email." '
           'aria-label="Eclipse Agentic OS">'
           '<rect x="440" y="196" width="320" height="214" rx="12"/>'
@@ -160,22 +176,27 @@ def suite():
     for i, t in enumerate(['Schedules and court assignments', 'TeamSnap imports', 'Volunteer assignments', 'Waivers and reminders', 'Sunday email']):
         b += f'<text class="dg-os-l" x="600" y="{290 + i*24}">{escape(t)}</text>'
     b += '</g>'
-    b += node(500, 520, 200, 48, 'TeamSnap',
-              'Where every parent and coach reads the schedule. Updated from the agent’s imports, so it stays current.', 'ext')
-    b += arrow([(600, 88), (600, 196)])
-    b += label(610, 146, ['events'], 'start')
-    b += arrow([(600, 410), (600, 520)])
-    b += label(610, 458, ['imports and', 'volunteer assignments'], 'start')
+    b += arrow([(600, 196), (600, 92)])
+    b += label(610, 136, ['events, games, practice', 'CSV imports'], 'start')
+
+    b += node(440, 520, 150, 48, 'Club calendar',
+              'The athletic director books every event here, in her own shorthand.', 'ext')
+    b += node(610, 520, 150, 48, 'Google Sheets',
+              'Volunteer assignments for every team, written by the agents and shared with parents.', 'ext')
+    b += arrow([(515, 520), (515, 410)])
+    b += label(523, 470, ['events'], 'start')
+    b += arrow([(685, 410), (685, 520)])
+    b += label(677, 458, ['volunteer', 'assignments'], 'end')
 
     b += arrow([(440, 250), (408, 250), (408, 180), (252, 180)])
-    b += label(330, 172, ['rosters'])
+    b += label(330, 142, ['rosters, opponents,', 'tournaments,', 'match formats'])
 
     b += zone(830, 20, 350, 600, 'Tournament Suite')
     b += shot(855, 64, 300, 169, 'tp-tv.webp', 'Command Center',
               'On the gym TVs: live scores, live standings with the gold-bracket cut line, and sponsor ads.', href='#/portfolio/volleyball/products/3')
     b += shot(852, 330, 97, 210, 'tp-hub.webp', 'Tournament App',
               'Families follow live scores, standings, schedule updates and which courts are running behind.', phone=True, href='#/portfolio/volleyball/products/3')
-    b += shot(976, 400, 190, 82, 'tp-score-land.webp', 'Scorekeeper',
+    b += shot(976, 400, 190, 82, 'tp-score-land.webp', ['Scorekeeper App', '@ every court'],
               'On every court, turned sideways: one volunteer taps +1 and the score reaches every phone and TV.', href='#/portfolio/volleyball/products/3')
     b += arrow([(1120, 400), (1120, 258)])
     b += label(1128, 330, ['live', 'scores'], 'start')
