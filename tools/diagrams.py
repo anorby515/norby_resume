@@ -420,8 +420,8 @@ def vibes():
     b += label(1160, 470, ['emails'], 'end')
     b += arrow([(1006, 520), (966, 520)])
 
-    b += node2(520, 584, 180, 44, 'Feedback automation', 'Email to task',
-               'In-app feedback arrives by email and becomes a task in the Todoist backlog automatically.', 'ai')
+    b += node2(520, 584, 180, 44, 'Make', 'Email to Todoist task',
+               'A Make automation turns each feedback email into a task in the Todoist backlog.', 'ext')
     b += arrow([(1085, 546), (1085, 606), (700, 606)])
     b += label(890, 600, ['user feedback'])
     b += arrow([(520, 606), (111, 606), (111, 378)])
