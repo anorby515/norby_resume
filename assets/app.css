@@ -377,3 +377,16 @@ button { font: inherit; color: inherit; }
 .builtwith .chips li { font-size: .8rem; padding: 3px 9px; }
 .slide--tools .dg { max-height: calc(100vh - var(--bar) - 320px); }
 .slide--tools .dg-hint { margin-top: 6px; }
+
+/* Suite product diagram */
+.suite__arch { margin: 8px 0 56px; }
+.suite__arch .dg { max-height: none; display: block; margin: 0 auto; max-width: 1200px; }
+.dg-frame { fill: none; stroke: var(--rule); stroke-width: 1.5; }
+.dg-frame--phone { stroke: #1a1a1a; stroke-width: 5; }
+.dg-shot:hover .dg-frame, .dg-shot:focus-visible .dg-frame { stroke: var(--accent); stroke-width: 3; }
+.dg-os rect { fill: var(--ink); }
+.dg-os-t { font-size: 22px !important; fill: var(--paper) !important; }
+.dg-os-s { font-size: 13px; font-weight: 650; fill: var(--accent); text-anchor: middle; }
+:root .dg-os-s { fill: #9DB1F0; }
+.dg-os-l { font-size: 14px; fill: var(--paper); opacity: .85; text-anchor: middle; font-family: var(--serif); }
+.dg-zone rect[width="360"] + .dg-zl:empty { display: none; }

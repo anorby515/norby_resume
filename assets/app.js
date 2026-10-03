@@ -196,6 +196,7 @@
       '<div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
         '<p class="suite__kicker">' + esc(w.kicker) + '</p>' +
         '<p class="prose suite__summary">' + esc(w.summary) + '</p></div>' +
+      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does.</p></div>' : '') +
       '<ol class="suite__products">' + w.products.map(function (pr) {
         return '<li><a class="pcard pcard--suite" href="' + link(base + '/' + pr.id + '/why') + '">' +
           cover(pr.hero ? { src: 'assets/work/' + w.id + '/' + pr.hero.src, tall: pr.hero.tall } : null, pr.name) +

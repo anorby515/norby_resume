@@ -47,6 +47,24 @@ def arrow(points, label=None, lx=None, ly=None, anchor='middle', both=False, das
         s += f'<text class="dg-el" x="{lx}" y="{ly}" text-anchor="{anchor}">{escape(label)}</text>'
     return s
 
+
+_clip = [0]
+def shot(x, y, w, h, src, caption, tip, phone=False):
+    """A screenshot inside the diagram, with its caption underneath."""
+    _clip[0] += 1
+    cid = f'dgc{_clip[0]}'
+    r = 14 if phone else 6
+    href = 'assets/work/volleyball/' + src
+    s = (f'<g class="dg-node dg-shot" tabindex="0" data-tip="{escape(tip)}" aria-label="{escape(caption)}: {escape(tip)}">'
+         f'<clipPath id="{cid}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/></clipPath>'
+         f'<image href="{href}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMin slice" clip-path="url(#{cid})"/>'
+         f'<rect class="dg-frame{" dg-frame--phone" if phone else ""}" x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/>'
+         f'<text class="dg-nt" x="{x + w/2}" y="{y + h + 22}">{escape(caption)}</text></g>')
+    return s
+
+def label(x, y, lines, anchor='middle'):
+    return ''.join(f'<text class="dg-el" x="{x}" y="{y + i*15}" text-anchor="{anchor}">{escape(t)}</text>' for i, t in enumerate(lines))
+
 DEFS = ('<defs>'
         '<marker id="dg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">'
         '<path d="M0,0 L10,5 L0,10 z" class="dg-head"/></marker>'
@@ -117,6 +135,55 @@ def stats_app():
     b += node(926, 392, 238, 44, 'Sign-in and Sheets API', 'OAuth sign-in, then the Sheets API creates the coach’s spreadsheet.', 'ext')
     b += arrow([(1115, 284), (1115, 392)], 'export', 1123, 340, 'start')
     return svg(476, b, 'Stats App architecture')
+
+
+# --------------------------------------------------------------------------
+# Eclipse Volleyball: the product suite, shown on the overview page
+# --------------------------------------------------------------------------
+def suite():
+    b = zone(20, 20, 350, 600, 'Stats App')
+    b += shot(142, 64, 106, 230, 'st-tracker.webp', 'Stats Tracker',
+              'Any parent takes stats on their phone: three taps a play, works with no signal, syncs when it can.', phone=True)
+    b += shot(45, 390, 300, 168, 'an-attack.webp', 'Stats Analyzer',
+              'Coaches check stats on game day and analyze players and opponent matchups all season. Exports to Excel.')
+    b += arrow([(195, 322), (195, 390)])
+    b += label(205, 362, ['every play'], 'start')
+
+    b += zone(420, 20, 360, 600, '')
+    b += node(500, 44, 200, 44, 'Club calendar',
+              'The athletic director books every event here, in her own shorthand.', 'ext')
+    b += ('<g class="dg-node dg-ai dg-os" tabindex="0" data-tip="Claude agents on a schedule, following the club’s rules in a versioned skill. They plan events, keep TeamSnap current, assign volunteers, chase waivers and send the weekly email." '
+          'aria-label="Eclipse Agentic OS">'
+          '<rect x="440" y="196" width="320" height="214" rx="12"/>'
+          '<text class="dg-nt dg-os-t" x="600" y="236">Eclipse Agentic OS</text>'
+          '<text class="dg-os-s" x="600" y="258">Claude agents</text>')
+    for i, t in enumerate(['Schedules and court assignments', 'TeamSnap imports', 'Volunteer assignments', 'Waivers and reminders', 'Sunday email']):
+        b += f'<text class="dg-os-l" x="600" y="{290 + i*24}">{escape(t)}</text>'
+    b += '</g>'
+    b += node(500, 520, 200, 48, 'TeamSnap',
+              'Where every parent and coach reads the schedule. Updated from the agent’s imports, so it stays current.', 'ext')
+    b += arrow([(600, 88), (600, 196)])
+    b += label(610, 146, ['events'], 'start')
+    b += arrow([(600, 410), (600, 520)])
+    b += label(610, 458, ['imports and', 'volunteer assignments'], 'start')
+
+    b += arrow([(440, 250), (408, 250), (408, 180), (252, 180)])
+    b += label(330, 172, ['rosters'])
+
+    b += zone(830, 20, 350, 600, 'Tournament Suite')
+    b += shot(855, 64, 300, 169, 'tp-tv.webp', 'Command Center',
+              'On the gym TVs: live scores, live standings with the gold-bracket cut line, and sponsor ads.')
+    b += shot(852, 330, 97, 210, 'tp-hub.webp', 'Tournament App',
+              'Families follow live scores, standings, schedule updates and which courts are running behind.', phone=True)
+    b += shot(976, 400, 190, 82, 'tp-score-land.webp', 'Scorekeeper',
+              'On every court, turned sideways: one volunteer taps +1 and the score reaches every phone and TV.')
+    b += arrow([(1120, 400), (1120, 258)])
+    b += label(1128, 330, ['live', 'scores'], 'start')
+    b += arrow([(976, 441), (949, 441)])
+
+    b += arrow([(760, 300), (852, 300)])
+    b += label(806, 268, ['schedule,', 'courts, waivers'], 'middle')
+    return svg(640, b, 'Eclipse Volleyball product architecture')
 
 
 # --------------------------------------------------------------------------
@@ -235,7 +302,7 @@ def tournament():
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
-    payload = {'os': agentic_os(), 'stats': stats_app(), 'tournament': tournament()}
+    payload = {'suite': suite(), 'os': agentic_os(), 'stats': stats_app(), 'tournament': tournament()}
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('volleyball', " + json.dumps(payload, indent=1) + ');\n')
