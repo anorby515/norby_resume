@@ -73,6 +73,14 @@ def teamsnap_node(x, y, w, h):
             f'<image href="assets/icons/TeamSnapOne.jpg" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#dgc-ts)"/>'
             f'<rect class="dg-frame" x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/></g>')
 
+def node2(x, y, w, h, title, sub, tip, kind='n'):
+    """A box with a name and a short role line underneath."""
+    return (f'<g class="dg-node dg-{kind}" tabindex="0" data-tip="{escape(tip)}" '
+            f'aria-label="{escape(title)}, {escape(sub)}: {escape(tip)}">'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/>'
+            f'<text class="dg-nt" x="{x+w/2}" y="{y+h/2-2}">{escape(title)}</text>'
+            f'<text class="dg-sub" x="{x+w/2}" y="{y+h/2+15}">{escape(sub)}</text></g>')
+
 def label(x, y, lines, anchor='middle'):
     return ''.join(f'<text class="dg-el" x="{x}" y="{y + i*15}" text-anchor="{anchor}">{escape(t)}</text>' for i, t in enumerate(lines))
 
@@ -314,6 +322,106 @@ def tournament():
     return svg(482, b, 'Tournament Suite architecture')
 
 
+# --------------------------------------------------------------------------
+# Vibes.live: engineering architecture, from plan to App Store to data
+# --------------------------------------------------------------------------
+def vibes():
+    b = zone(20, 20, 370, 560, 'Plan and build')
+    b += node2(36, 52, 150, 56, 'Claude Cowork', 'Business model, spec',
+               'Business model, pricing and the product spec, worked out with Claude and kept as Markdown.', 'ai')
+    b += node2(224, 52, 150, 56, 'Digital marketing', 'Future',
+               'Next output from Claude Cowork: launch and marketing content.', 'ext')
+    b += arrow([(186, 80), (224, 80)], dashed=True)
+    b += node2(36, 146, 150, 52, 'Claude Design', 'UX',
+               'Screens and flows designed before they are built, against the app’s own color and type system.', 'ai')
+    b += node2(224, 146, 150, 52, 'Obsidian', 'Spec files',
+               'Where I read and manage the spec Markdown files: the product spec, the roadmap and the Claude Code contract.')
+    b += arrow([(150, 108), (150, 127), (299, 127), (299, 146)])
+    b += node2(36, 236, 338, 52, 'Claude Code', 'Coding',
+               'Writes the app, the Edge Functions and the tests, under a contract file with test-first, reproduce-before-fix and peer-review rules.', 'ai')
+    b += arrow([(111, 198), (111, 236)])
+    b += label(119, 222, ['UX'], 'start')
+    b += arrow([(299, 198), (299, 236)])
+    b += label(307, 222, ['specs'], 'start')
+    b += node2(36, 326, 150, 52, 'Todoist', 'Backlog',
+               'The Vibes.live Backlog project: every feature, bug and idea, prioritized. Claude Code reads it with a script.')
+    b += arrow([(111, 326), (111, 288)])
+    b += label(119, 312, ['backlog'], 'start')
+    b += node2(224, 326, 150, 52, 'Testing', 'Unit + UX tests',
+               'About 1,040 unit tests across Vitest, Jest and Deno, plus Maestro end-to-end flows for sign-up and sign-in.')
+    b += arrow([(299, 288), (299, 326)])
+    b += node2(224, 410, 150, 52, 'GitHub', 'Repo + Actions',
+               'Source and version history. GitHub Actions also runs the daily data pipeline.', 'ext')
+    b += arrow([(299, 378), (299, 410)])
+    b += node2(224, 494, 150, 52, 'Xcode', 'Build + profile',
+               'iOS Simulator for daily development and Instruments for memory-leak checks. EAS builds the release.')
+    b += arrow([(299, 462), (299, 494)])
+
+    b += zone(410, 20, 380, 560, 'The app')
+    b += node2(426, 52, 165, 52, 'Netlify', 'Support pages',
+               'Hosts live-vibes.net: the support, privacy and terms pages the App Store requires.', 'ext')
+    b += node2(611, 52, 165, 52, 'Cloudflare', 'Support email',
+               'Routes the support email address to my inbox.', 'ext')
+    tip = 'React Native and Expo. Follow artists and venues, see shows on a map, mark shows you are going to, and see where friends are going.'
+    b += (f'<g class="dg-node dg-key" tabindex="0" data-tip="{escape(tip)}" aria-label="Vibes.live for iPhone: {escape(tip)}">'
+          '<rect x="426" y="146" width="350" height="150" rx="8"/>'
+          '<text class="dg-nt" x="601" y="176">Vibes.live for iPhone</text>'
+          '<text class="dg-sub" x="601" y="194">React Native + Expo</text>')
+    for r, row in enumerate([['Open-source maps', 'Push alerts'], ['Sentry crashes', 'PostHog analytics']]):
+        for i, c in enumerate(row):
+            cx, cy = 438 + i * 168, 210 + r * 40
+            b += (f'<rect class="dg-chip" x="{cx}" y="{cy}" width="158" height="30" rx="15"/>'
+                  f'<text class="dg-ct" x="{cx + 79}" y="{cy + 20}">{escape(c)}</text>')
+    b += '</g>'
+    b += arrow([(508, 146), (508, 104)], dashed=True)
+    b += arrow([(693, 146), (693, 104)], dashed=True)
+    b += label(601, 129, ['support'])
+    b += node2(426, 336, 165, 52, 'Ticket links', 'StubHub, AXS, Vivid',
+               'Get Tickets taps go to Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats as affiliate links, and every tap is logged.')
+    b += arrow([(508, 296), (508, 336)])
+    b += node2(426, 494, 350, 52, 'App Store', 'TestFlight beta, then release',
+               'Every build goes to TestFlight testers first, then through App Store review.', 'key')
+    b += arrow([(374, 520), (426, 520)])
+    b += arrow([(693, 494), (693, 296)])
+    b += label(701, 410, ['installs'], 'start')
+
+    b += zone(810, 20, 370, 560, 'Data and services')
+    b += node(826, 52, 338, 86, 'Supabase',
+              'Postgres with row-level security on every table, email one-time-code sign-in, photo storage, and Deno Edge Functions on a schedule.',
+              'db', chips=['Postgres', 'Auth', 'Functions'])
+    b += arrow([(776, 200), (800, 200), (800, 95), (826, 95)], both=True)
+    b += label(818, 160, ['data, feedback'], 'start')
+    b += node2(826, 172, 338, 48, 'Data pipeline', 'GitHub Actions + pg_cron',
+               'Every day: Ticketmaster first, SeatGeek two hours later. One query per artist for all users, not per user, so API limits hold.')
+    b += arrow([(995, 172), (995, 138)])
+    b += label(1003, 160, ['daily'], 'start')
+    apis = [('Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates.'),
+            ('SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.'),
+            ('setlist.fm', 'Setlists for shows you attended, looked up when you open one.'),
+            ('OpenStreetMap', 'Geocodes venues when Ticketmaster leaves out coordinates.'),
+            ('Spotify', 'Connect Spotify to add the artists you already listen to.'),
+            ('Apple Music', 'Library sync, coming next.')]
+    for i, (t, tp) in enumerate(apis):
+        b += node(826 + (i % 2) * 174, 256 + (i // 2) * 56, 164, 44, t, tp, 'ext')
+    b += arrow([(908, 256), (908, 220)])
+    b += arrow([(1082, 256), (1082, 220)])
+    b += node2(826, 494, 140, 52, 'Daily emails', 'Analytics + health',
+               'Every morning: pipeline health and platform stats, plus an alert if anything failed. No email means something is broken.')
+    b += node2(1006, 494, 158, 52, 'Resend', 'Email delivery',
+               'Sends the daily analytics and health emails, and every piece of in-app feedback.', 'ext')
+    b += arrow([(1164, 97), (1172, 97), (1172, 520), (1164, 520)])
+    b += label(1160, 470, ['emails'], 'end')
+    b += arrow([(1006, 520), (966, 520)])
+
+    b += node2(520, 584, 180, 44, 'Feedback automation', 'Email to task',
+               'In-app feedback arrives by email and becomes a task in the Todoist backlog automatically.', 'ai')
+    b += arrow([(1085, 546), (1085, 606), (700, 606)])
+    b += label(890, 600, ['user feedback'])
+    b += arrow([(520, 606), (111, 606), (111, 378)])
+    b += label(300, 600, ['new tasks'])
+    return svg(640, b, 'Vibes.live engineering architecture')
+
+
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
@@ -321,4 +429,9 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('volleyball', " + json.dumps(payload, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'vibes.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('vibes', " + json.dumps({'arch': vibes()}, indent=1) + ');\n')
     print('wrote', os.path.relpath(out))

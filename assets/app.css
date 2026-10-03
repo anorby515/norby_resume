@@ -327,6 +327,8 @@ button { font: inherit; color: inherit; }
 .dg-ai rect { fill: var(--ink); stroke: var(--ink); }
 .dg-ai .dg-nt { fill: var(--paper); }
 .dg-nt { font-size: 16px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+.dg-sub { font-size: 12px; font-weight: 560; fill: var(--ink-2); text-anchor: middle; }
+.dg-ai .dg-sub { fill: var(--paper); opacity: .75; }
 .dg-chip { fill: var(--paper); stroke: var(--accent); stroke-width: 1.2; }
 .dg-ct { font-size: 13px; font-weight: 650; fill: var(--accent); text-anchor: middle; }
 .dg-e { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }

@@ -396,6 +396,8 @@
   }
   function simpleHow(p) {
     var h = p.how || {}, out = [];
+    var svg = h.svg && (diagrams[p.id] || {})[h.svg];
+    if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>'));
     if (arr(h.flow).length) out.push(slide('arch', 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
       list(h.practices, 'bullets prose notes') + (arr(h.stack).length ? '<h3 class="slide__sub">Built with</h3>' + chips(h.stack) : '')));
@@ -539,7 +541,13 @@
       startDeck(opts, idx);
     }
 
-    if (!p.page) return simple();
+    if (!p.page) {
+      if (!(p.how || {}).svg || diagrams[p.id]) return simple();
+      var ds = document.createElement('script');
+      ds.src = 'data/work/' + p.id + '.diagrams.js';
+      ds.onload = ds.onerror = simple;
+      return document.body.appendChild(ds);
+    }
     loadWork(p.page, function (w) {
       if (!w) return simple();
       var single = w.products.length === 1;
