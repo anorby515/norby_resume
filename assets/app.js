@@ -223,7 +223,7 @@
   }
 
   function decisions(items) {
-    return '<ul class="decisions">' + arr(items).map(function (d) {
+    return '<ul class="decisions' + (arr(items).length > 4 ? ' decisions--3' : '') + '">' + arr(items).map(function (d) {
       return '<li><span class="decision__t">' + esc(d.title) + '</span><p class="prose">' + esc(d.text) + '</p></li>';
     }).join('') + '</ul>';
   }

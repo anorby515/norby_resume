@@ -307,3 +307,7 @@ button { font: inherit; color: inherit; }
 .features--8 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 36px; }
 .features--8 li:nth-child(n+4) { border-top: 2px solid var(--ink); }
 .features--8 li:nth-child(n+5) { border-top: 1px solid var(--rule); }
+.decisions--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; }
+.decisions--3 li:nth-child(3) { border-top: 2px solid var(--ink); }
+.decisions--3 .decision__t { font-size: 1.15rem; }
+.decisions--3 .prose { font-size: 1rem; }

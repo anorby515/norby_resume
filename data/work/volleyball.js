@@ -202,6 +202,7 @@ PORTFOLIO_WORK.register({
     ],
     shared: [
       { title: 'Production and demo, from one codebase', text: 'A build flag sets the mode. Demo builds seed invented teams and players, show a banner, and never write to the database.' },
+      { title: 'One Supabase project, separate tables', text: 'The Stat Tracker, Stat Analyzer and Tournament Platform share one Supabase Postgres project. Each app has its own tables and schema migrations in the repo.' },
       { title: 'Deploys are gated', text: 'A script decides which pushes are worth a deploy, so documentation changes do not spend build minutes.' },
       { title: 'The docs are the spec', text: 'Product.md, Design.md and Test.md are kept current with the code, and Claude Code reads them before every change.' },
       { title: 'Security headers by default', text: 'Every response ships with frame, content-type, referrer and transport security headers.' }
@@ -213,13 +214,13 @@ PORTFOLIO_WORK.register({
         diagram: [
           { stage: 'Phone', nodes: ['Tracker', 'Match setup', 'Rosters'] },
           { stage: 'On device', nodes: ['localStorage, primary store', 'Service worker cache', 'Sync queue'] },
-          { stage: 'Cloud', nodes: ['Supabase Postgres', 'PostgREST API'] },
+          { stage: 'Supabase', nodes: ['Postgres: teams, players, matches, plays, stats', 'PostgREST API', 'Background sync every 30 seconds'] },
           { stage: 'Coaches', nodes: ['Stat Analyzer'] }
         ],
         decisions: [
           { title: 'Offline-first, not online-with-a-fallback', text: 'The phone is the source of truth during a match; Supabase is the sync target. A dead gym network costs nothing.' },
           { title: 'The score is derived, never stored', text: 'The score is folded from the play log, so undoing a play recalculates everything downstream with no drift.' },
-          { title: 'History is immutable', text: 'Every stat row snapshots the player’s name and number at match time. Changing a roster can never rewrite a past match.' },
+          { title: 'History is immutable in Supabase', text: 'Every stat row snapshots the player’s name and number at match time, and foreign keys stop a player or team with stats from being deleted. Changing a roster can never rewrite a past match.' },
           { title: 'No framework, no build step', text: 'Vanilla JavaScript served as static files. Fast on old phones, and nothing to upgrade between seasons.' }
         ],
         shots: [
@@ -240,12 +241,12 @@ PORTFOLIO_WORK.register({
       analyzer: {
         diagram: [
           { stage: 'Recorded', nodes: ['Stat Tracker play log'] },
-          { stage: 'Cloud', nodes: ['matches', 'set_scores', 'player_stats'] },
+          { stage: 'Supabase', nodes: ['Postgres: matches, set scores, player stats', 'Read through PostgREST'] },
           { stage: 'In the browser', nodes: ['Filters', 'Aggregates and percentages'] },
           { stage: 'Coaches', nodes: ['Tables', 'Excel export', 'Google Sheets export'] }
         ],
         decisions: [
-          { title: 'Fetch once, compute in the browser', text: 'Completed matches load once; every filter and total is computed on the page, so changing a filter is instant.' },
+          { title: 'Fetch once from Supabase, compute in the browser', text: 'Completed matches load from Supabase once; every filter and total is computed on the page, so changing a filter is instant.' },
           { title: 'Keyed by player, not by name', text: 'Two players who share a first name on different teams stay separate, and a swing player keeps one history.' },
           { title: 'Only our bench counts', text: 'Rows recorded for the other team are left out, so another club’s players never land in our totals.' },
           { title: 'Filters live in the URL', text: 'A filtered view is a link a coach can bookmark or send.' }
@@ -267,11 +268,13 @@ PORTFOLIO_WORK.register({
           { stage: 'At the venue', nodes: ['QR card per court', 'Scorekeeper phones', 'Laptop driving the TV'] },
           { stage: 'Apps', nodes: ['/score/N scorekeeper', '/tv wall display', '/invite family app'] },
           { stage: 'Logic', nodes: ['tournament-data.js: pure derivations', 'Offline cache and retry queue'] },
-          { stage: 'Cloud', nodes: ['Supabase tables', 'Netlify redirects'] }
+          { stage: 'Supabase', nodes: ['Postgres: matches and sets for the event', 'Score tables upsert each point', 'Every screen polls every 15 seconds'] }
         ],
         decisions: [
           { title: 'The URL is the access control', text: 'Scoring has no link inside the app. It is reached only from the QR card taped to the table, so the person holding it is the person scoring.' },
-          { title: 'Everything is derived from taps', text: 'Standings, seeding and brackets live in one pure, fully tested module with no screen code in it.' },
+          { title: 'Supabase holds the taps, nothing else', text: 'Score tables write points to Supabase with an upsert keyed on match and set, so a retried write never duplicates. Standings, seeding and brackets are never stored; they are computed from those rows.' },
+          { title: 'Polling, not websockets', text: 'Phones and the TV read Supabase every 15 seconds instead of holding a live connection. Gym wifi drops websockets silently; a missed poll fixes itself on the next one.' },
+          { title: 'One tested module does the math', text: 'Standings, seeding and brackets live in one pure, fully tested module with no screen code in it.' },
           { title: 'One writer per match', text: 'If a court already has a match open, a second phone is asked whether it is really theirs before it can score.' },
           { title: 'Game day is decided by the calendar', text: 'The app switches from preview to live on the event date, with a two-day grace window. Test taps from weeks earlier cannot flip it.' }
         ],
