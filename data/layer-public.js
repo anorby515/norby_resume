@@ -124,7 +124,7 @@ PORTFOLIO.register({
     {
       id: 'eclipse', title: 'Eclipse Volleyball', tone: 'eclipse',
       apps: [
-        { id: 'eclipse-os', name: 'Eclipse OS', icon: 'orbit', href: '#/portfolio/volleyball' },
+        { id: 'eclipse-os', name: 'Eclipse OS', img: 'assets/icons/eclipse.webp', href: '#/portfolio/volleyball' },
         { id: 'eclipse-cos', name: 'Eclipse CoS', icon: 'spark', href: '#/portfolio/volleyball' },
         { id: 'tourney', name: 'Tourney', icon: 'trophy', href: '#/portfolio/volleyball' },
         { id: 'tourney-tv', name: 'Tourney TV', icon: 'tv', href: '#/portfolio/volleyball' },
