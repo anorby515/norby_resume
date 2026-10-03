@@ -166,6 +166,74 @@
       '</div>';
   };
 
+  /* ---------------- AI Portfolio: home screen of apps ---------------- */
+
+  // 24px line glyphs for app icons.
+  var GLYPH = {
+    flask: 'M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7.5 14h9',
+    grid: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',
+    spark: 'M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z',
+    gauge: 'M4 18a8 8 0 1 1 16 0M12 18l4-6M8 18h8',
+    cycle: 'M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4',
+    coin: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM15 9h-4a1.8 1.8 0 0 0 0 3.6h2a1.8 1.8 0 0 1 0 3.6H9M12 7v2M12 16v2',
+    toggle: 'M7 7h10a5 5 0 0 1 0 10H7A5 5 0 0 1 7 7zM16 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+    orbit: 'M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 12c0-2.5 4-4.5 9-4.5s9 2 9 4.5-4 4.5-9 4.5-9-2-9-4.5z',
+    trophy: 'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M9.5 17h5',
+    tv: 'M3 6h18v11H3zM8 21h8M12 17v4M9 3l3 3 3-3',
+    plusone: 'M3 12h7M6.5 8.5v7M15 8l3-2v12',
+    bars: 'M5 20V11M10 20V5M15 20v-7M20 20V8M3 20h18',
+    analyze: 'M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM15.5 15.5L21 21M7.5 13V11M10.5 13V8.5M13.5 13v-3',
+    people: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.3a3.5 3.5 0 0 1 0 6.4M18 14a6.5 6.5 0 0 1 3.5 6',
+    sun: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+    home: 'M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-5h4v5',
+    bag: 'M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2',
+    car: 'M5 16H3v-4l2-5h14l2 5v4h-2M5 12h14M7.5 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM16.5 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9 17.5h6',
+    flame: 'M12 21a6 6 0 0 0 6-6c0-4-3-6-4-10-2 2-3 4-3 6-1-1-1.5-2-1.5-3C7 10 6 12.5 6 15a6 6 0 0 0 6 6z',
+    notebook: 'M6 3h12v18H6zM9 3v18M12 8h4M12 12h4M4 7h2M4 11h2M4 15h2',
+    folder: 'M3 6h6l2 2h10v11H3zM8 14l2.5 2.5L16 11',
+    music: 'M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',
+    trend: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+    pie: 'M12 3v9h9a9 9 0 1 1-9-9zM15 3.5A9 9 0 0 1 20.5 9H15z',
+    palm: 'M12 21c0-5 .5-9 2-12M14 9c-1-3-4-4-7-3M14 9c2-2 5-2 7 0M14 9c0-3 2-5 5-5M14 9c-3-1-6 1-7 4M4 21h16',
+    mountain: 'M2 20l7-12 4 6 3-4 6 10zM7.5 10.5L9 12l1.5-1.5',
+    disc: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM12 6.5a5.5 5.5 0 0 0-5.5 5.5'
+  };
+  var WORK_GLYPHS = ['flask', 'grid', 'spark', 'gauge', 'cycle', 'coin', 'toggle'];
+
+  function appIcon(a, k) {
+    var g = GLYPH[a.icon] || (a.placeholder ? GLYPH[WORK_GLYPHS[k % WORK_GLYPHS.length]] : GLYPH.grid);
+    return '<span class="app__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="' + g + '"/></svg></span>';
+  }
+
+  render.apps = function (s, first) {
+    var rows = arr(store.collections[s.items]).filter(function (r) { return !r.hidden && arr(r.apps).length; });
+    return (first ? sectionHead(s) : subHead(s)) +
+      '<div class="homescreen">' + rows.map(function (r) {
+        return '<section class="approw approw--' + esc(r.tone || r.id) + '" aria-label="' + esc(r.title) + '">' +
+          '<h2 class="approw__title">' + esc(r.title) + '</h2>' +
+          '<ul class="approw__apps">' + r.apps.map(function (a, k) {
+            var inner = appIcon(a, k) + '<span class="app__name">' + esc(a.name) + '</span>';
+            var cls = 'app' + (a.placeholder ? ' app--placeholder' : '');
+            if (a.href && !a.placeholder) {
+              var ext = /^https?:/.test(a.href);
+              return '<li><a class="' + cls + '" href="' + esc(a.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + inner + '</a></li>';
+            }
+            return '<li><span class="' + cls + ' app--static">' + inner + '</span></li>';
+          }).join('') + '</ul>' +
+          confirmNotes(r.confirm) +
+        '</section>';
+      }).join('') + '</div>' +
+      (s.footnote ? '<p class="footnote">' + esc(s.footnote) + '</p>' : '');
+  };
+
+  render.placeholder = function (s, first) {
+    return (first ? sectionHead(s) : subHead(s)) +
+      '<ol class="pq">' + arr(s.items).map(function (q, i) {
+        return '<li><span class="pq__n">' + (i + 1) + '</span><span class="pq__q">' + esc(q) + '</span>' +
+          (s.note ? '<span class="pq__note">' + esc(s.note) + '</span>' : '') + '</li>';
+      }).join('') + '</ol>' + confirmNotes(s.confirm);
+  };
+
   function arrowBtn(dir, label, attr) {
     var path = dir === 'prev' ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7';
     return '<button type="button" class="arrow" ' + attr + ' aria-label="' + label + '">' +
@@ -347,12 +415,29 @@
       '<div class="deck__viewport" data-viewport><div class="deck__track" data-track>' +
         slides.map(function (s, i) { return '<section class="slide slide--' + s.kind + '" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + slides.length + '">' + s.html + '</section>'; }).join('') +
       '</div></div>' +
-      (slides.length > 1 ? '<div class="deck__nav">' + arrowBtn('prev', 'Previous slide', 'data-prev') +
-        '<ol class="dots">' + slides.map(function (s, i) {
-          return '<li><button type="button" data-goto="' + i + '" aria-label="' + esc((i + 1) + ': ' + (s.title || 'Screenshot')) + '"></button></li>';
-        }).join('') + '</ol>' + arrowBtn('next', 'Next slide', 'data-next') +
-        '<span class="deck__count" data-count></span></div>' : '') +
+      (slides.length > 1 ? deckNav(slides.map(function (s) { return s.title || 'Screenshot'; }), 'slide') : '') +
     '</div>';
+  }
+
+  function deckNav(titles, noun) {
+    return '<div class="deck__nav">' + arrowBtn('prev', 'Previous ' + noun, 'data-prev') +
+      '<ol class="dots">' + titles.map(function (t, i) {
+        return '<li><button type="button" data-goto="' + i + '" aria-label="' + esc((i + 1) + ': ' + t) + '" title="' + esc(t) + '"></button></li>';
+      }).join('') + '</ol>' + arrowBtn('next', 'Next ' + noun, 'data-next') +
+      '<span class="deck__count" data-count></span></div>';
+  }
+
+  // The opening flow: every top-level screen is one scene in a horizontal deck.
+  function scenesView(all, k) {
+    var html = '<div class="deck deck--scenes" data-deck>' +
+      '<div class="deck__viewport" data-viewport><div class="deck__track" data-track>' +
+        all.map(function (sc) {
+          return '<section class="slide slide--scene" aria-roledescription="scene" aria-label="' + esc(sc.nav || store.profile.name) + '">' + screenView(sc) + '</section>';
+        }).join('') +
+      '</div></div>' + deckNav(all.map(function (sc) { return sc.nav || store.profile.name; }), 'section') + '</div>';
+    show(html, { deck: true, scenes: true, screen: all[k].id, title: all[k].id ? all[k].nav : '' });
+    deck = { n: all.length, i: 0, scenes: all.map(function (sc) { return sc.id; }), titles: all.map(function (sc) { return sc.nav; }) };
+    go(k, true);
   }
 
   function startDeck(opts, index) {
@@ -370,6 +455,7 @@
     document.querySelectorAll('.slide').forEach(function (el, k) {
       el.setAttribute('aria-hidden', String(k !== deck.i));
       el.inert = k !== deck.i;
+      if (k === deck.i && deck.scenes) el.scrollTop = 0;
     });
     document.querySelectorAll('[data-goto]').forEach(function (b, k) { b.setAttribute('aria-current', String(k === deck.i)); });
     var prev = document.querySelector('[data-prev]'), next = document.querySelector('[data-next]');
@@ -377,6 +463,14 @@
     if (next) next.disabled = deck.i === deck.n - 1;
     var c = document.querySelector('[data-count]');
     if (c) c.textContent = (deck.i + 1) + ' / ' + deck.n;
+    if (deck.scenes) {
+      var id = deck.scenes[deck.i];
+      document.querySelectorAll('#nav a').forEach(function (a) { a.toggleAttribute('aria-current', a.getAttribute('data-screen') === id); });
+      document.title = (id ? deck.titles[deck.i] + ' | ' : '') + (store.profile.name || '');
+      if (c) c.textContent = deck.titles[deck.i] || '';
+      if (!initial && history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#/' + id);
+      return;
+    }
     if (!initial && history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#/' + deck.path + '/' + (deck.i + 1));
   }
 
@@ -402,6 +496,7 @@
     opts = opts || {};
     document.body.classList.toggle('is-deck', !!opts.deck);
     document.body.classList.toggle('is-home', !!opts.home);
+    document.body.classList.toggle('is-scenes', !!opts.scenes);
     document.documentElement.setAttribute('data-lens', opts.view === 'how' ? 'how' : 'why');
     document.getElementById('main').innerHTML = html;
     document.querySelectorAll('#nav a').forEach(function (a) {
@@ -414,17 +509,18 @@
   function notFound() { show('<div class="page"><h1 class="page__title">Not found</h1><p class="prose">That page does not exist. <a href="#/">Go home</a>.</p></div>'); }
 
   function route() {
-    deck = null;
     var parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
     var all = screens();
 
-    if (!parts.length) { var home = all[0]; return show(screenView(home), { home: true, screen: '' }); }
-
-    if (parts[0] !== 'portfolio' || parts.length === 1) {
-      var sc = all.filter(function (x) { return x.id === parts[0]; })[0];
-      if (!sc) return notFound();
-      return show(screenView(sc), { screen: sc.id, title: sc.nav });
+    if (!parts.length || parts[0] !== 'portfolio' || parts.length === 1) {
+      var id = parts[0] || '', k = -1;
+      all.forEach(function (x, j) { if (x.id === id) k = j; });
+      if (k < 0) { deck = null; return notFound(); }
+      if (deck && deck.scenes && document.querySelector('.deck--scenes')) return go(k);
+      deck = null;
+      return scenesView(all, k);
     }
+    deck = null;
 
     var p = byId(store.projects, parts[1]);
     if (!p) return notFound();
@@ -473,6 +569,7 @@
 
   function bind() {
     document.addEventListener('click', function (e) {
+      if (swiped && e.target.closest('[data-viewport] a')) { e.preventDefault(); return; }
       var dl = e.target.closest && e.target.closest('.dg [data-href]');
       if (dl) { location.hash = dl.getAttribute('data-href'); return; }
       var t = e.target.closest('[data-prev],[data-next],[data-goto],[data-zoom],[data-close-lightbox],[data-rail-prev],[data-rail-next]');
@@ -556,7 +653,7 @@
 
   function drawChrome() {
     var nav = document.getElementById('nav');
-    nav.innerHTML = screens().filter(function (s) { return s.nav; }).map(function (s) {
+    nav.innerHTML = screens().filter(function (s) { return s.nav && s.id; }).map(function (s) {
       return '<a href="' + link(s.id) + '" data-screen="' + esc(s.id) + '">' + esc(s.nav) + '</a>';
     }).join('');
     document.getElementById('bar-name').textContent = store.profile.name || '';

@@ -58,12 +58,12 @@ PORTFOLIO.register({
 
   /* Page order. Corporate layer can insert sections by giving an `after` id. */
   sections: [
-    { id: 'leader', type: 'hero' },
+    { id: 'leader', type: 'hero', nav: 'Andy Norby' },
     {
       id: 'career',
       type: 'prose',
-      nav: 'Career',
-      title: 'Career',
+      nav: 'My Career',
+      title: 'My Career',
       body: [
         'Twenty-six years in technology and engineering. I have led embedded software teams, the electronics and hardware platforms beneath them, and the product-level engineering and product management above them.'
       ],
@@ -73,8 +73,8 @@ PORTFOLIO.register({
     {
       id: 'beyond',
       type: 'cards',
-      nav: 'Beyond work',
-      title: 'Beyond work',
+      nav: 'Beyond Work',
+      title: 'Beyond Work',
       lede: 'Where I spend the rest of my time.',
       items: 'community'
     },
@@ -87,10 +87,77 @@ PORTFOLIO.register({
     },
     {
       id: 'portfolio',
-      type: 'portfolio',
+      type: 'apps',
       nav: 'AI Portfolio',
       title: 'AI Portfolio',
-      lede: 'Apps I have vibe-coded and agents I run. Pick one to see why I built it and how.'
+      lede: 'Apps and agents I have built, grouped by who they serve. Open one to see why and how.',
+      items: 'appRows',
+      footnote: 'CoS is short for Chief of Staff.'
+    },
+    {
+      id: 'questions',
+      type: 'placeholder',
+      nav: 'Pre-Interview Questions',
+      title: 'Pre-Interview Questions',
+      lede: 'My answers to the three questions the panel shared ahead of the interview.',
+      items: ['Question 1', 'Question 2', 'Question 3'],
+      note: 'Shared in person.'
+    }
+  ],
+
+  /* AI Portfolio home screen. Rows merge by id, so the internal build can
+     replace a row (for example to give the work apps real icons and links). */
+  appRows: [
+    {
+      id: 'work', title: 'AI at Work', tone: 'work',
+      confirm: ['Placeholders on the public site. The internal build replaces this row with real icons and links.'],
+      apps: [
+        { id: 'labs', name: 'AI Dev Labs', placeholder: true },
+        { id: 'cos-os', name: 'CoS OS', placeholder: true },
+        { id: 'cos-agent', name: 'CoS Agent', placeholder: true },
+        { id: 'cos-command', name: 'CoS Command Center', placeholder: true },
+        { id: 'cos-automation', name: 'CoS Automation', placeholder: true },
+        { id: 'cos-budget', name: 'CoS Budget', placeholder: true },
+        { id: 'leadership-switch', name: 'The Leadership Switch', placeholder: true }
+      ]
+    },
+    {
+      id: 'eclipse', title: 'Eclipse Volleyball', tone: 'eclipse',
+      apps: [
+        { id: 'eclipse-os', name: 'Eclipse OS', icon: 'orbit', href: '#/portfolio/volleyball' },
+        { id: 'eclipse-cos', name: 'Eclipse CoS', icon: 'spark', href: '#/portfolio/volleyball' },
+        { id: 'tourney', name: 'Tourney', icon: 'trophy', href: '#/portfolio/volleyball' },
+        { id: 'tourney-tv', name: 'Tourney TV', icon: 'tv', href: '#/portfolio/volleyball' },
+        { id: 'tourney-score', name: 'Tourney Score', icon: 'plusone', href: '#/portfolio/volleyball' },
+        { id: 'stats', name: 'Stats', icon: 'bars', href: '#/portfolio/volleyball' },
+        { id: 'stats-analyzer', name: 'Stats Analyzer', icon: 'analyze', href: '#/portfolio/volleyball' },
+        { id: 'volunteers', name: 'Volunteers', icon: 'people', href: '#/portfolio/volleyball' }
+      ]
+    },
+    {
+      id: 'family', title: 'Family & Home', tone: 'family',
+      confirm: ['Muse has no deck yet, so its icon does not open anything.'],
+      apps: [
+        { id: 'personal-cos', name: 'Personal CoS', icon: 'sun', href: '#/portfolio/household' },
+        { id: 'family-cos', name: 'Family CoS', icon: 'home', href: '#/portfolio/household' },
+        { id: 'muse', name: 'Muse', icon: 'bag' },
+        { id: 'vehicles', name: 'Vehicles', icon: 'car', href: '#/portfolio/household' },
+        { id: 'habits', name: 'Habits', icon: 'flame', href: '#/portfolio/habits' },
+        { id: 'college-notes', name: 'College Notes', icon: 'notebook', href: '#/portfolio/household' },
+        { id: 'document-agent', name: 'Document Agent', icon: 'folder', href: '#/portfolio/household' }
+      ]
+    },
+    {
+      id: 'public', title: 'Public & Friends', tone: 'public',
+      confirm: ['Countdown apps and Vinyl Moon have no deck or public URL yet. Add a URL to open them directly, or a one-line description for a deck.'],
+      apps: [
+        { id: 'vibes', name: 'Vibes.live', icon: 'music', href: '#/portfolio/vibes' },
+        { id: 'ai2fi', name: 'AI2FI', icon: 'trend', href: '#/portfolio/ai2fi' },
+        { id: 'financial-analyst', name: 'Financial Analyst', icon: 'pie', href: '#/portfolio/ai2fi' },
+        { id: 'hawaii', name: 'Hawaii or Bust', icon: 'palm' },
+        { id: 'co-hiking', name: 'CO Hiking', icon: 'mountain' },
+        { id: 'vinyl-moon', name: 'Vinyl Moon', icon: 'disc' }
+      ]
     }
   ],
 
@@ -262,7 +329,7 @@ PORTFOLIO.register({
 
     {
       id: 'habits',
-      title: 'Habit tracker',
+      title: 'Habits',
       kind: ['app'],
       attributes: ['learner'],
       summary: 'An iOS habit app, being extended into a two-player challenge.',

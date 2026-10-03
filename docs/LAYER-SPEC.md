@@ -20,20 +20,23 @@ Each layer file calls `PORTFOLIO.register({...})` once. Later layers add to or o
 | `profile` | Fields shallow-merged. A later `headline` replaces the earlier one. |
 | `tools` | Object merge by tool id. |
 | `attributes`, `sections`, `projects` | Matched by `id`. Same id updates the item; a new id is appended, or inserted using `after: '<id>'` or `before: '<id>'`. |
-| Any other array (e.g. `community`, `roles`, `questions`) | Becomes a named collection, merged by `id`. Sections read collections through `items: '<name>'`. |
+| Any other array (e.g. `community`, `appRows`, `roles`, `questions`) | Becomes a named collection, merged by `id`. Sections read collections through `items: '<name>'`. |
 
 ## Screens and navigation
 
 The site is one page with hash routes. Sections become screens:
 
-- A section with a `nav` label starts a screen and adds a top-menu item. The `hero` section is the home screen.
-- Sections without `nav` join the screen before them (for example `about` joins Beyond work).
+- A section with a `nav` label starts a screen. The `hero` section is the first screen.
+- Sections without `nav` join the screen before them (for example `about` joins Beyond Work).
 - Use `after: '<id>'` in another layer to place a section.
+- The opening is one horizontal deck: each screen is a scene, in section order (Andy Norby, My Career, Beyond Work, AI Portfolio, Pre-Interview Questions). The top menu, dots, arrows, arrow keys and swipe move between scenes; a scene taller than the window scrolls on its own.
 
 | type | Reads | Use for |
 |---|---|---|
 | `hero` | `profile.name`, `attributes` | Home: name and the four attributes |
-| `portfolio` | all `projects` | Horizontal rail, one marquee screenshot (`cover`) per project |
+| `apps` | `items: '<collection>'` of rows `{ id, title, tone, confirm?, apps: [{ id, name, icon?, href?, placeholder? }] }`; `footnote?` | AI Portfolio home screen: one row of app icons per group. `href` opens a project deck (`#/portfolio/<id>`) or a URL; no `href` or `placeholder: true` shows the icon without a link. Tones: `work`, `eclipse`, `family`, `public` |
+| `placeholder` | `items: [labels]`, `note?` | Numbered stand-ins (Pre-Interview Questions on the public site) |
+| `portfolio` | all `projects` | Horizontal rail of project covers (not used on the current site) |
 | `prose` | `body: [paragraphs]` | Free text. Hidden publicly when empty |
 | `cards` | `items: '<collection>'` | Beyond work, programs |
 | `timeline` | `items: '<collection>'` with `{ id, period, title, text, points? }` | Career history |
@@ -41,7 +44,7 @@ The site is one page with hash routes. Sections become screens:
 
 Routes:
 
-- `#/` home, `#/<section-id>` a menu screen
+- `#/` first scene, `#/<section-id>` any other scene
 - `#/portfolio/<project>` suite overview (or straight into the deck when there is one product)
 - `#/portfolio/<project>/<product>/why|how/<slide>` a product deck. Arrow keys, the arrows, the dots, or a swipe move between slides.
 
@@ -51,7 +54,7 @@ Routes:
 {
   id: 'example',
   title: 'Example',
-  cover: { src: 'assets/work/example/cover.webp', tall: false }, // marquee on the portfolio rail
+  cover: { src: 'assets/work/example/cover.webp', tall: false }, // marquee image (used by the rail and suite pages)
   page: 'example',                // optional: data/work/example.js gives it Why/How decks
   short: 'Ex',                    // optional label for the tools matrix
   context: 'work',                // optional; shows an "At work" tag
@@ -92,3 +95,7 @@ To add one:
 Projects without a `page` file get a short two-slide deck from their entry in the layer file.
 
 Never use screenshots that show real players' names or faces. Capture demo builds instead.
+
+## App icons
+
+`icon` names a built-in line glyph: flask, grid, spark, gauge, cycle, coin, toggle, orbit, trophy, tv, plusone, bars, analyze, people, sun, home, bag, car, flame, notebook, folder, music, trend, pie, palm, mountain, disc. To change a row from another layer, register an `appRows` item with the same `id`; its `apps` list replaces the old one.

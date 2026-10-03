@@ -416,3 +416,104 @@ button { font: inherit; color: inherit; }
 .pslide__img.is-tall img { max-height: calc(100vh - var(--bar) - 260px); }
 @media (max-height: 780px) { .pslide__points li { font-size: .92rem; padding: 6px 0 6px 18px; } .pslide__line { margin: 12px 0; } }
 @media (max-height: 780px) { .pslide__img img { max-height: calc(100vh - var(--bar) - 270px); } .pslide__img.is-tall img { max-height: calc(100vh - var(--bar) - 280px); } .pslide__name { font-size: 2.6rem; } }
+
+/* ---------- opening flow: scenes deck ---------- */
+.deck--scenes { grid-template-rows: minmax(0, 1fr) auto; }
+.slide--scene { padding: 0; }
+.slide--scene > .page { padding-top: clamp(28px, 5vh, 64px); padding-bottom: 32px; }
+.slide--scene .home { padding: 0; }
+.deck--scenes .deck__count { font-weight: 600; font-variant-numeric: normal; }
+.deck--scenes .deck__nav { border-top: 1px solid var(--rule); padding-top: 10px; }
+
+/* ---------- AI Portfolio home screen ---------- */
+.block--apps .page__head { margin-bottom: 24px; }
+.homescreen {
+  border-radius: 28px; padding: clamp(18px, 3vh, 32px) clamp(20px, 3vw, 40px);
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--cobalt) 22%, transparent), transparent 55%),
+    radial-gradient(120% 140% at 100% 100%, color-mix(in srgb, var(--ochre) 24%, transparent), transparent 55%),
+    var(--paper-2);
+  border: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: clamp(12px, 2.2vh, 22px);
+}
+.approw { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; align-items: start; }
+.approw + .approw { border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: clamp(12px, 2.2vh, 22px); }
+.approw__title { font-size: .82rem; font-weight: 720; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); padding-top: 18px; }
+.approw__apps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, 96px); gap: 10px 14px; }
+.approw .confirm { grid-column: 2; margin-top: 0; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 7px; text-decoration: none; color: var(--ink); width: 96px; padding: 4px 0; border-radius: 14px; }
+.app__icon {
+  width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center;
+  background: linear-gradient(150deg, var(--t1), var(--t2)); color: #fff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .25) inset, 0 6px 14px rgba(20, 30, 28, .18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.app__icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.app__name { font-size: .8rem; font-weight: 560; line-height: 1.2; text-align: center; max-width: 92px; }
+a.app:hover .app__icon, a.app:focus-visible .app__icon { transform: translateY(-3px) scale(1.04); box-shadow: 0 1px 0 rgba(255, 255, 255, .25) inset, 0 12px 22px rgba(20, 30, 28, .26); }
+a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.app--static { cursor: default; }
+.app--placeholder .app__icon { background: color-mix(in srgb, var(--paper) 70%, transparent); color: var(--ink-2); border: 1.5px dashed var(--ink-2); box-shadow: none; }
+.app--placeholder .app__name { color: var(--ink-2); }
+.approw--work { --t1: #5B6B68; --t2: #3A4644; }
+.approw--eclipse { --t1: #3C5FD0; --t2: #1C2F78; }
+.approw--family { --t1: #D49A2A; --t2: #9A5F0A; }
+.approw--public { --t1: #2F9C83; --t2: #186150; }
+.footnote { margin-top: 14px; font-size: .85rem; color: var(--ink-2); }
+
+/* ---------- pre-interview questions placeholder ---------- */
+.pq { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.pq li { border-top: 2px solid var(--ink); padding-top: 18px; display: flex; flex-direction: column; gap: 6px; }
+.pq__n { font-size: 3.4rem; font-weight: 820; font-stretch: 122%; line-height: 1; color: var(--accent); }
+.pq__q { font-size: 1.4rem; font-weight: 720; }
+.pq__note { font-family: var(--serif); color: var(--ink-2); }
+
+@media (max-height: 780px) {
+  .block--apps .page__title { font-size: 3rem; }
+  .block--apps .page__lede { margin-top: 10px; }
+  .app__icon { width: 52px; height: 52px; border-radius: 13px; }
+  .app__icon svg { width: 26px; height: 26px; }
+  .approw__title { padding-top: 14px; }
+}
+/* app scene: header on one line so all four rows fit without scrolling */
+.block--apps .page__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; max-width: none; margin-bottom: clamp(14px, 2.4vh, 24px); }
+.block--apps .page__title { font-size: clamp(2.8rem, 4.4vw, 4rem); }
+.block--apps .page__lede { margin: 0 0 6px; max-width: 44ch; font-size: 1.05rem; }
+.slide--scene > .page--apps { padding-top: clamp(20px, 3.5vh, 44px); }
+.homescreen { padding-top: clamp(14px, 2.2vh, 26px); padding-bottom: clamp(14px, 2.2vh, 26px); gap: clamp(8px, 1.6vh, 18px); }
+.approw + .approw { padding-top: clamp(8px, 1.6vh, 18px); }
+.app { width: 104px; }
+.approw__apps { grid-template-columns: repeat(auto-fill, 104px); gap: 6px 12px; }
+.app__name { max-width: 100px; font-size: .78rem; }
+.footnote { margin-top: 10px; }
+@media (max-height: 780px) {
+  .block--apps .page__title { font-size: 2.6rem; }
+  .app { gap: 5px; padding: 2px 0; }
+  .app__icon { width: 48px; height: 48px; border-radius: 12px; }
+  .app__icon svg { width: 24px; height: 24px; }
+  .approw__title { padding-top: 12px; }
+}
+@media (max-width: 860px) { .block--apps .page__head { display: block; } .block--apps .page__lede { margin-top: 10px; } }
+
+@media (max-width: 720px) {
+  .approw { grid-template-columns: 1fr; gap: 8px; }
+  .approw__title { padding-top: 0; }
+  .approw .confirm { grid-column: 1; }
+  .approw__apps { grid-template-columns: repeat(auto-fill, 76px); }
+  .app { width: 76px; }
+  .app__name { font-size: .74rem; max-width: 74px; }
+  .pq { grid-template-columns: 1fr; }
+}
+.slide--scene > .page { padding-bottom: 16px; }
+.block--apps .page__lede { max-width: 50ch; }
+@media (max-width: 720px) {
+  .bar { gap: 20px; }
+  .bar__name { white-space: nowrap; }
+  .bar__nav { overflow-x: auto; scrollbar-width: none; gap: 18px; min-width: 0; }
+  .bar__nav a { white-space: nowrap; }
+  .deck--scenes .deck__count { display: none; }
+  .approw__apps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 4px; }
+  .app { width: auto; }
+  .app__name { max-width: 100%; }
+  .homescreen { padding-left: 14px; padding-right: 14px; border-radius: 22px; }
+}
