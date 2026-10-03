@@ -268,7 +268,8 @@
   function productHow(w, p) {
     var e = ((w.how || {}).products || {})[p.id] || {}, out = [];
     var svg = (diagrams[w.id] || {})[p.id];
-    if (svg) out.push(slide('arch slide--svg', 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>'));
+    var builtWith = arr(e.tools).length ? '<div class="builtwith"><span class="builtwith__k">Built with</span>' + chips(e.tools, w) + '</div>' : '';
+    if (svg) out.push(slide('arch slide--svg' + (builtWith ? ' slide--tools' : ''), 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>' + builtWith));
     else if (arr(e.diagram).length) out.push(slide('arch', 'Architecture', diagram(e.diagram)));
     if (arr(e.decisions).length) out.push(slide('decisions', 'Decisions that shaped it', decisions(e.decisions)));
     arr(e.shots).forEach(function (s) {
@@ -285,7 +286,7 @@
     if (e.split || arr(e.tools).length) out.push(slide('split', 'Vibe-coded and agentic',
       (e.split ? '<div class="split"><div class="split__side split__side--vibe"><span class="split__k">Vibe-coded</span><p>' + esc(e.split.vibe) + '</p></div>' +
         '<div class="split__side split__side--agent"><span class="split__k">Agentic</span><p>' + esc(e.split.agentic) + '</p></div></div>' : '') +
-      (arr(e.tools).length ? '<h3 class="slide__sub">Built with</h3>' + chips(e.tools, w) : '') + confirmNotes(e.confirm)));
+      (svg ? '' : (arr(e.tools).length ? '<h3 class="slide__sub">Built with</h3>' + chips(e.tools, w) : '')) + confirmNotes(e.confirm)));
     return out;
   }
 

@@ -370,3 +370,10 @@ button { font: inherit; color: inherit; }
   .insight p { font-size: 1.02rem; }
   .try { margin-top: 16px; }
 }
+
+/* Built with, under the architecture diagram */
+.builtwith { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 14px; flex-wrap: wrap; }
+.builtwith__k { font-size: .9rem; font-weight: 720; color: var(--accent); }
+.builtwith .chips li { font-size: .8rem; padding: 3px 9px; }
+.slide--tools .dg { max-height: calc(100vh - var(--bar) - 320px); }
+.slide--tools .dg-hint { margin-top: 6px; }
