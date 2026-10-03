@@ -331,104 +331,126 @@ def tournament():
 # Vibes.live: engineering architecture, from plan to App Store to data
 # --------------------------------------------------------------------------
 def vibes():
-    b = zone(20, 20, 370, 560, 'Plan and build')
+    # ---- left: plan, build, test and deploy ----
+    b = zone(20, 20, 370, 620, 'Plan, build, test and deploy')
     b += node2(36, 52, 150, 56, 'Claude Cowork', 'Business model, spec',
                'Business model, pricing and the product spec, worked out with Claude and kept as Markdown.', 'ai')
     b += node2(224, 52, 150, 56, 'Digital marketing', 'Future',
                'Next output from Claude Cowork: launch and marketing content.', 'ext')
     b += arrow([(186, 80), (224, 80)], dashed=True)
-    b += node2(36, 146, 150, 52, 'Obsidian', 'Spec files',
+    b += node2(36, 138, 150, 48, 'Obsidian', 'Spec files',
                'Where I read and manage the spec Markdown files: the product spec, the roadmap and the Claude Code contract. Linked to the Todoist backlog.')
-    b += arrow([(111, 108), (111, 146)])
-    b += node2(224, 146, 150, 52, 'Claude Design', 'UX',
+    b += arrow([(111, 108), (111, 138)])
+    b += node2(224, 138, 150, 48, 'Claude Design', 'UX',
                'Screens and flows designed before they are built. A major UX revamp is designed and coming in the next App Store version.', 'ai')
-    b += node2(36, 236, 338, 52, 'Claude Code', 'Coding',
-               'Writes the app, the Edge Functions and the tests, under a contract file with test-first, reproduce-before-fix and peer-review rules.', 'ai')
-    b += arrow([(111, 198), (111, 236)])
-    b += label(119, 222, ['specs'], 'start')
-    b += arrow([(299, 198), (299, 236)])
-    b += label(307, 222, ['UX'], 'start')
-    b += arrow([(36, 172), (27, 172), (27, 352), (36, 352)], both=True)
-    b += node2(36, 326, 150, 52, 'Todoist', 'Backlog',
+    b += node2(36, 224, 338, 48, 'Claude Code', 'Coding',
+               'Writes the app, the Supabase functions and the tests, under a contract file with test-first, reproduce-before-fix and peer-review rules.', 'ai')
+    b += arrow([(111, 186), (111, 224)])
+    b += label(119, 210, ['specs'], 'start')
+    b += arrow([(299, 186), (299, 224)])
+    b += label(307, 210, ['UX'], 'start')
+    b += node2(36, 310, 150, 48, 'Todoist', 'Backlog',
                'The Vibes.live Backlog project: every feature, bug and idea, prioritized. Claude Code reads it with a script.')
-    b += arrow([(111, 326), (111, 288)])
-    b += label(119, 312, ['backlog'], 'start')
-    b += node2(224, 326, 150, 52, 'Testing', 'Unit + UX tests',
+    b += arrow([(111, 310), (111, 272)])
+    b += label(119, 296, ['backlog'], 'start')
+    b += arrow([(36, 162), (27, 162), (27, 334), (36, 334)], both=True)
+    b += node2(224, 310, 150, 48, 'Testing', 'Unit + UX tests',
                'About 1,040 unit tests across Vitest, Jest and Deno, plus Maestro end-to-end flows for sign-up and sign-in.')
-    b += arrow([(299, 288), (299, 326)])
-    b += node2(224, 410, 150, 52, 'GitHub', 'Repo + Actions',
+    b += arrow([(299, 272), (299, 310)])
+    b += node2(224, 392, 150, 48, 'GitHub', 'Repo + Actions',
                'Source and version history. GitHub Actions also runs the daily data pipeline.', 'ext')
-    b += arrow([(299, 378), (299, 410)])
-    b += node2(224, 494, 150, 52, 'Xcode', 'Build + profile',
+    b += arrow([(299, 358), (299, 392)])
+    b += node2(224, 474, 150, 48, 'Xcode', 'Build + profile',
                'iOS Simulator for daily development and Instruments for memory-leak checks. EAS builds the release.')
-    b += arrow([(299, 462), (299, 494)])
+    b += arrow([(299, 440), (299, 474)])
+    b += node2(224, 556, 150, 48, 'App Store', 'TestFlight, then release',
+               'Every build goes to TestFlight testers first, then through App Store review.', 'key')
+    b += arrow([(299, 522), (299, 556)])
 
-    b += zone(410, 20, 380, 560, 'The app')
-    b += node2(426, 52, 165, 52, 'GitHub Pages', 'Support pages',
-               'Hosts live-vibes.net from the repo: the support, privacy and terms pages the App Store requires.', 'ext')
-    b += node2(611, 52, 165, 52, 'Cloudflare', 'Support email',
-               'Routes the support email address to my inbox.', 'ext')
+    # ---- middle: the runtime stack, top to bottom ----
+    b += zone(410, 20, 580, 620, 'How it runs')
+    # links out of the app
+    b += node2(426, 52, 264, 48, 'Buy tickets', 'Ticketmaster, StubHub, AXS, more',
+               'Tap Get Tickets to buy on Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats. Resale links are affiliate links, and every tap is logged.')
+    b += node2(710, 52, 264, 48, 'Artist socials', 'YouTube, Instagram, more',
+               'Artist cards link out to the artist’s YouTube, Instagram and other social channels.')
+    # the app
     tip = 'React Native and Expo. Follow artists and venues, see shows on a map, mark shows you are going to, and see where friends are going.'
     b += (f'<g class="dg-node dg-key" tabindex="0" data-tip="{escape(tip)}" aria-label="Vibes.live for iPhone: {escape(tip)}">'
-          '<rect x="426" y="146" width="350" height="150" rx="8"/>'
-          '<text class="dg-nt" x="601" y="176">Vibes.live for iPhone</text>'
-          '<text class="dg-sub" x="601" y="194">React Native + Expo</text>')
-    for r, row in enumerate([['OpenStreetMap maps', 'Push alerts'], ['Sentry crashes', 'PostHog analytics']]):
-        for i, c in enumerate(row):
-            cx, cy = 438 + i * 168, 210 + r * 40
-            b += (f'<rect class="dg-chip" x="{cx}" y="{cy}" width="158" height="30" rx="15"/>'
-                  f'<text class="dg-ct" x="{cx + 79}" y="{cy + 20}">{escape(c)}</text>')
+          '<rect x="426" y="146" width="548" height="100" rx="8"/>'
+          '<text class="dg-nt" x="700" y="176">Vibes.live for iPhone</text>'
+          '<text class="dg-sub" x="700" y="194">React Native + Expo</text>')
+    for i, c in enumerate(['OpenStreetMap maps', 'Push alerts']):
+        cx = 552 + i * 158
+        b += (f'<rect class="dg-chip" x="{cx}" y="206" width="148" height="30" rx="15"/>'
+              f'<text class="dg-ct" x="{cx + 74}" y="226">{escape(c)}</text>')
     b += '</g>'
-    b += arrow([(508, 146), (508, 104)], dashed=True)
-    b += arrow([(693, 146), (693, 104)], dashed=True)
-    b += label(601, 129, ['support'])
-    b += group(426, 330, 350, 168, 'On demand, for each user')
-    b += node(440, 354, 160, 40, 'Spotify',
-              'Connect Spotify on your phone and Vibes.live suggests the artists you already listen to. The sync runs in Supabase, so keys stay on the server.', 'ext')
-    b += node(616, 354, 146, 40, 'Apple Music',
-              'Library sync, coming next. Same pattern as Spotify.', 'ext')
-    b += node(440, 402, 124, 40, 'setlist.fm',
-              'Open a show you attended and its setlist is looked up, through Supabase, and saved.', 'ext')
-    b += node2(580, 402, 182, 40, 'Buy tickets', 'Ticketmaster, StubHub, more',
-               'Tap Get Tickets to buy on Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats. Resale links are affiliate links, and every tap is logged.')
-    b += node2(440, 450, 322, 40, 'Artist socials', 'YouTube, Instagram, more',
-               'Artist cards link out to the artist’s YouTube, Instagram and other social channels.')
-    b += arrow([(601, 298), (601, 328)], both=True)
-    b += node2(426, 508, 350, 48, 'App Store', 'TestFlight beta, then release',
-               'Every build goes to TestFlight testers first, then through App Store review.', 'key')
-    b += arrow([(374, 530), (426, 530)])
-    b += arrow([(776, 532), (786, 532), (786, 250), (776, 250)])
-
-    b += zone(810, 20, 370, 560, 'Data and services')
-    b += node(826, 52, 338, 86, 'Supabase',
-              'Postgres with row-level security on every table, email one-time-code sign-in, photo storage, and Deno Edge Functions on a schedule.',
+    b += arrow([(558, 146), (558, 100)])
+    b += arrow([(842, 146), (842, 100)])
+    b += label(700, 128, ['links out'])
+    # App Store installs the app
+    b += arrow([(374, 580), (400, 580), (400, 196), (426, 196)])
+    b += label(396, 296, ['installs'], 'end')
+    # music accounts: started in the app, land in Supabase
+    b += node(740, 290, 110, 44, 'Spotify',
+              'Connect Spotify in the app; a Supabase function syncs the artists you listen to into your list.', 'ext')
+    b += node(864, 290, 110, 44, 'Apple Music', 'Library sync, coming next. Same pattern as Spotify.', 'ext')
+    b += arrow([(795, 246), (795, 290)])
+    b += arrow([(919, 246), (919, 290)])
+    b += arrow([(795, 334), (795, 370)])
+    b += arrow([(919, 334), (919, 370)])
+    b += label(732, 272, ['connect'], 'end')
+    b += label(732, 356, ['artists'], 'end')
+    # app <-> database
+    b += arrow([(560, 246), (560, 370)], both=True)
+    b += label(570, 302, ['shows, friends,', 'feedback'], 'start')
+    # Supabase
+    b += node(426, 370, 548, 86, 'Supabase',
+              'Postgres with row-level security on every table, email one-time-code sign-in, photo storage, and Deno functions on a schedule.',
               'db', chips=['Postgres', 'Auth', 'Functions'])
-    b += arrow([(776, 200), (800, 200), (800, 95), (826, 95)], both=True)
-    b += label(818, 160, ['data, feedback'], 'start')
-    b += node2(826, 172, 338, 48, 'Data pipeline', 'GitHub Actions + pg_cron',
+    # data layer
+    b += node2(426, 490, 264, 48, 'Data pipeline', 'Daily · GitHub Actions + pg_cron',
                'Every day: Ticketmaster first, SeatGeek two hours later. One query per artist for all users, not per user, so API limits hold.')
-    b += arrow([(995, 172), (995, 138)])
-    b += label(1003, 160, ['daily'], 'start')
-    b += group(826, 244, 338, 84, 'Daily sources')
-    b += node(840, 272, 150, 44, 'Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates.', 'ext')
-    b += node(1000, 272, 150, 44, 'SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.', 'ext')
-    b += arrow([(995, 244), (995, 220)])
-    b += node2(826, 494, 140, 52, 'Daily emails', 'Analytics + health',
-               'Every morning: pipeline health and platform stats, plus an alert if anything failed. No email means something is broken.')
-    b += node2(1006, 494, 158, 52, 'Resend', 'Email delivery',
+    b += node2(710, 490, 264, 48, 'On-demand lookups', 'Supabase functions',
+               'Called when someone needs it, such as opening a show they attended to see its setlist.')
+    b += arrow([(558, 490), (558, 456)])
+    b += arrow([(842, 490), (842, 456)])
+    # platforms and APIs
+    b += node(426, 574, 170, 48, 'Ticketmaster', 'Main source of shows, venues, festivals and on-sale dates (Discovery API).', 'ext')
+    b += node(610, 574, 170, 48, 'SeatGeek', 'Adds shows Ticketmaster misses, and ticket links for shows on both.', 'ext')
+    b += node(804, 574, 170, 48, 'setlist.fm', 'Setlists for shows you attended, looked up when you open one.', 'ext')
+    b += arrow([(511, 574), (511, 538)])
+    b += arrow([(660, 574), (660, 538)])
+    b += label(586, 562, ['APIs'])
+    b += arrow([(889, 574), (889, 538)])
+
+    # ---- right: support and operations ----
+    b += zone(1010, 20, 170, 620, 'Support and ops')
+    b += group(1018, 58, 154, 112, 'Support')
+    b += node(1024, 82, 142, 38, 'GitHub Pages',
+              'Hosts live-vibes.net from the repo: the support, privacy and terms pages the App Store requires.', 'ext')
+    b += node(1024, 126, 142, 38, 'Cloudflare', 'Routes the support email address to my inbox.', 'ext')
+    b += group(1018, 182, 154, 334, 'Operations')
+    b += node(1024, 204, 142, 40, 'Sentry', 'Crash reports from the app.', 'ext')
+    b += node(1024, 254, 142, 40, 'PostHog', 'Product analytics: how people use the app.', 'ext')
+    b += arrow([(974, 210), (999, 210), (999, 224), (1024, 224)])
+    b += arrow([(974, 236), (990, 236), (990, 274), (1024, 274)])
+    b += node2(1024, 392, 142, 44, 'Resend', 'Email delivery',
                'Sends the daily analytics and health emails, and every piece of in-app feedback.', 'ext')
-    b += arrow([(1164, 97), (1172, 97), (1172, 520), (1164, 520)])
-    b += label(1160, 470, ['emails'], 'end')
-    b += arrow([(1006, 520), (966, 520)])
+    b += arrow([(974, 414), (1024, 414)])
+    b += label(999, 406, ['emails'])
+    b += node2(1024, 456, 142, 48, 'Daily emails', 'Analytics + health',
+               'Every morning: pipeline health and platform stats, plus an alert if anything failed. No email means something is broken.')
+    b += arrow([(1095, 436), (1095, 456)])
 
-    b += node2(520, 584, 180, 44, 'Make', 'Email to Todoist task',
+    # ---- feedback loop back to the backlog ----
+    b += node2(560, 650, 180, 40, 'Make', 'Email to Todoist task',
                'A Make automation turns each feedback email into a task in the Todoist backlog.', 'ext')
-    b += arrow([(1085, 546), (1085, 606), (700, 606)])
-    b += label(890, 600, ['user feedback'])
-    b += arrow([(520, 606), (111, 606), (111, 378)])
-    b += label(300, 600, ['new tasks'])
-    return svg(640, b, 'Vibes.live engineering architecture')
-
+    b += arrow([(1166, 414), (1174, 414), (1174, 670), (740, 670)])
+    b += label(950, 664, ['user feedback'])
+    b += arrow([(560, 670), (111, 670), (111, 358)])
+    b += label(320, 664, ['new tasks'])
+    return svg(700, b, 'Vibes.live engineering architecture')
 
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
