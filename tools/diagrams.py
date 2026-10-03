@@ -333,7 +333,7 @@ def vibes():
                'Next output from Claude Cowork: launch and marketing content.', 'ext')
     b += arrow([(186, 80), (224, 80)], dashed=True)
     b += node2(36, 146, 150, 52, 'Claude Design', 'UX',
-               'Screens and flows designed before they are built, against the app’s own color and type system.', 'ai')
+               'Screens and flows designed before they are built. A major UX revamp is designed and coming in the next App Store version.', 'ai')
     b += node2(224, 146, 150, 52, 'Obsidian', 'Spec files',
                'Where I read and manage the spec Markdown files: the product spec, the roadmap and the Claude Code contract.')
     b += arrow([(150, 108), (150, 127), (299, 127), (299, 146)])
