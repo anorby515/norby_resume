@@ -152,7 +152,7 @@ PORTFOLIO.register({
       confirm: ['Countdown apps and Vinyl Moon have no deck or public URL yet. Add a URL to open them directly, or a one-line description for a deck.'],
       apps: [
         { id: 'vibes', name: 'Vibes.live', note: '(available in App Store for iOS)', img: 'assets/icons/vibes.webp', href: '#/portfolio/vibes' },
-        { id: 'ai2fi', name: 'AI2FI', icon: 'trend', href: '#/portfolio/ai2fi' },
+        { id: 'ai2fi', name: 'AI2FI', note: '(published on GitHub)', icon: 'trend', href: '#/portfolio/ai2fi' },
         { id: 'financial-analyst', name: 'Financial Analyst', icon: 'pie', href: '#/portfolio/ai2fi' },
         { id: 'hawaii', name: 'Hawaii or Bust', icon: 'palm' },
         { id: 'co-hiking', name: 'CO Hiking', icon: 'mountain' },
