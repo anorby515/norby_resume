@@ -125,10 +125,10 @@ PORTFOLIO.register({
       id: 'eclipse', title: 'Eclipse Volleyball', tone: 'eclipse',
       apps: [
         { id: 'eclipse-os', name: 'Eclipse OS', img: 'assets/icons/eclipse.webp', href: '#/portfolio/volleyball' },
-        { id: 'eclipse-cos', name: 'Eclipse CoS', icon: 'spark', href: '#/portfolio/volleyball' },
+        { id: 'eclipse-cos', name: 'Eclipse CoS', img: 'assets/icons/eclipse.webp', href: '#/portfolio/volleyball' },
         { id: 'tourney', name: 'Tourney', img: 'assets/icons/eclipse-invitational.webp', href: '#/portfolio/volleyball' },
-        { id: 'tourney-tv', name: 'Tourney TV', icon: 'tv', href: '#/portfolio/volleyball' },
-        { id: 'tourney-score', name: 'Tourney Score', icon: 'plusone', href: '#/portfolio/volleyball' },
+        { id: 'tourney-tv', name: 'Tourney TV', img: 'assets/icons/eclipse-invitational.webp', href: '#/portfolio/volleyball' },
+        { id: 'tourney-score', name: 'Tourney Scorekeeper', img: 'assets/icons/eclipse-invitational.webp', href: '#/portfolio/volleyball' },
         { id: 'stats', name: 'Stats', img: 'assets/icons/eclipse-stats.webp', href: '#/portfolio/volleyball' },
         { id: 'stats-analyzer', name: 'Stats Analyzer', img: 'assets/icons/eclipse-stats.webp', href: '#/portfolio/volleyball' },
         { id: 'volunteers', name: 'Volunteers', icon: 'people', href: '#/portfolio/volleyball' }
