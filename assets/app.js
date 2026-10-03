@@ -229,26 +229,39 @@
     }).join('') + '</ul>';
   }
 
+  function linkButtons(p) {
+    var l = arr(p.links).concat(p.link && p.link.href ? [p.link] : []).filter(function (x) { return x.href; });
+    if (!l.length) return '';
+    return '<p class="try">' + l.map(function (x) { return '<a href="' + esc(x.href) + '" target="_blank" rel="noopener">' + esc(x.label) + '</a>'; }).join('') + '</p>';
+  }
+
   function productWhy(w, p) {
     var why = p.why || {}, out = [];
     var hero = p.hero ? img('assets/work/' + w.id + '/' + p.hero.src, p.hero.alt, 'slide__hero' + (p.hero.tall ? ' is-tall' : '')) : '';
     out.push(slide('intro', 'Why I built this',
       '<div class="intro"><div class="intro__text"><p class="intro__problem">' + esc(why.problem) + '</p>' +
         (why.insight ? '<blockquote class="insight"><span>The insight</span><p>' + esc(why.insight) + '</p></blockquote>' : '') +
-        confirmNotes(p.confirm) + '</div>' + hero + '</div>'));
+        linkButtons(p) + confirmNotes(p.confirm) + '</div>' + hero + '</div>'));
     if (arr(p.who).length) out.push(slide('who', 'Who I built this for',
       '<ul class="personas">' + p.who.map(function (x) {
         return '<li class="persona"><div class="persona__who"><span class="persona__name">' + esc(x.name) + '</span><span class="persona__role">' + esc(x.who) + '</span></div>' +
           '<div><span class="persona__k">Needs</span><p class="prose">' + esc(x.need) + '</p></div>' +
           '<div><span class="persona__k">Gets</span><p class="prose">' + esc(x.gets) + '</p></div></li>';
       }).join('') + '</ul>'));
+    arr(p.featureGroups).forEach(function (g) {
+      var shot = g.shot ? img('assets/work/' + w.id + '/' + g.shot.src, g.shot.alt || g.title, 'whatsplit__img' + (g.shot.tall ? ' is-tall' : '')) : '';
+      out.push(slide('whatsplit', 'What it does',
+        '<div class="whatsplit"><div><h3 class="whatsplit__group">' + esc(g.title) + '</h3><ul class="flist">' + arr(g.items).map(function (f) {
+          return '<li><span class="feature__name">' + esc(f.name) + '</span><p class="prose">' + esc(f.text) + '</p>' + confirmNotes(f.confirm) + '</li>';
+        }).join('') + '</ul></div>' + shot + '</div>'));
+    });
     if (arr(p.features).length) out.push(slide('what', 'What it does',
       '<ul class="features' + (p.features.length > 6 ? ' features--8' : '') + '">' + p.features.map(function (f) {
         return '<li><span class="feature__name">' + esc(f.name) + '</span><p class="prose">' + esc(f.text) + '</p>' + confirmNotes(f.confirm) + '</li>';
       }).join('') + '</ul>'));
     if (p.value) out.push(slide('case', 'The case for it',
       '<p class="case__model">' + esc(p.value.model) + '</p>' + list(p.value.points, 'case__points') + confirmNotes(p.value.confirm) +
-      (p.link && p.link.href ? '<p class="case__link"><a href="' + esc(p.link.href) + '">' + esc(p.link.label) + '</a></p>' : '')));
+      linkButtons(p)));
     return out;
   }
 

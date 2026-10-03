@@ -60,10 +60,10 @@ def svg(h, body, title):
 
 
 # --------------------------------------------------------------------------
-# Stat Tracker
+# Stats App: the tracker on volunteers' phones and the coaches' analytics
 # --------------------------------------------------------------------------
-def stat_tracker():
-    b = zone(20, 20, 680, 300, 'Volunteer’s phone (PWA)')
+def stats_app():
+    b = zone(20, 20, 540, 290, 'Volunteer’s phone')
     pages = [
         ('Match setup', 'Pick the team, opponent, tournament and format. Remembers the last team used.'),
         ('Tracker', 'Live stat entry: action, player, result. Three taps a play, one-handed, portrait.'),
@@ -71,99 +71,52 @@ def stat_tracker():
         ('Learn', 'A ten-screen swipe-through guide for new stat keepers, ending in the practice app.'),
     ]
     for i, (t, tip) in enumerate(pages):
-        b += node(40 + i * 162, 62, 148, 46, t, tip)
-    b += node(200, 152, 300, 48, 'offline-storage.js',
+        b += node(36 + i * 128, 62, 118, 44, t, tip)
+    b += node(140, 150, 280, 44, 'offline-storage.js',
               'The data layer every page shares. Writes to the phone first, queues changes, and syncs with Supabase when a connection is there.', 'key')
-    b += node(40, 248, 200, 48, 'localStorage',
+    b += node(36, 240, 220, 44, 'localStorage',
               'The primary store during a match. Matches, plays and rosters live here first, so a gym with no signal loses nothing.', 'db')
-    b += node(300, 248, 180, 48, 'Service worker',
+    b += node(300, 240, 244, 44, 'Service worker',
               'Caches the app so it opens instantly and works offline. App files cache-first; CDN files network-first.')
-    b += node(530, 248, 150, 48, 'Cache Storage', 'The cached app shell the service worker serves from.', 'db')
-    b += arrow([(274, 108), (274, 152)])
-    b += arrow([(240, 200), (240, 222), (140, 222), (140, 248)])
-    b += arrow([(480, 272), (530, 272)])
+    b += arrow([(225, 106), (225, 150)])
+    b += arrow([(200, 194), (200, 216), (146, 216), (146, 240)])
 
-    b += zone(780, 20, 400, 300, 'Supabase')
-    b += node(820, 152, 320, 48, 'PostgREST API',
-              'Supabase’s HTTPS API over Postgres, called through the supabase-js client.', 'key')
-    b += node(820, 248, 320, 48, 'Postgres',
+    b += zone(620, 20, 260, 290, 'Supabase')
+    b += node(636, 150, 228, 44, 'PostgREST API', 'Supabase’s HTTPS API over Postgres, called through the supabase-js client.', 'key')
+    b += node(636, 240, 228, 44, 'Postgres',
               'Teams, players, rosters, opponents, tournaments, matches, set scores, the play-by-play log and player stats. Stat rows are never rewritten.', 'db')
-    b += arrow([(980, 200), (980, 248)], both=True)
-    b += arrow([(500, 166), (820, 166)], 'push every 30 s', 660, 156)
-    b += arrow([(820, 188), (500, 188)], 'pull rosters', 660, 210)
+    b += arrow([(750, 194), (750, 240)], both=True)
+    b += arrow([(420, 162), (636, 162)], 'push every 30 s', 528, 152)
+    b += arrow([(636, 182), (420, 182)], 'pull rosters', 528, 204)
 
-    b += zone(20, 370, 360, 120, 'GitHub')
-    b += node(40, 414, 140, 48, 'Repo', 'Code, docs and SQL migrations for the tracker, analyzer and tournament apps.')
-    b += node(220, 414, 140, 48, 'Actions',
-              'Runs 600+ Jest unit tests and Playwright phone tests on every pull request and merge.', 'ext')
-    b += arrow([(180, 438), (220, 438)])
+    b += zone(940, 20, 240, 290, 'Coach’s browser')
+    b += node(956, 150, 208, 44, 'Analytics',
+              'Loads completed matches once, then filters by team, tournament and opponent and computes record, totals, attack, serve, block and error stats on the page.', 'key')
+    b += node(956, 240, 98, 44, 'Excel', 'Exports every filtered table to an .xlsx file, built in the browser, for coaches’ own analysis.')
+    b += node(1066, 240, 98, 44, 'Sheets', 'Signs the coach in with Google and writes the data to a new spreadsheet in their Drive.')
+    b += arrow([(864, 172), (956, 172)], 'select', 910, 164)
+    b += arrow([(1005, 194), (1005, 240)])
+    b += arrow([(1115, 194), (1115, 240)])
 
-    b += zone(420, 370, 380, 120, 'Netlify')
-    b += node(440, 414, 160, 48, 'Production',
-              'The live tracker. Builds from main; a script skips deploys for changes the site does not serve.')
-    b += node(620, 414, 160, 48, 'Demo',
-              'Same code built with APP_MODE=demo: an invented roster, a banner, and nothing written to Supabase. Volunteers practice here.')
-    b += arrow([(380, 438), (420, 438)])
-    b += arrow([(520, 414), (520, 320)], 'serves', 528, 352, 'start')
+    b += zone(20, 350, 270, 110, 'GitHub')
+    b += node(36, 392, 110, 44, 'Repo', 'Code, docs and SQL migrations for every Eclipse app.')
+    b += node(162, 392, 112, 44, 'Actions', 'Runs 600+ Jest unit tests and Playwright phone tests on every pull request and merge.', 'ext')
+    b += arrow([(146, 414), (162, 414)])
 
-    b += zone(840, 370, 340, 120, 'CDNs')
-    b += node(860, 414, 140, 48, 'jsDelivr', 'Delivers the supabase-js client library.', 'ext')
-    b += node(1020, 414, 140, 48, 'Google Fonts', 'Oswald and Barlow Condensed, the tracker’s type.', 'ext')
-    b += arrow([(930, 414), (930, 345), (660, 345), (660, 320)], 'libraries', 795, 337)
-    return svg(510, b, 'Stat Tracker architecture')
+    b += zone(320, 350, 300, 110, 'Netlify')
+    b += node(336, 392, 130, 44, 'Production', 'The live app for the club. Builds from main; a script skips deploys for changes the site does not serve.')
+    b += node(476, 392, 128, 44, 'Demo', 'Same code in demo mode: an invented roster, a banner, and nothing written. Volunteers practice here.')
+    b += arrow([(290, 414), (320, 414)])
+    b += arrow([(401, 392), (401, 310)], 'serves', 409, 340, 'start')
 
+    b += zone(650, 350, 230, 110, 'CDNs')
+    b += node(666, 392, 98, 44, 'jsDelivr', 'Delivers supabase-js and ExcelJS.', 'ext')
+    b += node(774, 392, 90, 44, 'Fonts', 'Google Fonts: Oswald and Barlow Condensed.', 'ext')
 
-# --------------------------------------------------------------------------
-# Stat Analyzer
-# --------------------------------------------------------------------------
-def stat_analyzer():
-    b = zone(20, 20, 300, 240, 'Supabase')
-    b += node(40, 64, 260, 48, 'PostgREST API', 'Supabase’s HTTPS API, read through supabase-js.', 'key')
-    b += node(40, 168, 260, 48, 'Postgres',
-              'Completed matches, set scores and player stats, written by the Stat Tracker.', 'db')
-    b += arrow([(170, 112), (170, 168)], both=True)
-
-    b += zone(20, 300, 300, 120, 'Stat Tracker')
-    b += node(40, 344, 260, 48, 'Volunteers’ phones', 'Each phone records a match and syncs it to Supabase.', 'ext')
-    b += arrow([(170, 344), (170, 260)], 'sync', 178, 302, 'start')
-
-    b += zone(370, 20, 460, 470, 'Coach’s browser')
-    steps = [
-        ('Load', 'One fetch of every completed match, its sets and its player stats.'),
-        ('Merge', 'Adds completed matches still on this device that have not synced yet, from localStorage.'),
-        ('Filter', 'By team, tournament and opponent. Filters live in the URL, so a view can be shared.', 'key'),
-        ('Aggregate', 'Season record by sets, grand totals, kill %, hitting %, serve and error breakdowns, all computed on the page.', 'key'),
-        ('Render', 'Team record, match history set by set, attack, serve and error tables. Sortable.'),
-    ]
-    y = 64
-    for i, st in enumerate(steps):
-        b += node(400, y, 400, 44, st[0], st[1], st[2] if len(st) > 2 else 'n')
-        if i:
-            b += arrow([(600, y - 22), (600, y)])
-        y += 66
-    b += node(400, 414, 190, 48, 'Excel export', 'Builds the .xlsx in the browser with ExcelJS and downloads it.')
-    b += node(610, 414, 190, 48, 'Sheets export', 'Signs the coach in with Google and writes a new spreadsheet with the filtered data.')
-    b += arrow([(495, 372), (495, 414)])
-    b += arrow([(705, 372), (705, 414)])
-    b += arrow([(300, 86), (400, 86)], 'select', 350, 78)
-
-    b += zone(880, 20, 300, 110, 'Netlify')
-    b += node(900, 62, 260, 48, 'Coach link', 'analyze-stats.html, its own link so coaches go straight to the numbers.')
-    b += arrow([(900, 86), (830, 86)], 'page', 865, 78)
-
-    b += zone(880, 150, 300, 110, 'jsDelivr')
-    b += node(900, 192, 120, 48, 'supabase-js', 'Client library for the Supabase API.', 'ext')
-    b += node(1040, 192, 120, 48, 'ExcelJS', 'Builds Excel files in the browser.', 'ext')
-    b += arrow([(900, 216), (830, 216)], 'libraries', 865, 208)
-
-    b += zone(880, 280, 300, 210, 'Google')
-    b += node(900, 322, 260, 40, 'Identity Services', 'OAuth sign-in that grants the page access to create a sheet.', 'ext')
-    b += node(900, 378, 260, 40, 'Sheets API', 'Creates the spreadsheet and writes the rows.', 'ext')
-    b += node(900, 434, 260, 40, 'Coach’s Drive', 'Where the new spreadsheet lands.', 'db')
-    b += arrow([(1030, 362), (1030, 378)])
-    b += arrow([(1030, 418), (1030, 434)])
-    b += arrow([(800, 438), (850, 438), (850, 342), (900, 342)])
-    return svg(510, b, 'Stat Analyzer architecture')
+    b += zone(910, 350, 270, 110, 'Google')
+    b += node(926, 392, 238, 44, 'Sign-in and Sheets API', 'OAuth sign-in, then the Sheets API creates the coach’s spreadsheet.', 'ext')
+    b += arrow([(1115, 284), (1115, 392)], 'export', 1123, 340, 'start')
+    return svg(476, b, 'Stats App architecture')
 
 
 # --------------------------------------------------------------------------
@@ -216,7 +169,7 @@ def tournament():
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
-    payload = {'stats': stat_tracker(), 'analyzer': stat_analyzer(), 'tournament': tournament()}
+    payload = {'stats': stats_app(), 'tournament': tournament()}
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('volleyball', " + json.dumps(payload, indent=1) + ');\n')

@@ -342,3 +342,31 @@ button { font: inherit; color: inherit; }
 }
 .dg-tip strong { display: block; font-family: var(--display); font-size: .9rem; margin-bottom: 3px; }
 .slide--svg .slide__title { margin-bottom: 14px; }
+.try { display: flex; gap: 12px; margin: 26px 0 0; flex-wrap: wrap; }
+.try a { text-decoration: none; font-weight: 680; font-size: .98rem; padding: 11px 18px; border-radius: 6px; background: var(--accent); color: var(--paper); }
+.try a:hover { filter: brightness(1.1); }
+
+/* What it does: features left, screenshot right */
+.whatsplit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(36px, 4vw, 72px); align-items: center; }
+.whatsplit__group { font-size: 1.35rem; font-weight: 740; margin: 0 0 10px; }
+.flist { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.flist li { padding: clamp(8px, 1.4vh, 14px) 0; border-bottom: 1px solid var(--rule); }
+.flist .feature__name { font-size: 1.08rem; margin-bottom: 3px; }
+.flist .prose { font-size: .98rem; color: var(--ink-2); line-height: 1.45; }
+.whatsplit__img { justify-self: center; }
+.whatsplit__img img { max-height: calc(100vh - var(--bar) - 250px); width: auto; max-width: 100%; }
+@media (max-height: 780px) { .flist .prose { font-size: .92rem; } .flist li { padding: 6px 0; } }
+.whatsplit__img.is-tall img { max-height: calc(100vh - var(--bar) - 300px); }
+.flist li { padding: clamp(6px, 1.1vh, 12px) 0; }
+@media (max-height: 780px) {
+  .whatsplit__group { font-size: 1.15rem; margin-bottom: 6px; }
+  .flist li { padding: 5px 0; }
+  .flist .feature__name { font-size: .98rem; margin-bottom: 1px; }
+  .flist .prose { font-size: .88rem; line-height: 1.35; }
+}
+@media (max-height: 780px) {
+  .intro__problem { font-size: 1.2rem; line-height: 1.4; }
+  .insight { margin-top: 18px; padding: 14px 20px; }
+  .insight p { font-size: 1.02rem; }
+  .try { margin-top: 16px; }
+}
