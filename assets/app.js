@@ -200,7 +200,9 @@
           cover(pr.hero ? { src: 'assets/work/' + w.id + '/' + pr.hero.src, tall: pr.hero.tall } : null, pr.name) +
           '<span class="pcard__kinds">' + kinds(pr.kind) + '</span>' +
           '<span class="pcard__title">' + esc(pr.name) + '</span>' +
-          '<span class="pcard__summary">' + esc(pr.line) + '</span></a></li>';
+          '<span class="pcard__summary">' + esc(pr.line) + '</span>' +
+          (arr(pr.points).length ? '<span class="pcard__points">' + pr.points.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
+          '</a></li>';
       }).join('') + '</ol>' +
       (w.how ? '<p class="suite__deep"><a href="' + link(base + '/suite/how') + '">How the suite fits together</a>' +
         '<span>The build loop, shared architecture and numbers across all three.</span></p>' : '') +
@@ -240,7 +242,7 @@
           '<div><span class="persona__k">Gets</span><p class="prose">' + esc(x.gets) + '</p></div></li>';
       }).join('') + '</ul>'));
     if (arr(p.features).length) out.push(slide('what', 'What it does',
-      '<ul class="features">' + p.features.map(function (f) {
+      '<ul class="features' + (p.features.length > 6 ? ' features--8' : '') + '">' + p.features.map(function (f) {
         return '<li><span class="feature__name">' + esc(f.name) + '</span><p class="prose">' + esc(f.text) + '</p>' + confirmNotes(f.confirm) + '</li>';
       }).join('') + '</ul>'));
     if (p.value) out.push(slide('case', 'The case for it',

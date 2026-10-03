@@ -7,9 +7,9 @@
 PORTFOLIO_WORK.register({
   id: 'volleyball',
   title: 'Eclipse Volleyball',
-  kicker: 'Three products for one youth volleyball club',
+  kicker: 'Four products for one youth volleyball club',
   summary:
-    'Des Moines Eclipse is an 11-team volunteer-run club. I coach there and run its digital side, so I built the software it runs on: a stat tracker for coaches, a platform for hosting tournaments, and an automation layer that integrates with TeamSnap, the club’s team management platform, to keep every team’s schedule right.',
+    'Des Moines Eclipse is an 11-team volunteer-run club. I coach there and run its digital side, so I built the software it runs on: a stat tracker and analyzer for coaches, a platform for hosting tournaments, and an automation layer that integrates with TeamSnap, the club’s team management platform, to keep every team’s schedule right.',
 
   why: {
     lead: 'A volunteer club runs on spreadsheets, group texts and whoever remembers.',
@@ -20,7 +20,7 @@ PORTFOLIO_WORK.register({
   },
 
   numbers: [
-    { n: '3', label: 'products, one club' },
+    { n: '4', label: 'products, one club' },
     { n: '543', label: 'commits since February 2026' },
     { n: '740', label: 'automated tests' },
     { n: '11', label: 'teams served' }
@@ -32,7 +32,12 @@ PORTFOLIO_WORK.register({
       id: 'os',
       hero: { src: 'os-homenight.webp', alt: 'A home night schedule planned with Claude' },
       name: 'Eclipse OS',
-      line: 'Agents that turn the athletic director’s calendar into a correct TeamSnap schedule for every team.',
+      line: 'An agent I orchestrate that runs the club’s entire schedule.',
+      points: [
+        'Reads upcoming events and tournaments, then creates the TeamSnap imports and volunteer sign-ups automatically.',
+        'Monitors our plans and emails the athletic director and me every week with upcoming events and anything still open.',
+        'Builds game-night schedules and court assignments.'
+      ],
       kind: ['agent'],
       why: {
         problem:
@@ -46,11 +51,11 @@ PORTFOLIO_WORK.register({
         { name: 'Families and coaches', who: 'Everyone reading TeamSnap', need: 'A schedule they can trust.', gets: 'Events that land in TeamSnap the same week they are booked.' }
       ],
       features: [
-        { name: 'Tournament to TeamSnap', text: 'From a tournament link to which club teams are in, then a TeamSnap-ready import file and a printable schedule.' },
-        { name: 'Calendar watch', text: 'Checks the club calendar twice a day and creates a task, push and email only when something changed.' },
-        { name: 'Delete first, then import', text: 'On request, produces the rows to delete, the rows to import, and a plain-language summary.' },
-        { name: 'Drift detection', text: 'Compares a TeamSnap export against the calendar and flags hand edits, duplicates and missed imports.' },
-        { name: 'Weekly events email', text: 'Every Sunday: this week, next week and the two after, with gaps, TBDs and missing start times called out.' },
+        { name: 'Events to TeamSnap', text: 'Reads upcoming events and tournaments and creates TeamSnap-ready imports for every team involved.' },
+        { name: 'Volunteer sign-ups', text: 'Creates the volunteer sign-ups for each event alongside the schedule.' },
+        { name: 'Game nights and courts', text: 'Builds game-night schedules and court assignments across multiple courts and visiting clubs.' },
+        { name: 'Weekly events email', text: 'Every Sunday the athletic director and I get this week, next week and the two after, with anything still open called out.' },
+        { name: 'Calendar watch', text: 'Checks the club calendar twice a day. When something changes, it lays out exactly what to delete and import, in the right order.' },
         { name: 'Roster sync', text: 'Roster changes flow into the stat tracker so every app works from the same teams.', confirm: 'Confirm how roster sync works today.' }
       ],
       value: {
@@ -78,7 +83,7 @@ PORTFOLIO_WORK.register({
       },
       who: [
         { name: 'Stat keeper', who: 'A parent volunteer in the stands', need: 'Record every play without looking away from the court for long.', gets: 'Three taps per play, one-handed, and the next serve is already waiting.' },
-        { name: 'Coach', who: 'Head and assistant coaches', need: 'Know who is hitting well before the next match, not next week.', gets: 'Per-player kill % and hit %, set-by-set, filterable across a season, exportable to Excel.' },
+        { name: 'Coach', who: 'Head and assistant coaches', need: 'Know who is hitting well before the next match, not next week.', gets: 'Every play recorded with its player and set, ready for the Stat Analyzer before the next match.' },
         { name: 'Club admin', who: 'Me, for eight teams and 73 players', need: 'Rosters that change all season without breaking last season’s numbers.', gets: 'One player directory, swing players across teams, and history that never rewrites itself.' }
       ],
       features: [
@@ -86,7 +91,7 @@ PORTFOLIO_WORK.register({
         { name: 'Works offline', text: 'Saves on the phone first and syncs when a connection returns, with a color-coded sync status.' },
         { name: 'Smart serve tracking', text: 'Knows who is still serving after a point, and suggests the likely server after a side out.' },
         { name: 'Undo with a name', text: 'Take back any of the last three plays; the confirm names exactly what will be reverted.' },
-        { name: 'Season analytics', text: 'Team record, per-player stats, error tracking and match history, filtered by team, tournament and opponent.' },
+        { name: 'Feeds the Stat Analyzer', text: 'Every play lands in one clean log that the Stat Analyzer turns into season stats.' },
         { name: 'Learn and practice', text: 'A ten-screen guide and a practice build with invented players, so new volunteers can try it before game day.' }
       ],
       value: {
@@ -103,10 +108,48 @@ PORTFOLIO_WORK.register({
     },
     /* ------------------------------------------------------------------ */
     {
+      id: 'analyzer',
+      hero: { src: 'an-attack.webp', alt: 'Attack stats in the Stat Analyzer, shown with invented sample data' },
+      name: 'Stat Analyzer',
+      line: 'Season analytics for coaches, built on every play the Stat Tracker records.',
+      kind: ['app'],
+      why: {
+        problem:
+          'A stat sheet only matters if someone reads it later. Coaches wanted to know who was hitting well, where points were being given away, and how a team was trending across a season, not just how one match went.',
+        insight:
+          'Because the tracker records every play with its player and set, analysis is just questions asked of one clean log. Filter by team, tournament or opponent and every number recomputes.'
+      },
+      who: [
+        { name: 'Coach', who: 'Head and assistant coaches', need: 'Know who is hitting well and where points are lost before the next match.', gets: 'Kill % and hitting % per player, sortable, filtered to any team, tournament or opponent.' },
+        { name: 'Club admin', who: 'Me, across eight teams', need: 'One view of every team’s season.', gets: 'Team records, grand totals and match history in one place, exportable.' }
+      ],
+      features: [
+        { name: 'Filter anything', text: 'By team, tournament and opponent. Filters live in the link, so a coach can share a view.' },
+        { name: 'Team record and totals', text: 'Season record by sets won and lost, with kills, serves, blocks and errors for both sides.' },
+        { name: 'Match history', text: 'Every match set by set. Open a date to view or edit that match.' },
+        { name: 'Attack and serve stats', text: 'Per player, sortable, with kill % and hitting % calculated.' },
+        { name: 'Error tracking', text: 'Hitting, serving, passing and penalty errors, so coaches see where points go.' },
+        { name: 'Export', text: 'To Excel, or straight into Google Sheets.' }
+      ],
+      value: {
+        model: 'Turns stat keeping into something coaches actually use.',
+        points: [
+          'Every play a volunteer records becomes useful after the match.',
+          'Coaches share one link instead of passing a spreadsheet around.',
+          'The raw data exports for anyone who wants to dig further.'
+        ],
+        confirm: 'How do coaches use it? A short example or quote would help here.'
+      }
+    },
+    /* ------------------------------------------------------------------ */
+    {
       id: 'tournament',
       hero: { src: 'tp-tv.webp', alt: 'The tournament TV wall' },
       name: 'Tournament Platform',
       line: 'One link for families, a scorekeeper at every court, and a live wall in the gym.',
+      points: [
+        'An agent built the full schedule: court assignments and matchups from the format’s rules and constraints.'
+      ],
       kind: ['app', 'agent'],
       why: {
         problem:
@@ -121,6 +164,8 @@ PORTFOLIO_WORK.register({
         { name: 'Visiting coaches', who: 'Other clubs’ staff', need: 'Rules, format and their team’s path through the day.', gets: 'A My Team view, published rules, and both brackets as they fill in.' }
       ],
       features: [
+        { name: 'Agent-built schedule', text: 'An agent did all the scheduling: court assignments and matchups worked out from the rules and constraints we gave it.' },
+        { name: 'QR score cards', text: 'Printable cards taped to each score table open scoring for that court. One script reprints them if the site ever moves.' },
         { name: 'Two shells, one app', text: 'An eight-page preview deck before the event; a live hub on game day. The switch is automatic.' },
         { name: 'Scorekeeper', text: 'Large +1 targets per team, set management, and a guard against two people scoring the same match.' },
         { name: 'TV wall', text: 'Live standings with the gold-bracket cut line, both courts’ scores, and what is next.' },
@@ -143,9 +188,9 @@ PORTFOLIO_WORK.register({
 
   /* ==================================================================== */
   how: {
-    lead: 'Three products, built with three different kinds of AI help.',
+    lead: 'Four products, built with two kinds of AI help: vibe coding and agents.',
     body: [
-      'The two apps are vibe-coded: I wrote requirements, prototyped the experience in Claude Design, and built with Claude Code, with every change backed by tests. Eclipse OS is agentic: Claude runs on a schedule with the calendar, Drive and Todoist connected, following a skill I wrote that encodes the club’s rules.',
+      'The apps are vibe-coded: I wrote requirements, prototyped the experience in Claude Design, and built with Claude Code, with every change backed by tests. Eclipse OS is agentic: Claude runs on a schedule with the calendar, Drive and Todoist connected, following a skill I wrote that encodes the club’s rules.',
       'The apps share one repository, one Netlify deploy and one Supabase database, and nothing else. Each has its own service worker, its own look and its own tables, so a change to one cannot break the others.'
     ],
     workflow: [
@@ -169,7 +214,7 @@ PORTFOLIO_WORK.register({
           { stage: 'Phone', nodes: ['Tracker', 'Match setup', 'Rosters'] },
           { stage: 'On device', nodes: ['localStorage, primary store', 'Service worker cache', 'Sync queue'] },
           { stage: 'Cloud', nodes: ['Supabase Postgres', 'PostgREST API'] },
-          { stage: 'Coaches', nodes: ['Analytics dashboard', 'Excel export', 'Google Sheets export'] }
+          { stage: 'Coaches', nodes: ['Stat Analyzer'] }
         ],
         decisions: [
           { title: 'Offline-first, not online-with-a-fallback', text: 'The phone is the source of truth during a match; Supabase is the sync target. A dead gym network costs nothing.' },
@@ -186,10 +231,35 @@ PORTFOLIO_WORK.register({
           { src: 'st-home.webp', tall: true, title: 'Demo mode', caption: 'The same code in demo mode: invented players, a banner, nothing saved. It is how new volunteers practice.', tools: ['netlify'] }
         ],
         split: {
-          vibe: 'The whole app: tracker, rosters, analytics, offline sync and the learning guide.',
+          vibe: 'The whole app: tracker, rosters, offline sync and the learning guide.',
           agentic: 'Roster updates generated by the Eclipse OS agents.'
         },
-        tools: ['vanilla-js', 'pwa', 'supabase', 'netlify', 'jest', 'exceljs', 'sheets-api', 'claude-code', 'claude-design']
+        tools: ['vanilla-js', 'pwa', 'supabase', 'netlify', 'jest', 'claude-code', 'claude-design']
+      },
+
+      analyzer: {
+        diagram: [
+          { stage: 'Recorded', nodes: ['Stat Tracker play log'] },
+          { stage: 'Cloud', nodes: ['matches', 'set_scores', 'player_stats'] },
+          { stage: 'In the browser', nodes: ['Filters', 'Aggregates and percentages'] },
+          { stage: 'Coaches', nodes: ['Tables', 'Excel export', 'Google Sheets export'] }
+        ],
+        decisions: [
+          { title: 'Fetch once, compute in the browser', text: 'Completed matches load once; every filter and total is computed on the page, so changing a filter is instant.' },
+          { title: 'Keyed by player, not by name', text: 'Two players who share a first name on different teams stay separate, and a swing player keeps one history.' },
+          { title: 'Only our bench counts', text: 'Rows recorded for the other team are left out, so another club’s players never land in our totals.' },
+          { title: 'Filters live in the URL', text: 'A filtered view is a link a coach can bookmark or send.' }
+        ],
+        shots: [
+          { src: 'an-record.webp', wide: true, title: 'Season record', caption: 'The record across every match in the current filter, counted by sets. Shown with invented sample data.', tools: ['supabase'] },
+          { src: 'an-history.webp', wide: true, title: 'Match history', caption: 'Every match set by set, with kills, serves, blocks and errors for both teams. Shown with invented sample data.', tools: ['vanilla-js'] },
+          { src: 'an-attack.webp', wide: true, title: 'Attack stats', caption: 'Per-player kill % and hitting %, sortable by any column. Shown with invented sample data.', tools: ['vanilla-js', 'exceljs'] }
+        ],
+        split: {
+          vibe: 'The whole dashboard: queries, aggregation, filters and exports.',
+          agentic: 'None. It reads what the Stat Tracker records.'
+        },
+        tools: ['vanilla-js', 'supabase', 'exceljs', 'sheets-api', 'netlify', 'claude-code']
       },
 
       tournament: {
@@ -214,7 +284,7 @@ PORTFOLIO_WORK.register({
         ],
         split: {
           vibe: 'The family app, scorekeeper, TV wall, printable QR cards and Senior Night.',
-          agentic: 'The waiver tracker: an hourly agent that matched signed waivers to visiting rosters, with fuzzy name matching, and emailed a daily status.'
+          agentic: 'Scheduling: an agent assigned courts and matchups from the rules and constraints. Waivers: an hourly agent matched signed waivers to visiting rosters, with fuzzy name matching, and emailed a daily status.'
         },
         tools: ['vanilla-js', 'pwa', 'supabase', 'netlify', 'jest', 'python', 'claude-design', 'claude-code', 'cowork', 'sheets', 'gmail']
       },
