@@ -283,10 +283,7 @@
       '<div class="artifact"><table><thead><tr>' + e.artifact.head.map(function (c) { return '<th scope="col">' + esc(c) + '</th>'; }).join('') +
       '</tr></thead><tbody>' + e.artifact.rows.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') +
       '</tbody></table><p class="prose artifact__cap">' + esc(e.artifact.caption) + '</p></div>'));
-    if (e.split || arr(e.tools).length) out.push(slide('split', 'Vibe-coded and agentic',
-      (e.split ? '<div class="split"><div class="split__side split__side--vibe"><span class="split__k">Vibe-coded</span><p>' + esc(e.split.vibe) + '</p></div>' +
-        '<div class="split__side split__side--agent"><span class="split__k">Agentic</span><p>' + esc(e.split.agentic) + '</p></div></div>' : '') +
-      (svg ? '' : (arr(e.tools).length ? '<h3 class="slide__sub">Built with</h3>' + chips(e.tools, w) : '')) + confirmNotes(e.confirm)));
+    if (!svg && arr(e.tools).length) out.push(slide('split', 'Built with', chips(e.tools, w) + confirmNotes(e.confirm)));
     return out;
   }
 
