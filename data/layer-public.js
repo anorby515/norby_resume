@@ -143,7 +143,7 @@ PORTFOLIO.register({
         { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp' },
         { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/household' },
         { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
-        { id: 'habits', name: 'Habits', icon: 'flame', href: '#/portfolio/habits' },
+        { id: 'habits', name: 'Habit Tracking App', icon: 'flame', href: '#/portfolio/habits' },
         { id: 'college-notes', name: 'College Notes', icon: 'notebook', href: '#/portfolio/household' },
         { id: 'document-agent', name: 'Document Agent', icon: 'folder', href: '#/portfolio/household' }
       ]
