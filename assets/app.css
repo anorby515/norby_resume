@@ -311,3 +311,34 @@ button { font: inherit; color: inherit; }
 .decisions--3 li:nth-child(3) { border-top: 2px solid var(--ink); }
 .decisions--3 .decision__t { font-size: 1.15rem; }
 .decisions--3 .prose { font-size: 1rem; }
+
+/* ---------- architecture diagrams (tools/diagrams.py) ---------- */
+.dgwrap { width: 100%; display: flex; justify-content: center; }
+.dg { width: 100%; max-width: 1200px; height: auto; max-height: calc(100vh - var(--bar) - 265px); font-family: var(--display); overflow: visible; }
+.dg-zone rect { fill: var(--paper-2); stroke: none; }
+.dg-zl { font-size: 15px; font-weight: 720; fill: var(--ink-2); }
+.dg-node { cursor: help; outline: none; }
+.dg-node rect:first-of-type { transition: stroke-width .15s, filter .15s; }
+.dg-node:hover rect:first-of-type, .dg-node:focus-visible rect:first-of-type { stroke-width: 3; filter: drop-shadow(0 4px 10px rgba(20, 30, 28, .18)); }
+.dg-n rect { fill: var(--paper); stroke: var(--ink-2); stroke-width: 1.3; }
+.dg-key rect:first-of-type { fill: var(--wash); stroke: var(--accent); stroke-width: 2; }
+.dg-db rect { fill: var(--paper); stroke: var(--accent); stroke-width: 1.6; }
+.dg-ext rect { fill: var(--paper); stroke: var(--ink-2); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.dg-ai rect { fill: var(--ink); stroke: var(--ink); }
+.dg-ai .dg-nt { fill: var(--paper); }
+.dg-nt { font-size: 16px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+.dg-chip { fill: var(--paper); stroke: var(--accent); stroke-width: 1.2; }
+.dg-ct { font-size: 13px; font-weight: 650; fill: var(--accent); text-anchor: middle; }
+.dg-e { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+.dg-e--dash { stroke-dasharray: 5 5; stroke-width: 1.5; stroke: var(--ink-2); }
+.dg-head { fill: var(--accent); }
+.dg-el { font-size: 13px; font-weight: 650; fill: var(--accent); paint-order: stroke; stroke: var(--paper); stroke-width: 6px; stroke-linejoin: round; }
+.dg-zone + .dg-el, .dg-el { }
+.dg-hint { text-align: center; color: var(--ink-2); font-size: .88rem; margin: 10px 0 0; }
+.dg-tip {
+  position: fixed; z-index: 40; max-width: 320px; pointer-events: none;
+  background: var(--ink); color: var(--paper); padding: 10px 14px; border-radius: 8px;
+  font-family: var(--serif); font-size: .95rem; line-height: 1.45; box-shadow: 0 10px 28px rgba(0, 0, 0, .25);
+}
+.dg-tip strong { display: block; font-family: var(--display); font-size: .9rem; margin-bottom: 3px; }
+.slide--svg .slide__title { margin-bottom: 14px; }

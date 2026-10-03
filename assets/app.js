@@ -15,6 +15,7 @@
 
   var store = { profile: {}, attributes: [], sections: [], tools: {}, projects: [], collections: {}, layers: [] };
   var works = {};
+  var diagrams = {};
   var review = /[?&]review\b/.test(location.search);
   var KIND = { app: 'App', agent: 'Agent', product: 'Product' };
   var deck = null; // active slide deck state
@@ -253,7 +254,9 @@
 
   function productHow(w, p) {
     var e = ((w.how || {}).products || {})[p.id] || {}, out = [];
-    if (arr(e.diagram).length) out.push(slide('arch', 'Architecture', diagram(e.diagram)));
+    var svg = (diagrams[w.id] || {})[p.id];
+    if (svg) out.push(slide('arch slide--svg', 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>'));
+    else if (arr(e.diagram).length) out.push(slide('arch', 'Architecture', diagram(e.diagram)));
     if (arr(e.decisions).length) out.push(slide('decisions', 'Decisions that shaped it', decisions(e.decisions)));
     arr(e.shots).forEach(function (s) {
       var src = 'assets/work/' + w.id + '/' + s.src;
@@ -342,6 +345,7 @@
   }
 
   function go(i, initial) {
+    var t = document.querySelector('.dg-tip'); if (t) t.hidden = true;
     if (!deck) return;
     deck.i = Math.max(0, Math.min(deck.n - 1, i));
     var track = document.querySelector('[data-track]');
@@ -366,7 +370,14 @@
     if (works[id]) return cb(works[id]);
     var s = document.createElement('script');
     s.src = 'data/work/' + id + '.js';
-    s.onload = function () { cb(works[id] || null); };
+    s.onload = function () {
+      var w = works[id];
+      if (!w || !w.diagrams) return cb(w || null);
+      var d = document.createElement('script');
+      d.src = 'data/work/' + id + '.diagrams.js';
+      d.onload = d.onerror = function () { cb(w); };
+      document.body.appendChild(d);
+    };
     s.onerror = function () { cb(null); };
     document.body.appendChild(s);
   }
@@ -488,6 +499,29 @@
       }
     }, { passive: true });
 
+    // Diagram tooltips: hover or keyboard focus on a box shows its purpose.
+    var tip = document.createElement('div');
+    tip.className = 'dg-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true;
+    document.body.appendChild(tip);
+    function showTip(el, x, y) {
+      tip.innerHTML = '<strong>' + esc(el.querySelector('.dg-nt').textContent) + '</strong>' + esc(el.getAttribute('data-tip'));
+      tip.hidden = false;
+      var r = tip.getBoundingClientRect();
+      var left = Math.min(window.innerWidth - r.width - 12, Math.max(12, x - r.width / 2));
+      var top = y - r.height - 14;
+      if (top < 8) top = y + 22;
+      tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    }
+    document.addEventListener('mousemove', function (e) {
+      var n = e.target.closest && e.target.closest('.dg [data-tip]');
+      if (n) showTip(n, e.clientX, e.clientY); else tip.hidden = true;
+    });
+    document.addEventListener('focusin', function (e) {
+      var n = e.target.closest && e.target.closest('.dg [data-tip]');
+      if (!n) { tip.hidden = true; return; }
+      var r = n.getBoundingClientRect();
+      showTip(n, r.left + r.width / 2, r.top);
+    });
     window.addEventListener('hashchange', route);
   }
 
@@ -537,5 +571,5 @@
     },
     _store: store
   };
-  window.PORTFOLIO_WORK = { register: function (d) { works[d.id] = d; } };
+  window.PORTFOLIO_WORK = { register: function (d) { works[d.id] = d; }, diagrams: function (id, map) { diagrams[id] = map; } };
 })();
