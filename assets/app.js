@@ -387,7 +387,7 @@
       '<div class="intro"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
       (arr(y.decisions).length ? '<h3 class="slide__sub">Decisions I made</h3>' + list(y.decisions, 'bullets prose') : '') +
       (y.outcome ? '<h3 class="slide__sub">What it changed</h3><p class="prose">' + esc(y.outcome) + '</p>' : '') +
-      confirmNotes(p.confirm) + '</div>' + (p.cover ? img(p.cover.src, p.title, 'slide__hero' + (p.cover.tall ? ' is-tall' : '')) : '') + '</div>'));
+      linkButtons(p) + confirmNotes(p.confirm) + '</div>' + (p.cover ? img(p.cover.src, p.title, 'slide__hero' + (p.cover.tall ? ' is-tall' : '')) : '') + '</div>'));
     if (arr(p.components).length) out.push(slide('what', 'What is in it',
       '<ul class="features">' + p.components.map(function (c) {
         return '<li><span class="feature__name">' + esc(c.title) + ' ' + kinds(c.kind) + '</span><p class="prose">' + esc(c.text) + '</p>' + confirmNotes(c.confirm) + '</li>';
@@ -398,7 +398,7 @@
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
     if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>'));
-    if (arr(h.flow).length) out.push(slide('arch', 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
+    if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
       list(h.practices, 'bullets prose notes') + (arr(h.stack).length ? '<h3 class="slide__sub">Built with</h3>' + chips(h.stack) : '')));
     return out;
