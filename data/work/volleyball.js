@@ -37,7 +37,8 @@ PORTFOLIO_WORK.register({
       points: [
         'Reads upcoming events and tournaments, then creates the TeamSnap imports and volunteer sign-ups automatically.',
         'Monitors our plans and emails the athletic director and me every week with upcoming events and anything still open.',
-        'Builds game-night schedules and court assignments.'
+        'Builds game-night schedules and court assignments.',
+        'Monitors live tournaments: as new games are added, it updates volunteer assignments across every team, creates the TeamSnap imports and notifies me, so parents’ schedules stay current.'
       ],
       kind: ['agent'],
       why: {
@@ -54,6 +55,7 @@ PORTFOLIO_WORK.register({
       features: [
         { name: 'Events to TeamSnap', text: 'Reads upcoming events and tournaments and creates TeamSnap-ready imports for every team involved.' },
         { name: 'Volunteer sign-ups', text: 'Creates the volunteer sign-ups for each event alongside the schedule.' },
+        { name: 'Live tournament watch', text: 'During a tournament, picks up new games as they are added, updates volunteer assignments across every team, creates the TeamSnap imports and notifies me.' },
         { name: 'Game nights and courts', text: 'Builds game-night schedules and court assignments across multiple courts and visiting clubs.' },
         { name: 'Weekly events email', text: 'Every Sunday the athletic director and I get this week, next week and the two after, with anything still open called out.' },
         { name: 'Calendar watch', text: 'Checks the club calendar twice a day. When something changes, it lays out exactly what to delete and import, in the right order.' },
