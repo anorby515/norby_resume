@@ -74,7 +74,12 @@ PORTFOLIO_WORK.register({
       id: 'stats',
       hero: { src: 'st-tracker.webp', tall: true, alt: 'The Stats App during a match' },
       name: 'Stats App',
-      line: 'Live match stats on a parent’s phone, even with no signal, and season analytics for coaches.',
+      line: 'Stat tracking for every team in the club, and analytics coaches use all season.',
+      points: [
+        'Tracks stats across all of the club’s teams in one app.',
+        'An analyzer coaches use on game day and throughout the season.',
+        'A tracker so intuitive any parent can take stats on their phone.'
+      ],
       kind: ['app'],
       why: {
         problem:
