@@ -140,8 +140,9 @@ PORTFOLIO.register({
       apps: [
         { id: 'personal-cos', name: 'Personal CoS', icon: 'sun', href: '#/portfolio/household' },
         { id: 'family-cos', name: 'Family CoS', icon: 'home', href: '#/portfolio/household' },
-        { id: 'muse', name: 'Muse', icon: 'bag' },
-        { id: 'vehicles', name: 'Vehicles', icon: 'car', href: '#/portfolio/household' },
+        { id: 'muse', name: 'Muse', img: 'assets/icons/muse.webp' },
+        { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/household' },
+        { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
         { id: 'habits', name: 'Habits', icon: 'flame', href: '#/portfolio/habits' },
         { id: 'college-notes', name: 'College Notes', icon: 'notebook', href: '#/portfolio/household' },
         { id: 'document-agent', name: 'Document Agent', icon: 'folder', href: '#/portfolio/household' }
