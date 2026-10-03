@@ -126,19 +126,19 @@ def tournament():
     b = zone(20, 16, 870, 52, 'Netlify')
     for x, t, tip in [(150, '/invite', 'The one link sent to families a week before the event.'),
                       (452, '/score/N', 'Printed on the QR card taped to each score table. The card is the access control.'),
-                      (735, '/tv', 'Opened on the laptop that drives the wall TV.')]:
+                      (735, '/tv', 'Opened on the laptop that drives the gym TVs.')]:
         b += node(x, 24, 110, 36, t, tip, 'ext')
 
     b += zone(20, 96, 1160, 132, 'Surfaces')
     b += node(36, 132, 300, 84, 'Tournament App',
-              'For families and visiting coaches. Before the event, a swipeable preview; on game day, a live hub with courts, standings and brackets. Links to the waiver.',
+              'For families: live scores, live standings, schedule updates and which courts are running behind. A swipeable preview before the event. Links to the waiver.',
               'key', chips=['Mobile', 'Desktop'])
     b += node(352, 132, 250, 84, 'Scorekeeper',
-              'One volunteer per score table taps +1. Opened from the QR card, so no login. Guards against two phones scoring one match.', 'key')
-    b += node(618, 132, 256, 84, 'TV wall',
-              'The walk-by display: live standings with the gold-bracket cut line, both courts, what is next, and rotating sponsor panels.', 'key')
+              'On every court: one volunteer taps +1, and the score reaches parents’ phones and the TVs. Opened from the QR card, so no login.', 'key')
+    b += node(618, 132, 256, 84, 'Command Center',
+              'The Tournament Command Center on the gym TVs: live scores, live standings with the gold-bracket cut line, and sponsor ads.', 'key')
     b += node(910, 132, 254, 84, 'Volunteer sheet',
-              'Google Sheet where families sign up for volunteer shifts.', 'key')
+              'Volunteer assignments for the day, created by the tournament agent.', 'key')
     for x in (205, 507, 790):
         b += arrow([(x, 60), (x, 132)])
 
@@ -154,16 +154,15 @@ def tournament():
     b += node(926, 364, 238, 44, 'Responses sheet', 'Every signed waiver, with athlete, team and parent.', 'db')
     b += arrow([(1045, 336), (1045, 364)])
 
-    b += zone(20, 376, 870, 84, 'Claude agents')
-    b += node(36, 400, 300, 44, 'Schedule agent',
-              'Built the full schedule: court assignments and matchups from the format’s rules and constraints.', 'ai')
-    b += node(352, 400, 250, 44, 'Waiver agent',
-              'Hourly check of signed waivers against visiting rosters, with fuzzy name matching. Emails a daily status to the athletic director and me.', 'ai')
-    b += node(618, 400, 256, 44, 'Daily status email', 'Who is still missing a waiver, by team.', 'ext')
+    b += zone(20, 376, 870, 84, 'Claude')
+    b += node(36, 400, 566, 44, 'Tournament agent',
+              'Built the schedule (courts and matchups from the rules and constraints), monitored waivers against visiting rosters, sent reminders and a daily status, and created the volunteer assignments.', 'ai')
+    b += node(618, 400, 256, 44, 'Reminders and status', 'Waiver reminders, and a daily status email to the athletic director and me.', 'ext')
     b += arrow([(186, 400), (186, 358), (420, 358), (420, 324)], 'schedule', 300, 352)
     b += arrow([(602, 422), (618, 422)])
-    b += arrow([(926, 386), (540, 386), (540, 400)], 'reads', 740, 380)
-    return svg(476, b, 'Tournament Platform architecture')
+    b += arrow([(926, 386), (540, 386), (540, 400)], 'reads waivers', 740, 380)
+    b += arrow([(560, 444), (560, 470), (898, 470), (898, 240), (1037, 240), (1037, 216)], 'volunteer assignments', 730, 462)
+    return svg(482, b, 'Tournament Platform architecture')
 
 
 if __name__ == '__main__':

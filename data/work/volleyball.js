@@ -124,11 +124,14 @@ PORTFOLIO_WORK.register({
     /* ------------------------------------------------------------------ */
     {
       id: 'tournament',
-      hero: { src: 'tp-tv.webp', alt: 'The tournament TV wall' },
+      hero: { src: 'tp-tv.webp', alt: 'The Tournament Command Center on the gym TV' },
       name: 'Tournament Platform',
-      line: 'One link for families, a scorekeeper at every court, and a live wall in the gym.',
+      line: 'A collection of apps that made the Eclipse tournament run perfectly.',
       points: [
-        'An agent built the full schedule: court assignments and matchups from the format’s rules and constraints.'
+        'A tournament app where families follow live scores, live standings, schedule updates and which courts are running behind.',
+        'A Tournament Command Center on the TVs, showing live scores, live standings and sponsor ads.',
+        'A scorekeeper app on every court, feeding live scores to parents’ phones and the TVs.',
+        'An agent that managed the schedule, monitored waivers and sent reminders, and created the volunteer assignments.'
       ],
       kind: ['app', 'agent'],
       why: {
@@ -140,23 +143,23 @@ PORTFOLIO_WORK.register({
       who: [
         { name: 'Families', who: 'Parents and fans from every visiting team', need: 'Know when and where their team plays, and how the day is going.', gets: 'One link sent a week out: a swipeable preview before the event, a live hub on the day.' },
         { name: 'Scorekeepers', who: 'Volunteers at each score table', need: 'Keep score without training or logging in.', gets: 'A QR card taped to the table opens scoring for that court directly.' },
-        { name: 'Organizers', who: 'The club running the event', need: 'Stay on schedule, collect waivers, and give sponsors visibility.', gets: 'Live “minutes behind” per court, a waiver tracker, and a TV wall that rotates sponsor panels.' },
+        { name: 'Organizers', who: 'The club running the event', need: 'Stay on schedule, collect waivers, and give sponsors visibility.', gets: 'Live “minutes behind” per court, a waiver tracker, and a Command Center on the TVs that rotates sponsor ads.' },
         { name: 'Visiting coaches', who: 'Other clubs’ staff', need: 'Rules, format and their team’s path through the day.', gets: 'A My Team view, published rules, and both brackets as they fill in.' }
       ],
       features: [
-        { name: 'Agent-built schedule', text: 'An agent did all the scheduling: court assignments and matchups worked out from the rules and constraints we gave it.' },
+        { name: 'Tournament agent', text: 'Built the schedule (courts and matchups from our rules and constraints), monitored waivers and sent reminders, and created the volunteer assignments.' },
         { name: 'QR score cards', text: 'Printable cards taped to each score table open scoring for that court. One script reprints them if the site ever moves.' },
         { name: 'Two shells, one app', text: 'An eight-page preview deck before the event; a live hub on game day. The switch is automatic.' },
         { name: 'Scorekeeper', text: 'Large +1 targets per team, set management, and a guard against two people scoring the same match.' },
-        { name: 'TV wall', text: 'Live standings with the gold-bracket cut line, both courts’ scores, and what is next.' },
+        { name: 'Command Center', text: 'On the gym TVs: live scores, live standings with the gold-bracket cut line, what is next, and sponsor ads.' },
         { name: 'Brackets and standings', text: 'Gold and silver brackets seeded from pool play: sets won, then point differential, then head-to-head.' },
-        { name: 'Waivers', text: 'A waiver page in the app, plus an agent that reconciled signed waivers against visiting rosters and emailed daily status.' },
+        { name: 'Waivers', text: 'A waiver page in the app. The agent matched signed waivers to visiting rosters and sent reminders and a daily status.' },
         { name: 'Reused for Senior Night', text: 'The same platform ran a four-court Senior Night a week later, with sixteen volunteer scorekeepers.' }
       ],
       value: {
         model: 'Tournaments are how a club raises money. This makes hosting repeatable.',
         points: [
-          'Gate fees and sponsors fund the club. The TV wall and splash screen give sponsors visibility they can see.',
+          'Gate fees and sponsors fund the club. The Command Center and splash screen give sponsors visibility they can see.',
           'Turned one-off event work into a platform: Senior Night reused it within a week.',
           'Fewer volunteers needed at the desk answering “which court?”'
         ],
@@ -219,7 +222,7 @@ PORTFOLIO_WORK.register({
       tournament: {
         diagram: [
           { stage: 'At the venue', nodes: ['QR card per court', 'Scorekeeper phones', 'Laptop driving the TV'] },
-          { stage: 'Apps', nodes: ['/score/N scorekeeper', '/tv wall display', '/invite family app'] },
+          { stage: 'Apps', nodes: ['/score/N scorekeeper', '/tv Command Center', '/invite family app'] },
           { stage: 'Logic', nodes: ['tournament-data.js: pure derivations', 'Offline cache and retry queue'] },
           { stage: 'Supabase', nodes: ['Postgres: matches and sets for the event', 'Score tables upsert each point', 'Every screen polls every 15 seconds'] }
         ],
@@ -234,13 +237,13 @@ PORTFOLIO_WORK.register({
         shots: [
           { src: 'tp-hub.webp', tall: true, title: 'Family hub on game day', caption: 'What is on each court right now, how far behind it is running, and what is next.', tools: ['vanilla-js', 'supabase'] },
           { src: 'tp-score.webp', tall: true, title: 'Scorekeeper guard', caption: 'A second phone at a court with an open match is asked to confirm before it can score, so two people never write the same match.', tools: ['supabase'] },
-          { src: 'tp-tv.webp', wide: true, title: 'TV wall', caption: 'Live standings with the gold-bracket cut line and both courts. Sponsor panels rotate in between.', tools: ['vanilla-js'] },
+          { src: 'tp-tv.webp', wide: true, title: 'Tournament Command Center', caption: 'Live standings with the gold-bracket cut line and both courts. Sponsor panels rotate in between.', tools: ['vanilla-js'] },
           { src: 'tp-desk.webp', wide: true, title: 'Scales to desktop', caption: 'The same screens reflow into a sidebar layout for laptops at the desk.', tools: ['claude-design'] },
           { src: 'sn-tv.webp', wide: true, title: 'Reused for Senior Night', caption: 'A four-court version shipped a week later from the same platform, with cache headers tuned so sixteen volunteer phones always ran the latest build.', tools: ['netlify'] }
         ],
         split: {
-          vibe: 'The family app, scorekeeper, TV wall, printable QR cards and Senior Night.',
-          agentic: 'Scheduling: an agent assigned courts and matchups from the rules and constraints. Waivers: an hourly agent matched signed waivers to visiting rosters, with fuzzy name matching, and emailed a daily status.'
+          vibe: 'The tournament app, scorekeeper, Command Center, printable QR cards and Senior Night.',
+          agentic: 'The tournament agent: built the schedule from our rules and constraints, matched signed waivers to visiting rosters every hour and sent reminders and a daily status, and created the volunteer assignments.'
         },
         tools: ['vanilla-js', 'pwa', 'supabase', 'netlify', 'jest', 'python', 'claude-design', 'claude-code', 'cowork', 'sheets', 'gmail']
       },
