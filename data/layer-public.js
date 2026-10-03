@@ -136,11 +136,11 @@ PORTFOLIO.register({
     },
     {
       id: 'family', title: 'Family & Home', tone: 'family',
-      confirm: ['Muse has no deck yet, so its icon does not open anything.'],
+      confirm: ['Personal Assistant has no deck yet, so its icon does not open anything.'],
       apps: [
         { id: 'personal-cos', name: 'Personal CoS', icon: 'sun', href: '#/portfolio/household' },
         { id: 'family-cos', name: 'Family CoS', icon: 'home', href: '#/portfolio/household' },
-        { id: 'muse', name: 'Muse', img: 'assets/icons/muse.webp' },
+        { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp' },
         { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/household' },
         { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
         { id: 'habits', name: 'Habits', icon: 'flame', href: '#/portfolio/habits' },
