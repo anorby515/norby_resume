@@ -66,18 +66,12 @@ def shot(x, y, w, h, src, caption, tip, phone=False, href=None):
     return s
 
 def teamsnap_node(x, y, w, h):
-    """TeamSnap box. Shows the official logo when assets/icons/teamsnap.(svg|png|webp) exists."""
+    """TeamSnap, shown as its official logo (assets/icons/TeamSnapOne.jpg)."""
     tip = 'Where every parent and coach reads the schedule. Kept current by the agents’ CSV imports.'
-    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    logo = next((f'assets/icons/teamsnap.{e}' for e in ('svg', 'png', 'webp')
-                 if os.path.exists(os.path.join(root, 'assets', 'icons', f'teamsnap.{e}'))), None)
-    if not logo:
-        return node(x, y, w, h, 'TeamSnap', tip, 'ext')
-    sz = 28
-    return (f'<g class="dg-node dg-ext" tabindex="0" data-tip="{escape(tip)}" aria-label="TeamSnap: {escape(tip)}">'
-            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/>'
-            f'<image href="{logo}" x="{x+40}" y="{y+(h-sz)/2}" width="{sz}" height="{sz}" preserveAspectRatio="xMidYMid meet"/>'
-            f'<text class="dg-nt" x="{x+w/2+18}" y="{y+h/2+5}">TeamSnap</text></g>')
+    return (f'<g class="dg-node dg-shot" tabindex="0" data-tip="{escape(tip)}" aria-label="TeamSnap: {escape(tip)}">'
+            f'<clipPath id="dgc-ts"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/></clipPath>'
+            f'<image href="assets/icons/TeamSnapOne.jpg" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#dgc-ts)"/>'
+            f'<rect class="dg-frame" x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/></g>')
 
 def label(x, y, lines, anchor='middle'):
     return ''.join(f'<text class="dg-el" x="{x}" y="{y + i*15}" text-anchor="{anchor}">{escape(t)}</text>' for i, t in enumerate(lines))
@@ -167,7 +161,7 @@ def suite():
     b += label(205, 362, ['every play'], 'start')
 
     b += zone(420, 20, 360, 600, '')
-    b += teamsnap_node(500, 44, 200, 48)
+    b += teamsnap_node(492, 30, 216, 66)
     b += ('<g class="dg-node dg-ai dg-os" tabindex="0" data-href="#/portfolio/volleyball/products/1" role="link" data-tip="Claude agents on a schedule, following the club’s rules in a versioned skill. They plan events, keep TeamSnap current, assign volunteers, chase waivers and send the weekly email." '
           'aria-label="Eclipse Agentic OS">'
           '<rect x="440" y="196" width="320" height="214" rx="12"/>'
@@ -176,7 +170,7 @@ def suite():
     for i, t in enumerate(['Schedules and court assignments', 'TeamSnap imports', 'Volunteer assignments', 'Waivers and reminders', 'Sunday email']):
         b += f'<text class="dg-os-l" x="600" y="{290 + i*24}">{escape(t)}</text>'
     b += '</g>'
-    b += arrow([(600, 196), (600, 92)])
+    b += arrow([(600, 196), (600, 96)])
     b += label(610, 136, ['events, games, practice', 'CSV imports'], 'start')
 
     b += node(440, 520, 150, 48, 'Club calendar',
