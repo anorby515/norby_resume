@@ -205,8 +205,6 @@
           (arr(pr.points).length ? '<span class="pcard__points">' + pr.points.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
           '</a></li>';
       }).join('') + '</ol>' +
-      (w.how ? '<p class="suite__deep"><a href="' + link(base + '/suite/how') + '">How the suite fits together</a>' +
-        '<span>The build loop, shared architecture and numbers across all three.</span></p>' : '') +
     '</div>';
   }
 
@@ -446,10 +444,7 @@
       }
       var crumbs2 = crumbBase.concat(single ? [] : [{ label: w.title, href: link(base) }]);
       var opts;
-      if (product === 'suite') {
-        opts = { slides: view === 'how' ? suiteHow(w) : suiteWhy(w), views: ['why', 'how'], view: view, base: base + '/suite',
-          name: w.title, kind: [], crumbs: crumbs2.concat([{ label: 'The suite' }]) };
-      } else {
+      {
         var pr = byId(w.products, product);
         if (!pr) return notFound();
         opts = { slides: view === 'how' ? productHow(w, pr) : productWhy(w, pr), views: ['why', 'how'], view: view,
