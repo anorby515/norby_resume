@@ -127,7 +127,7 @@ PORTFOLIO.register({
       cover: { src: 'assets/work/volleyball/tp-tv.webp' },
       kind: ['app', 'agent'],
       attributes: ['innovator', 'executor', 'collaborator', 'learner'],
-      summary: 'Three products for an 11-team club: a stat tracker, a tournament platform and an automation layer.',
+      summary: 'Three products for an 11-team club: a stat tracker, a tournament platform and an automation layer integrated with TeamSnap.',
       why: {
         problem:
           'A volunteer-run club juggles dozens of teams, tournaments, rosters and parents across disconnected tools. Errors surface on game day, when they are hardest to fix.',

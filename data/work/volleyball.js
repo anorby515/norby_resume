@@ -9,7 +9,7 @@ PORTFOLIO_WORK.register({
   title: 'Eclipse Volleyball',
   kicker: 'Three products for one youth volleyball club',
   summary:
-    'Des Moines Eclipse is an 11-team volunteer-run club. I coach there and run its digital side, so I built the software it runs on: a stat tracker for coaches, a platform for hosting tournaments, and an automation layer that keeps every team’s schedule right.',
+    'Des Moines Eclipse is an 11-team volunteer-run club. I coach there and run its digital side, so I built the software it runs on: a stat tracker for coaches, a platform for hosting tournaments, and an automation layer that integrates with TeamSnap, the club’s team management platform, to keep every team’s schedule right.',
 
   why: {
     lead: 'A volunteer club runs on spreadsheets, group texts and whoever remembers.',
