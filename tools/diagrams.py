@@ -120,6 +120,73 @@ def stats_app():
 
 
 # --------------------------------------------------------------------------
+# Eclipse Agentic OS: Claude running the club schedule
+# --------------------------------------------------------------------------
+def agentic_os():
+    b = zone(20, 20, 250, 340, 'Sources')
+    b += node(36, 64, 218, 44, 'Tournament links',
+              'Host sites and shared workbooks for each tournament: draws, pools, courts and times.', 'ext')
+    b += node(36, 128, 218, 44, 'TeamSnap export',
+              'What TeamSnap actually holds, exported by hand (TeamSnap has no API). Used to verify deletes and spot drift.', 'ext')
+    b += node(36, 192, 218, 44, 'TeamSnap feed',
+              'TeamSnap’s own calendar feed, mirrored into Google Calendar. Lags 8 to 24 hours, so it only confirms that an import landed.', 'ext')
+    b += node(36, 256, 218, 64, 'Club calendar',
+              'The athletic director’s Google Calendar: the source of truth for every event, written in her own shorthand.', 'key')
+
+    b += zone(320, 20, 540, 340, 'Claude')
+    jobs = [
+        ('Calendar watch', 'Twice a day, unattended. Diffs the calendar against the last snapshot and notifies only when something changed, plus a weekly heartbeat so silence never hides a failure.'),
+        ('Change analysis', 'On demand, after a TeamSnap export: the rows to delete, the rows to import, a plain-language summary, and a drift report.'),
+        ('Event planning', 'Builds tournament and game-night schedules, court assignments and matchups from the rules and constraints.'),
+        ('Live tournament watch', 'During a tournament, picks up new games as they are added and updates volunteer assignments and TeamSnap imports.'),
+        ('Sunday email', 'Every Sunday: this week, next week and the two after, with gaps, TBDs and missing start times called out.'),
+    ]
+    for i, (t, tip) in enumerate(jobs):
+        b += node(336, 56 + i * 44, 250, 36, t, tip, 'ai')
+    b += node(620, 60, 224, 52, 'Eclipse skill',
+              'The playbook every run follows: two modes, team-name mapping, venues, override events, and the delete-first-then-import rule. Versioned, so unattended runs behave the same.', 'key')
+    b += node(620, 136, 224, 44, 'sync_check.py',
+              'Diffs by Google event ID, parses the athletic director’s shorthand into team rows, and verifies the delete list against the TeamSnap export.')
+    b += node(620, 204, 224, 44, 'Snapshot',
+              'eclipse-calendar-snapshot.json in Google Drive: the calendar state TeamSnap is aligned to. Only analysis advances it.', 'db')
+    b += arrow([(586, 74), (620, 74)])
+    b += arrow([(732, 112), (732, 136)])
+    b += arrow([(732, 180), (732, 204)])
+    conns = [('Calendar', 'Google Calendar connector: reads the club calendar and the TeamSnap feed.'),
+             ('Drive', 'Google Drive connector: the snapshot, the export mirror and the outputs.'),
+             ('Gmail', 'Gmail connector: weekly and change emails.'),
+             ('Todoist', 'Todoist connector: one task per change, due today.'),
+             ('My Mac', 'Reads the TeamSnap export from my laptop when it is online.')]
+    for i, (t, tip) in enumerate(conns):
+        b += node(336 + i * 102, 314, 94, 32, t, tip, 'ext')
+    b += ('<text class="dg-zl" x="336" y="304">Connectors</text>')
+    b += arrow([(270, 180), (336, 180)], 'reads', 303, 172)
+
+    b += zone(910, 20, 270, 340, 'Outputs')
+    outs = [
+        ('TeamSnap imports', 'CSV rows ready for TeamSnap’s importer: games and other events, one row per team.'),
+        ('Delete worklist', 'The exact rows to remove in TeamSnap first. TeamSnap’s importer appends and never merges.'),
+        ('Volunteer assignments', 'Volunteer events for every team, updated as tournament games are added.'),
+        ('Schedules', 'Printable game-night and tournament schedules: PDF, image and spreadsheet.'),
+        ('Notifications', 'A Todoist task, a phone push and an email, leading with what I need to do next.'),
+    ]
+    for i, (t, tip) in enumerate(outs):
+        b += node(926, 60 + i * 58, 238, 44, t, tip, 'db' if i < 3 else 'n')
+    b += arrow([(844, 230), (926, 230)], 'writes', 885, 222)
+
+    b += zone(20, 400, 1160, 92, 'People')
+    b += node(36, 440, 218, 40, 'Athletic director', 'Books events in her calendar and gets the Sunday email. Nothing new to learn.')
+    b += node(336, 440, 250, 40, 'Parents and coaches', 'Read the schedule in TeamSnap, where it now lands the same week it is booked.')
+    b += node(620, 440, 224, 40, 'TeamSnap', 'Where every family and coach reads the schedule.', 'ext')
+    b += node(926, 440, 238, 40, 'Me', 'Reviews the change summary, deletes first, then imports. The one human step, by design.', 'key')
+    b += arrow([(145, 440), (145, 320)], 'books', 153, 392, 'start')
+    b += arrow([(1045, 350), (1045, 440)], 'review', 1053, 392, 'start')
+    b += arrow([(926, 460), (844, 460)], 'import', 885, 452)
+    b += arrow([(620, 460), (586, 460)])
+    return svg(504, b, 'Eclipse Agentic OS architecture')
+
+
+# --------------------------------------------------------------------------
 # Tournament Platform: the four surfaces and what feeds them
 # --------------------------------------------------------------------------
 def tournament():
@@ -168,7 +235,7 @@ def tournament():
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
-    payload = {'stats': stats_app(), 'tournament': tournament()}
+    payload = {'os': agentic_os(), 'stats': stats_app(), 'tournament': tournament()}
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('volleyball', " + json.dumps(payload, indent=1) + ');\n')
