@@ -259,7 +259,7 @@ PORTFOLIO.register({
           'Three-phase mobile roadmap.'
         ]
       },
-      confirm: ['Confirm hosting (Netlify? Cloudflare?) and data store for Vibes.live.', 'Add the public URL.']
+      confirm: ['Add the public URL.']
     },
 
     {

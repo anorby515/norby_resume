@@ -358,8 +358,8 @@ def vibes():
     b += arrow([(299, 462), (299, 494)])
 
     b += zone(410, 20, 380, 560, 'The app')
-    b += node2(426, 52, 165, 52, 'Netlify', 'Support pages',
-               'Hosts live-vibes.net: the support, privacy and terms pages the App Store requires.', 'ext')
+    b += node2(426, 52, 165, 52, 'GitHub Pages', 'Support pages',
+               'Hosts live-vibes.net from the repo: the support, privacy and terms pages the App Store requires.', 'ext')
     b += node2(611, 52, 165, 52, 'Cloudflare', 'Support email',
                'Routes the support email address to my inbox.', 'ext')
     tip = 'React Native and Expo. Follow artists and venues, see shows on a map, mark shows you are going to, and see where friends are going.'
