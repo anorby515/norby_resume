@@ -196,20 +196,26 @@
       '<div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
         '<p class="suite__kicker">' + esc(w.kicker) + '</p>' +
         '<p class="prose suite__summary">' + esc(w.summary) + '</p></div>' +
-      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does.</p></div>' : '') +
-      '<ol class="suite__products">' + w.products.map(function (pr) {
-        return '<li><a class="pcard pcard--suite" href="' + link(base + '/' + pr.id + '/why') + '">' +
-          cover(pr.hero ? { src: 'assets/work/' + w.id + '/' + pr.hero.src, tall: pr.hero.tall } : null, pr.name) +
-          '<span class="pcard__kinds">' + kinds(pr.kind) + '</span>' +
-          '<span class="pcard__title">' + esc(pr.name) + '</span>' +
-          '<span class="pcard__summary">' + esc(pr.line) + '</span>' +
-          (arr(pr.points).length ? '<span class="pcard__points">' + pr.points.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</span>' : '') +
-          '</a></li>';
-      }).join('') + '</ol>' +
+      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it.</p></div>' : '') +
+      '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a>' +
+        '<span>' + w.products.map(function (pr) { return esc(pr.name); }).join(', ') + '</span></p>' +
     '</div>';
   }
 
   /* ---------------- slides ---------------- */
+
+  function productTour(w, base) {
+    return w.products.map(function (pr) {
+      var hero = pr.hero ? img('assets/work/' + w.id + '/' + pr.hero.src, pr.hero.alt || pr.name, 'pslide__img' + (pr.hero.tall ? ' is-tall' : '')) : '';
+      return slide('product', '',
+        '<div class="pslide"><div class="pslide__text"><p class="pslide__kinds">' + kinds(pr.kind) + '</p>' +
+        '<h2 class="pslide__name">' + esc(pr.name) + '</h2>' +
+        '<p class="pslide__line">' + esc(pr.line) + '</p>' +
+        (arr(pr.points).length ? list(pr.points, 'pslide__points') : '') +
+        '<p class="pslide__go"><a class="go--why" href="' + link(base + '/' + pr.id + '/why') + '">Why I built this</a>' +
+        '<a class="go--how" href="' + link(base + '/' + pr.id + '/how') + '">How I built this</a></p></div>' + hero + '</div>');
+    });
+  }
 
   function slide(kind, title, body) {
     return { kind: kind, title: title, html: (title ? '<h2 class="slide__title">' + esc(title) + '</h2>' : '') + body };
@@ -334,7 +340,7 @@
     var pill = opts.views.length > 1 ? '<div class="pill" role="group" aria-label="View">' + opts.views.map(function (v) {
       var label = v === 'why' ? 'Why I built this' : 'How I built this';
       return '<a href="' + link(base + '/' + v) + '"' + (v === opts.view ? ' aria-current="page"' : '') + '>' + label + '</a>';
-    }).join('') + '</div>' : '';
+    }).join('') + '</div>' : '<div></div>';
     return '<div class="deck" data-deck>' +
       '<div class="deck__top">' + crumbs(opts.crumbs) + pill +
         '<div class="deck__name"><span class="deck__product">' + esc(opts.name) + '</span>' + kinds(opts.kind) + '</div></div>' +
@@ -350,7 +356,7 @@
   }
 
   function startDeck(opts, index) {
-    deck = { n: opts.slides.length, i: 0, path: opts.base + '/' + opts.view, titles: opts.slides.map(function (s) { return s.title; }) };
+    deck = { n: opts.slides.length, i: 0, path: opts.view ? opts.base + '/' + opts.view : opts.base, titles: opts.slides.map(function (s) { return s.title; }) };
     go(index || 0, true);
   }
 
@@ -445,11 +451,18 @@
       }
       var crumbs2 = crumbBase.concat(single ? [] : [{ label: w.title, href: link(base) }]);
       var opts;
+      if (product === 'products') {
+        opts = { slides: productTour(w, base), views: [], view: '', base: base + '/products',
+          name: w.title, kind: [], crumbs: crumbs2.concat([{ label: 'Products' }]) };
+        show(deckView(opts), { deck: true, view: 'why', screen: 'portfolio', title: w.title });
+        return startDeck(opts, Math.max(0, (parseInt(parts[3], 10) || 1) - 1));
+      }
       {
         var pr = byId(w.products, product);
         if (!pr) return notFound();
         opts = { slides: view === 'how' ? productHow(w, pr) : productWhy(w, pr), views: ['why', 'how'], view: view,
-          base: base + '/' + pr.id, name: pr.name, kind: pr.kind, crumbs: crumbs2.concat([{ label: pr.name }]) };
+          base: base + '/' + pr.id, name: pr.name, kind: pr.kind,
+          crumbs: crumbs2.concat([{ label: pr.name, href: link(base + '/products/' + (w.products.indexOf(pr) + 1)) }, { label: view === 'how' ? 'How I built this' : 'Why I built this' }]) };
       }
       show(deckView(opts), { deck: true, view: view, screen: 'portfolio', title: opts.name });
       startDeck(opts, idx);
@@ -460,6 +473,8 @@
 
   function bind() {
     document.addEventListener('click', function (e) {
+      var dl = e.target.closest && e.target.closest('.dg [data-href]');
+      if (dl) { location.hash = dl.getAttribute('data-href'); return; }
       var t = e.target.closest('[data-prev],[data-next],[data-goto],[data-zoom],[data-close-lightbox],[data-rail-prev],[data-rail-next]');
       var lb = document.getElementById('lightbox');
       if (!t) { if (e.target === lb) lb.close(); return; }
@@ -522,6 +537,11 @@
     document.addEventListener('mousemove', function (e) {
       var n = e.target.closest && e.target.closest('.dg [data-tip]');
       if (n) showTip(n, e.clientX, e.clientY); else tip.hidden = true;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var dl = e.target.closest && e.target.closest('.dg [data-href]');
+      if (dl) location.hash = dl.getAttribute('data-href');
     });
     document.addEventListener('focusin', function (e) {
       var n = e.target.closest && e.target.closest('.dg [data-tip]');

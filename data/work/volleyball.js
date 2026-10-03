@@ -127,7 +127,7 @@ PORTFOLIO_WORK.register({
     {
       id: 'tournament',
       hero: { src: 'tp-tv.webp', alt: 'The Tournament Command Center on the gym TV' },
-      name: 'Tournament Platform',
+      name: 'Tournament Suite',
       line: 'A collection of apps that made the Eclipse tournament run perfectly.',
       points: [
         'A tournament app where families follow live scores, live standings, schedule updates and which courts are running behind.',
@@ -187,7 +187,7 @@ PORTFOLIO_WORK.register({
     ],
     shared: [
       { title: 'Production and demo, from one codebase', text: 'A build flag sets the mode. Demo builds seed invented teams and players, show a banner, and never write to the database.' },
-      { title: 'One Supabase project, separate tables', text: 'The Stats App and Tournament Platform share one Supabase Postgres project. Each app has its own tables and schema migrations in the repo.' },
+      { title: 'One Supabase project, separate tables', text: 'The Stats App and Tournament Suite share one Supabase Postgres project. Each app has its own tables and schema migrations in the repo.' },
       { title: 'Deploys are gated', text: 'A script decides which pushes are worth a deploy, so documentation changes do not spend build minutes.' },
       { title: 'The docs are the spec', text: 'Product.md, Design.md and Test.md are kept current with the code, and Claude Code reads them before every change.' },
       { title: 'Security headers by default', text: 'Every response ships with frame, content-type, referrer and transport security headers.' }

@@ -49,15 +49,15 @@ def arrow(points, label=None, lx=None, ly=None, anchor='middle', both=False, das
 
 
 _clip = [0]
-def shot(x, y, w, h, src, caption, tip, phone=False):
+def shot(x, y, w, h, src, caption, tip, phone=False, href=None):
     """A screenshot inside the diagram, with its caption underneath."""
     _clip[0] += 1
     cid = f'dgc{_clip[0]}'
     r = 14 if phone else 6
-    href = 'assets/work/volleyball/' + src
-    s = (f'<g class="dg-node dg-shot" tabindex="0" data-tip="{escape(tip)}" aria-label="{escape(caption)}: {escape(tip)}">'
+    img_src = 'assets/work/volleyball/' + src
+    s = (f'<g class="dg-node dg-shot" tabindex="0" data-tip="{escape(tip)}"' + (f' data-href="{href}" role="link"' if href else '') + f' aria-label="{escape(caption)}: {escape(tip)}">'
          f'<clipPath id="{cid}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/></clipPath>'
-         f'<image href="{href}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMin slice" clip-path="url(#{cid})"/>'
+         f'<image href="{img_src}" x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMin slice" clip-path="url(#{cid})"/>'
          f'<rect class="dg-frame{" dg-frame--phone" if phone else ""}" x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/>'
          f'<text class="dg-nt" x="{x + w/2}" y="{y + h + 22}">{escape(caption)}</text></g>')
     return s
@@ -143,16 +143,16 @@ def stats_app():
 def suite():
     b = zone(20, 20, 350, 600, 'Stats App')
     b += shot(142, 64, 106, 230, 'st-tracker.webp', 'Stats Tracker',
-              'Any parent takes stats on their phone: three taps a play, works with no signal, syncs when it can.', phone=True)
+              'Any parent takes stats on their phone: three taps a play, works with no signal, syncs when it can.', phone=True, href='#/portfolio/volleyball/products/2')
     b += shot(45, 390, 300, 168, 'an-attack.webp', 'Stats Analyzer',
-              'Coaches check stats on game day and analyze players and opponent matchups all season. Exports to Excel.')
+              'Coaches check stats on game day and analyze players and opponent matchups all season. Exports to Excel.', href='#/portfolio/volleyball/products/2')
     b += arrow([(195, 322), (195, 390)])
     b += label(205, 362, ['every play'], 'start')
 
     b += zone(420, 20, 360, 600, '')
     b += node(500, 44, 200, 44, 'Club calendar',
               'The athletic director books every event here, in her own shorthand.', 'ext')
-    b += ('<g class="dg-node dg-ai dg-os" tabindex="0" data-tip="Claude agents on a schedule, following the club’s rules in a versioned skill. They plan events, keep TeamSnap current, assign volunteers, chase waivers and send the weekly email." '
+    b += ('<g class="dg-node dg-ai dg-os" tabindex="0" data-href="#/portfolio/volleyball/products/1" role="link" data-tip="Claude agents on a schedule, following the club’s rules in a versioned skill. They plan events, keep TeamSnap current, assign volunteers, chase waivers and send the weekly email." '
           'aria-label="Eclipse Agentic OS">'
           '<rect x="440" y="196" width="320" height="214" rx="12"/>'
           '<text class="dg-nt dg-os-t" x="600" y="236">Eclipse Agentic OS</text>'
@@ -172,11 +172,11 @@ def suite():
 
     b += zone(830, 20, 350, 600, 'Tournament Suite')
     b += shot(855, 64, 300, 169, 'tp-tv.webp', 'Command Center',
-              'On the gym TVs: live scores, live standings with the gold-bracket cut line, and sponsor ads.')
+              'On the gym TVs: live scores, live standings with the gold-bracket cut line, and sponsor ads.', href='#/portfolio/volleyball/products/3')
     b += shot(852, 330, 97, 210, 'tp-hub.webp', 'Tournament App',
-              'Families follow live scores, standings, schedule updates and which courts are running behind.', phone=True)
+              'Families follow live scores, standings, schedule updates and which courts are running behind.', phone=True, href='#/portfolio/volleyball/products/3')
     b += shot(976, 400, 190, 82, 'tp-score-land.webp', 'Scorekeeper',
-              'On every court, turned sideways: one volunteer taps +1 and the score reaches every phone and TV.')
+              'On every court, turned sideways: one volunteer taps +1 and the score reaches every phone and TV.', href='#/portfolio/volleyball/products/3')
     b += arrow([(1120, 400), (1120, 258)])
     b += label(1128, 330, ['live', 'scores'], 'start')
     b += arrow([(976, 441), (949, 441)])
@@ -296,7 +296,7 @@ def tournament():
     b += arrow([(602, 422), (618, 422)])
     b += arrow([(926, 386), (540, 386), (540, 400)], 'reads waivers', 740, 380)
     b += arrow([(560, 444), (560, 470), (898, 470), (898, 240), (1037, 240), (1037, 216)], 'volunteer assignments', 730, 462)
-    return svg(482, b, 'Tournament Platform architecture')
+    return svg(482, b, 'Tournament Suite architecture')
 
 
 if __name__ == '__main__':
