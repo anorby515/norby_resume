@@ -386,10 +386,10 @@ def vibes():
               'Connect Spotify on your phone and Vibes.live suggests the artists you already listen to. The sync runs in Supabase, so keys stay on the server.', 'ext')
     b += node(616, 358, 146, 44, 'Apple Music',
               'Library sync, coming next. Same pattern as Spotify.', 'ext')
-    b += node(440, 410, 160, 44, 'setlist.fm',
+    b += node(440, 410, 124, 44, 'setlist.fm',
               'Open a show you attended and its setlist is looked up, through Supabase, and saved.', 'ext')
-    b += node2(616, 410, 146, 44, 'Ticket links', 'StubHub, AXS, Vivid',
-               'Get Tickets taps go to Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats as affiliate links, and every tap is logged.')
+    b += node2(580, 410, 182, 44, 'Buy tickets', 'Ticketmaster, StubHub, more',
+               'Tap Get Tickets to buy on Ticketmaster, SeatGeek, StubHub, AXS or Vivid Seats. Resale links are affiliate links, and every tap is logged.')
     b += arrow([(601, 298), (601, 330)], both=True)
     b += node2(426, 494, 350, 52, 'App Store', 'TestFlight beta, then release',
                'Every build goes to TestFlight testers first, then through App Store review.', 'key')
