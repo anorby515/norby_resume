@@ -154,7 +154,7 @@ PORTFOLIO.register({
       apps: [
         { id: 'vibes', name: 'Vibes.live', note: '(available in App Store for iOS)', img: 'assets/icons/vibes.webp', href: '#/portfolio/vibes' },
         { id: 'ai2fi', name: 'AI2FI', note: '(available on GitHub)', icon: 'trend', href: '#/portfolio/ai2fi' },
-        { id: 'financial-analyst', name: 'Financial Analyst', icon: 'pie', href: '#/portfolio/ai2fi' },
+        { id: 'financial-analyst', name: 'Financial Analyst Agent', icon: 'pie', href: '#/portfolio/ai2fi' },
         { id: 'hawaii', name: 'Hawaii or Bust', icon: 'palm' },
         { id: 'co-hiking', name: 'CO Hiking', icon: 'mountain' },
         { id: 'vinyl-moon', name: 'Vinyl Moon', icon: 'disc' }
