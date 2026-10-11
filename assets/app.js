@@ -19,6 +19,7 @@
   var review = /[?&]review\b/.test(location.search);
   var KIND = { app: 'App', agent: 'Agent', product: 'Product' };
   var deck = null; // active slide deck state
+  var FS_BTN = '<button type="button" class="dg-open" data-dg-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>';
 
   /* ---------------- helpers ---------------- */
 
@@ -266,7 +267,7 @@
       '<div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
         '<p class="suite__kicker">' + esc(w.kicker) + '</p>' +
         '<p class="prose suite__summary">' + esc(w.summary) + '</p></div>' +
-      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it.</p></div>' : '') +
+      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it. ' + FS_BTN + '</p></div>' : '') +
       '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a>' +
         '<span>' + w.products.map(function (pr) { return esc(pr.name); }).join(', ') + '</span></p>' +
     '</div>';
@@ -344,7 +345,7 @@
     var e = ((w.how || {}).products || {})[p.id] || {}, out = [];
     var svg = (diagrams[w.id] || {})[p.id];
     var builtWith = arr(e.tools).length ? '<div class="builtwith"><span class="builtwith__k">Built with</span>' + chips(e.tools, w) + '</div>' : '';
-    if (svg) out.push(slide('arch slide--svg' + (builtWith ? ' slide--tools' : ''), 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>' + builtWith));
+    if (svg) out.push(slide('arch slide--svg' + (builtWith ? ' slide--tools' : ''), 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>' + builtWith));
     else if (arr(e.diagram).length) out.push(slide('arch', 'Architecture', diagram(e.diagram)));
     if (arr(e.decisions).length) out.push(slide('decisions', 'Decisions that shaped it', decisions(e.decisions)));
     arr(e.shots).forEach(function (s) {
@@ -397,7 +398,7 @@
   function simpleHow(p) {
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
-    if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>'));
+    if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>'));
     if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
       list(h.practices, 'bullets prose notes') + (arr(h.stack).length ? '<h3 class="slide__sub">Built with</h3>' + chips(h.stack) : '')));
@@ -575,13 +576,57 @@
     });
   }
 
+  /* ---------------- full-screen diagram viewer ---------------- */
+
+  function openDiagram(from) {
+    var host = from.closest('.slide, .suite__arch, .page') || document;
+    var svg = host.querySelector('svg.dg');
+    if (!svg) return;
+    var v = document.getElementById('dgview');
+    var title = host.querySelector('.slide__title, .page__title') || document.querySelector('#main h1');
+    var name = document.querySelector('.deck__product');
+    v.querySelector('[data-dg-title]').textContent = [name && host.classList.contains('slide') ? name.textContent : '', title ? title.textContent : ''].filter(Boolean).join(' \u2014 ');
+    v.querySelector('[data-dg-body]').innerHTML = svg.outerHTML;
+    var tip = document.querySelector('.dg-tip'); if (tip) { tip.hidden = true; v.appendChild(tip); }
+    v.showModal();
+    v.querySelector('[data-dg-close]').focus();
+    // Fill the whole screen, not just the window, where the browser allows it.
+    if (v.requestFullscreen && !document.fullscreenElement) {
+      v.requestFullscreen().then(function () { v.dataset.fs = '1'; }).catch(function () {});
+    }
+  }
+
+  function buildViewer() {
+    var v = document.createElement('dialog');
+    v.id = 'dgview'; v.className = 'dgview'; v.setAttribute('aria-label', 'Diagram, full screen');
+    v.innerHTML = '<div class="dgview__bar"><span class="dgview__title" data-dg-title></span>' +
+      '<span class="dgview__help">Hover over any box to see what it does. Esc to close.</span>' +
+      '<button type="button" class="dgview__close" data-dg-close>Close</button></div>' +
+      '<div class="dgview__body" data-dg-body></div>';
+    // Esc leaves browser full screen first; treat that as closing the viewer too.
+    document.addEventListener('fullscreenchange', function () {
+      if (!document.fullscreenElement && v.dataset.fs) { delete v.dataset.fs; if (v.open) v.close(); }
+    });
+    v.addEventListener('close', function () {
+      if (v.dataset.fs && document.fullscreenElement) { delete v.dataset.fs; document.exitFullscreen().catch(function () {}); }
+      var tip = v.querySelector('.dg-tip'); if (tip) { tip.hidden = true; document.body.appendChild(tip); }
+      v.querySelector('[data-dg-body]').innerHTML = '';
+    });
+    document.body.appendChild(v);
+  }
+
   /* ---------------- interaction ---------------- */
 
   function bind() {
+    buildViewer();
     document.addEventListener('click', function (e) {
       if (swiped && e.target.closest('[data-viewport] a')) { e.preventDefault(); return; }
       var dl = e.target.closest && e.target.closest('.dg [data-href]');
-      if (dl) { location.hash = dl.getAttribute('data-href'); return; }
+      if (dl) { var v = document.getElementById('dgview'); if (v.open) v.close(); location.hash = dl.getAttribute('data-href'); return; }
+      var dv = document.getElementById('dgview');
+      if (e.target.closest('[data-dg-close]') || e.target === dv) { dv.close(); return; }
+      var fs = e.target.closest('[data-dg-open]') || (!swiped && e.target.closest('.dg') && !e.target.closest('#dgview') ? e.target : null);
+      if (fs) { openDiagram(fs); return; }
       var t = e.target.closest('[data-prev],[data-next],[data-goto],[data-zoom],[data-close-lightbox],[data-rail-prev],[data-rail-next]');
       var lb = document.getElementById('lightbox');
       if (!t) { if (e.target === lb) lb.close(); return; }
@@ -601,7 +646,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (!deck || document.getElementById('lightbox').open || e.altKey || e.metaKey || e.ctrlKey) return;
+      if (!deck || document.getElementById('lightbox').open || document.getElementById('dgview').open || e.altKey || e.metaKey || e.ctrlKey) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') { go(deck.i + 1); e.preventDefault(); }
       else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(deck.i - 1); e.preventDefault(); }
       else if (e.key === 'Home') { go(0); e.preventDefault(); }
