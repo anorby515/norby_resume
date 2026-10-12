@@ -47,7 +47,7 @@ PORTFOLIO.register({
     {
       id: 'innovator',
       name: 'Innovator / Continuous Learner',
-      line: 'I’m always looking for better, faster ways to work at higher quality, and I try new tools early. Lately that means putting AI to work and teaching others to do the same.'
+      line: 'I\u2019m always looking for better, faster ways to produce at higher quality, and I love to experiment with new tools and methods early. Lately that means getting my hands dirty putting AI to work, then teaching and inspiring others to do the same. Beyond AI, I\u2019ve spent the past couple of years studying business strategy and product management.'
     }
   ],
 
