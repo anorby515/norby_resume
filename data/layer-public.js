@@ -362,7 +362,7 @@ PORTFOLIO.register({
           'A separate script for the family web app, so new features cannot break ingestion.'
         ]
       },
-      confirm: ['Add a Vehicles App screenshot (cover).']
+      cover: { src: 'assets/work/vehicles/home.webp' }
     },
 
     {
