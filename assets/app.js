@@ -85,7 +85,9 @@
   render.hero = function () {
     var p = store.profile;
     return '<div class="home">' +
-      '<h1 class="home__name">' + esc(p.name).replace(' ', '<br>') + '</h1>' +
+      '<header class="home__head"><h1 class="home__name">' + esc(p.name) + '</h1>' +
+      (p.headline ? '<p class="home__tagline"' + draftMark(p.headlineDraft) + '>' + esc(p.headline) + '</p>' : '') +
+      '</header>' +
       '<ul class="home__traits" aria-label="Leadership attributes">' + store.attributes.map(function (a) {
         return '<li><span class="home__trait">' + esc(a.name) + '</span>' +
           '<span class="home__line"' + draftMark(a.draft) + '>' + esc(a.line) + '</span></li>';

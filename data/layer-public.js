@@ -12,8 +12,7 @@ PORTFOLIO.register({
   profile: {
     name: 'Andy Norby',
     location: 'Des Moines, Iowa',
-    headline: 'I lead engineering and product teams, and I build with the tools I ask them to adopt.',
-    headlineDraft: true,
+    headline: 'Approaching 30 years of Tech Stack product delivery in Deere',
     intro:
       'Twenty-six years in technology and engineering. Today I lead both the engineers who build products and the product managers who decide what is worth building. Outside work I build too: apps, agents and automations that run real operations for a youth sports club, a music discovery platform and my own household.',
     introDraft: true,
@@ -23,13 +22,18 @@ PORTFOLIO.register({
       // { label: 'GitHub', href: 'https://github.com/…' }
     ],
     confirm: [
-      'Positioning line and intro are drafts. Rewrite in your voice.',
+      'Intro is a draft. Rewrite in your voice.',
       'Add photo and LinkedIn/GitHub links.',
       'Is "Andy Norby" the name you want on the public page?'
     ]
   },
 
   attributes: [
+    {
+      id: 'leader',
+      name: 'Leader',
+      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
+    },
     {
       id: 'executor',
       name: 'Executor',
@@ -44,11 +48,6 @@ PORTFOLIO.register({
       id: 'innovator',
       name: 'Innovator / Continuous Learner',
       line: 'I’m always looking for better, faster ways to work at higher quality, and I try new tools early. Lately that means putting AI to work and teaching others to do the same.'
-    },
-    {
-      id: 'leader',
-      name: 'Leader',
-      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
     }
   ],
 
