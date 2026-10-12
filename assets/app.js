@@ -425,6 +425,11 @@
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
     if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>'));
+    arr(h.shots).forEach(function (s) {
+      out.push(slide('shot' + (s.tall ? ' slide--tall' : '') + (s.wide ? ' slide--wide' : ''), '',
+        '<div class="shot">' + img(s.src, s.title + '. ' + s.caption, 'shot__img') +
+        '<div class="shot__text"><h2 class="slide__title">' + esc(s.title) + '</h2><p class="shot__caption">' + esc(s.caption) + '</p></div></div>'));
+    });
     if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
       list(h.practices, 'bullets prose notes') + (arr(h.stack).length ? '<h3 class="slide__sub">Built with</h3>' + chips(h.stack) : '')));
