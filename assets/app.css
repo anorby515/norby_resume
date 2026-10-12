@@ -84,6 +84,11 @@ button { font: inherit; color: inherit; }
 .home__trait { font-size: clamp(1.7rem, 2.6vw, 2.4rem); font-weight: 740; font-stretch: 112%; letter-spacing: -.02em; line-height: 1.05; }
 .home__line { font-family: var(--serif); color: var(--ink-2); font-size: 1.02rem; }
 .home .confirm { grid-column: 1 / -1; }
+@media (max-width: 720px) {
+  .is-home main { align-items: flex-start; }
+  .home { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 32px; }
+  .home__name { font-size: clamp(3.6rem, 18vw, 5rem); }
+}
 
 /* ---------- pages ---------- */
 .page { max-width: 1320px; margin: 0 auto; padding: clamp(40px, 6vh, 72px) var(--gutter) 96px; }

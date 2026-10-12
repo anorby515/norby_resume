@@ -33,26 +33,22 @@ PORTFOLIO.register({
     {
       id: 'executor',
       name: 'Executor',
-      line: 'Runs things in production, with monitoring, fallbacks and a test environment.',
-      draft: true
+      line: 'Nearly 30 years delivering products, with leadership roles in some of Deere’s largest tech stack investments, including JDLink and the Gen4 Display. Most of my career has been in embedded software, followed by leading cross-functional electronics hardware organizations. Today I lead the Precision Upgrades product line, which now includes product management alongside engineering.'
     },
     {
       id: 'collaborator',
       name: 'Collaborator',
-      line: 'Builds for the people on the other end: coaches, parents, family, teams.',
-      draft: true
+      line: 'A career in the tech stack has given me a broad network across product lines and functions. People know me as authentic and trustworthy; trust is the fastest way to execute enterprise-wide programs.'
     },
     {
       id: 'innovator',
-      name: 'Innovator',
-      line: 'Spots the problem nobody has automated yet, and ships the first working version.',
-      draft: true
+      name: 'Innovator / Continuous Learner',
+      line: 'I’m always looking for better, faster ways to work at higher quality, and I try new tools early. Lately that means putting AI to work and teaching others to do the same.'
     },
     {
-      id: 'learner',
-      name: 'Continuous learner',
-      line: 'Picks up a new tool when the problem calls for it, then teaches it forward.',
-      draft: true
+      id: 'leader',
+      name: 'Leader',
+      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
     }
   ],
 
