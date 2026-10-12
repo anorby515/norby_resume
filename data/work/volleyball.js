@@ -85,6 +85,7 @@ PORTFOLIO_WORK.register({
       id: 'stats',
       hero: { src: 'st-tracker.webp', tall: true, alt: 'The Stats App during a match' },
       name: 'Stats App',
+      demo: { label: 'Demo the Stats App', href: 'https://volleyballtrackerdemo.netlify.app/' },
       line: 'Stat tracking for every team in the club, and analytics coaches use all season.',
       points: [
         'Tracks stats across all of the club’s teams in one app.',

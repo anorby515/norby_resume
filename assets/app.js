@@ -280,14 +280,19 @@
 
   function productTour(w, base) {
     return w.products.map(function (pr) {
-      var hero = pr.hero ? img('assets/work/' + w.id + '/' + pr.hero.src, pr.hero.alt || pr.name, 'pslide__img' + (pr.hero.tall ? ' is-tall' : '')) : '';
+      var heroes = [].concat(pr.hero || []);
+      var hero = heroes.length > 1
+        ? '<div class="pslide__imgs">' + heroes.map(function (h) { return img('assets/work/' + w.id + '/' + h.src, h.alt || pr.name, 'pslide__img' + (h.tall ? ' is-tall' : '')); }).join('') + '</div>'
+        : heroes.length ? img('assets/work/' + w.id + '/' + heroes[0].src, heroes[0].alt || pr.name, 'pslide__img' + (heroes[0].tall ? ' is-tall' : '')) : '';
       return slide('product', '',
         '<div class="pslide"><div class="pslide__text"><p class="pslide__kinds">' + kinds(pr.kind) + '</p>' +
         '<h2 class="pslide__name">' + esc(pr.name) + '</h2>' +
         '<p class="pslide__line">' + esc(pr.line) + '</p>' +
         (arr(pr.points).length ? list(pr.points, 'pslide__points') : '') +
         '<p class="pslide__go"><a class="go--why" href="' + link(base + '/' + pr.id + '/why') + '">Why I built this</a>' +
-        '<a class="go--how" href="' + link(base + '/' + pr.id + '/how') + '">How I built this</a></p></div>' + hero + '</div>');
+        '<a class="go--how" href="' + link(base + '/' + pr.id + '/how') + '">How I built this</a>' +
+        (pr.demo ? '<a class="go--demo" href="' + esc(pr.demo.href) + '" target="_blank" rel="noopener">' + esc(pr.demo.label) + '</a>' : '') +
+        '</p></div>' + hero + '</div>');
     });
   }
 
