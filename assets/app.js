@@ -270,9 +270,9 @@
         (w.summaryList ? (w.summaryListLead ? '<p class="prose suite__summary">' + esc(w.summaryListLead) + '</p>' : '') +
           '<ul class="prose suite__summary suite__list">' + w.summaryList.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '') +
         '</div>' +
-      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it. ' + FS_BTN + '</p></div>' : '') +
       '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a>' +
         '<span>' + w.products.map(function (pr) { return esc(pr.name); }).join(', ') + '</span></p>' +
+      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it. ' + FS_BTN + '</p></div>' : '') +
     '</div>';
   }
 
