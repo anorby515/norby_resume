@@ -138,8 +138,7 @@ PORTFOLIO.register({
       id: 'family', title: 'Family & Home', tone: 'family',
       confirm: ['Personal Assistant has no deck yet, so its icon does not open anything.'],
       apps: [
-        { id: 'personal-cos', name: 'Personal CoS', icon: 'sun', href: '#/portfolio/household' },
-        { id: 'family-cos', name: 'Family CoS', icon: 'home', href: '#/portfolio/household' },
+        { id: 'family-cos', name: 'Norby Family CoS', icon: 'home', href: '#/portfolio/household' },
         { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp' },
         { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/household' },
         { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
@@ -298,7 +297,7 @@ PORTFOLIO.register({
 
     {
       id: 'household',
-      title: 'Household automation',
+      title: 'Norby Family CoS',
       kind: ['agent'],
       attributes: ['executor', 'collaborator'],
       summary: 'Agents that take paperwork off my family’s plate: notes, receipts, statements and the weekly calendar.',
