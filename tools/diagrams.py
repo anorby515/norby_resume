@@ -741,6 +741,164 @@ def documents():
     return (f'<svg class="dg dg--half" viewBox="0 0 600 552" role="img" aria-label="Document Agents architecture" '
             f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
 
+# --------------------------------------------------------------------------
+# AI2FI: the coach, the spreadsheet it sets up, and the dashboard that reads it
+# --------------------------------------------------------------------------
+def mod(x, y, name, tip, soon=False):
+    """A dashboard module: a small box inside its sidebar group."""
+    return (f'<g class="dg-node dg-{"ext" if soon else "n"} dg-mod" tabindex="0" data-tip="{escape(tip)}" '
+            f'aria-label="{escape(name)}: {escape(tip)}">'
+            f'<rect x="{x}" y="{y}" width="98" height="30" rx="6"/>'
+            f'<text class="dg-nt" x="{x+49}" y="{y+20}">{escape(name)}</text></g>')
+
+def ai2fi():
+    # ---- left: the coach ----
+    b = zone(20, 20, 420, 580, 'AI2FI Coach · Claude')
+    b += node2(36, 52, 388, 52, 'You', 'Life situation · goals · what you know',
+               'The inputs: your life situation, your goals, and how much you already know, drawn out through conversation and quizzes.')
+    b += arrow([(230, 104), (230, 140)])
+    b += label(240, 126, ['interview + quizzes'], 'start')
+    b += node2(36, 140, 220, 52, 'Financial check-in', '/financial-check-in',
+               'Starts every session. A full two-pass assessment the first time, a light check-in after that. Then it routes you to the module that matters most right now.', 'ai')
+    b += node2(292, 140, 132, 52, 'Order of Ops', '14 steps',
+               'The 14-step Financial Order of Operations, from tracking net worth and a starter emergency fund through HSA, IRAs, education accounts and mortgage paydown. Steps gate the next ones.', 'db')
+    b += arrow([(256, 166), (292, 166)], both=True)
+    b += node2(36, 228, 190, 48, 'Module coach', '/module-coach',
+               'Coaches one topic in depth: getting to know you, a walkthrough, then goal setting.', 'ai')
+    b += node2(234, 228, 190, 48, 'Knowledge check', '/knowledge-check',
+               'Quizzes at four levels, fundamentals to advanced, so coaching starts where you are.', 'ai')
+    b += arrow([(131, 192), (131, 228)])
+    b += arrow([(230, 192), (230, 210), (329, 210), (329, 228)])
+    b += label(139, 214, ['routes'], 'start')
+    b += node(36, 312, 388, 86, 'Coaching modules',
+              'Curriculum, coaching scripts and quizzes for each topic. Financial strategy, investing (including the moat analysis framework) and mortgage today.',
+              'db', chips=['Strategy', 'Investing', 'Mortgage'])
+    b += arrow([(131, 276), (131, 312)])
+    b += arrow([(329, 276), (329, 312)])
+    b += node2(36, 432, 388, 52, 'Your profile', 'Journal · goals · competency · temperament',
+               'Markdown files in a private folder that git ignores. Session notes, goals, competency by topic, and how you behave when markets move, tracked over time.', 'db')
+    b += arrow([(230, 398), (230, 432)])
+    b += label(238, 420, ['progress'], 'start')
+    b += arrow([(36, 458), (27, 458), (27, 166), (36, 166)], both=True)
+    b += node2(36, 520, 250, 52, 'Financial strategy', 'Goals and the next step',
+               'The output: a strategy you agree on together, with goals and the next step on the order of operations.', 'key')
+    b += node2(298, 520, 126, 52, 'Follow-ups', 'Calendar reminders',
+               'Monthly or quarterly check-ins, sent as a calendar file or a Google Calendar event, so accountability actually arrives.', 'ext')
+    b += arrow([(161, 484), (161, 520)])
+    b += arrow([(361, 484), (361, 520)])
+
+    # ---- middle: the spreadsheet ----
+    b += zone(460, 20, 220, 580, 'Finances spreadsheet')
+    b += node2(476, 52, 188, 52, 'Demo template', 'Sample data to start',
+               'The dashboard opens on a sample workbook, so you can explore before entering anything of your own.', 'ext')
+    b += arrow([(570, 104), (570, 140)])
+    b += label(578, 126, ['swap in yours'], 'start')
+    tip = 'Your private database: one Excel workbook, one tab per area. It lives in your profile folder, git ignores it, and the dashboard reads it locally.'
+    b += (f'<g class="dg-node dg-db" tabindex="0" data-tip="{escape(tip)}" aria-label="Finances.xlsx: {escape(tip)}">'
+          '<rect x="476" y="140" width="188" height="380" rx="8"/>'
+          '<text class="dg-nt" x="570" y="172">Finances.xlsx</text>'
+          '<text class="dg-sub" x="570" y="190">One tab per area</text>')
+    tabs = ['Accounts', 'Net Worth MoM', 'Budget', 'Sankey', 'Mortgage', 'Education Savings', 'Brokerage Ledger',
+            '401k Ledger', 'BrokerageLink', 'Pension', 'Charitable Trust', 'Tickers']
+    for i, t in enumerate(tabs):
+        b += f'<text class="dg-tab" x="570" y="{226 + i * 24}">{escape(t)}</text>'
+    b += '</g>'
+    b += arrow([(424, 458), (476, 458)])
+    b += label(450, 450, ['sets up'])
+
+    # ---- right: the dashboard ----
+    b += zone(700, 20, 480, 580, 'AI2FI Dashboard · localhost:3001')
+    b += node2(716, 52, 216, 52, 'Yahoo Finance', 'Prices · splits · dividends',
+               'Live quotes, stock splits, dividends and the S&P 500 benchmark, cached so the dashboard stays fast.', 'ext')
+    b += node2(948, 52, 216, 52, 'Brokerage CSVs', 'Trade history imports',
+               'Import trade history from your brokerage as a CSV file.', 'ext')
+    b += arrow([(824, 104), (824, 140)])
+    b += label(832, 126, ['market data'], 'start')
+    b += arrow([(1056, 104), (1056, 140)])
+    b += label(1064, 126, ['lots'], 'start')
+    b += node2(716, 140, 448, 52, 'Local server', 'Node + Express · 21 API routes',
+               'Reads the workbook and market data and serves the dashboard. Starts at login and runs only on your computer.')
+    b += arrow([(664, 166), (716, 166)])
+    b += label(690, 158, ['reads'])
+    b += arrow([(940, 192), (940, 228)])
+    b += node2(716, 228, 448, 52, 'Dashboard', 'React + Vite · Recharts · d3-sankey',
+               'Opens in your browser. A sidebar of modules, with the demo template until you onboard.', 'key')
+    groups = [
+        ('Strategy', [
+            ('Net Worth', 'Net worth over time, its composition, and the debt ratio against a target.'),
+            ('Budget', 'The annual budget as a Sankey diagram: where money comes in and where it goes.'),
+            ('Education', 'Each 529 and ESA against projected tuition, semester by semester.'),
+            ('Mortgage', 'Payoff progress, plus a what-if simulator for extra payments.'),
+            ('Charitable', 'Stock gifts into a charitable trust and grants out to organizations.')]),
+        ('Portfolio', [
+            ('Brokerage', 'Every position and closed lot, returns against the S&P 500, dividends, and a detail view per stock.'),
+            ('RSUs', 'Restricted stock units: what has vested and how it has performed.'),
+            ('HSA', 'Health Savings Account investments, held like a brokerage account.'),
+            ('ESA', 'Education savings account holdings and returns.'),
+            ('Moat analysis', 'Shows each holding’s latest Moat Analysis report, from the quarterly research run.')]),
+        ('Retirement', [
+            ('IRAs', 'IRA holdings and returns.'),
+            ('401k', 'Each 401k fund’s annualized return, compared with putting the same dollars in the S&P 500.'),
+            ('BrokerageLink', 'Stocks held inside the 401k: return per holding against an S&P 500 shadow.'),
+            ('Pension', 'Pension payout options compared over time, for you and a spouse.')]),
+        ('Tools', [
+            ('Harvester', 'Gain/loss harvesting plan: realize losses to the $3,000 limit, then pair gains against them.'),
+            ('Refinance', 'Compare a refinance with the current loan: payment, months and total interest.'),
+            ('Sankey', 'A flow diagram for any tab with source, target and value columns.'),
+            ('Trade-offs', 'Coming soon: weigh one financial choice against another.')]),
+    ]
+    for gi, (title, mods) in enumerate(groups):
+        gx = 710 + gi * 118
+        b += group(gx, 306, 110, 30 + len(mods) * 36 + 4, title)
+        b += arrow([(gx + 55, 280), (gx + 55, 306)])
+        for mi, (name, mtip) in enumerate(mods):
+            b += mod(gx + 6, 334 + mi * 36, name, mtip, soon=(name == 'Trade-offs'))
+    b += label(1164, 556, ['18 modules, one more coming'], 'end')
+
+    # ---- quarterly moat research ----
+    b += zone(20, 620, 1160, 120, 'Quarterly moat research')
+    b += clock_node(476, 654, 188, 52, 'Moat prompt', 'Every quarter',
+                    'A scheduled Claude prompt reads my holdings from the workbook and runs the moat analysis framework on each one: what protects the business, and whether that is getting stronger or weaker.', 10, 10)
+    b += arrow([(570, 520), (570, 654)])
+    b += label(578, 590, ['holdings'], 'start')
+    tip = 'One Markdown report per holding, rewritten each quarter. The dashboard and the Gemini notebook both read them.'
+    b += ('<rect class="dg-stack" x="728" y="646" width="208" height="52" rx="8"/>'
+          '<rect class="dg-stack" x="722" y="650" width="208" height="52" rx="8"/>')
+    b += (f'<g class="dg-node dg-db" tabindex="0" data-tip="{escape(tip)}" aria-label="Moat Analysis .md files: {escape(tip)}">'
+          '<rect x="716" y="654" width="208" height="52" rx="8"/>'
+          '<text class="dg-nt" x="820" y="678">Moat Analysis .md</text>'
+          '<text class="dg-sub" x="820" y="695">1 to N · one per holding</text></g>')
+    b += arrow([(664, 680), (716, 680)])
+    b += label(690, 672, ['writes'])
+    b += arrow([(883, 646), (883, 520)])
+    b += label(891, 590, ['reports'], 'start')
+    b += node2(248, 654, 176, 52, 'Gemini notebook', 'Financial Analyst',
+               'A Gemini notebook loaded with every Moat Analysis report, so I can question the whole portfolio at once.', 'ext')
+    b += arrow([(780, 706), (780, 728), (336, 728), (336, 706)])
+    b += label(558, 722, ['sources'])
+    b += node2(36, 654, 176, 52, 'Audio summaries', 'Podcast-style reviews',
+               'Gemini turns the reports into audio overviews of the moat analysis that I listen to for the quarterly portfolio review.', 'key')
+    b += arrow([(248, 680), (212, 680)])
+
+    # ---- bottom: build, release and install ----
+    b += zone(20, 760, 1160, 108, 'Build, release and install')
+    steps = [
+        ('Claude Code', 'Builds app and skills', 'Writes the dashboard, the coaching skills and the modules.', 'ai'),
+        ('GitHub', 'Source on main', 'Source and version history for everything: dashboard, skills, modules and docs.', 'ext'),
+        ('Release skill', '/create-release', 'A Claude skill that cuts a versioned release from main.', 'ai'),
+        ('Release branch', 'v1.0.0 · May 12, 2026', 'What people download: the dashboard plus the coach’s skills and modules.', 'n'),
+        ('Install page', 'GitHub Pages', 'The public welcome page: what is in the release, a one-line installer for Mac and Windows, and how to start coaching.', 'ext'),
+    ]
+    for i, (t, s, tip, k) in enumerate(steps):
+        x = 36 + i * 232
+        b += node2(x, 800, 194, 52, t, s, tip, k)
+        if i:
+            b += arrow([(x - 38, 826), (x, 826)])
+    b += arrow([(1061, 800), (1061, 604)])
+    b += label(1053, 616, ['installs, starts at login'], 'end')
+    return svg(884, b, 'AI2FI architecture')
+
+
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
@@ -753,6 +911,11 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('vibes', " + json.dumps({'arch': vibes()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'ai2fi.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('ai2fi', " + json.dumps({'arch': ai2fi()}, indent=1) + ');\n')
     print('wrote', os.path.relpath(out))
     out = os.path.join(here, '..', 'data', 'work', 'household.diagrams.js')
     with open(out, 'w') as f:

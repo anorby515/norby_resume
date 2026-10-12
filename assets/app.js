@@ -399,13 +399,14 @@
   // Projects without a work file get a short deck from the main data.
   function simpleWhy(p) {
     var y = p.why || {}, out = [];
-    // A single full-width slide: a lead line, then named groups of bullets.
+    // A single full-width slide: a lead line, then named groups of bullets,
+    // followed by one slide per screenshot in why.shots.
     // Or a lead line and one list of bullets, beside the cover screenshot if there is one.
     if (arr(y.groups).length) return [slide('groups', 'Why I built this',
       '<p class="intro__problem">' + esc(y.problem) + '</p>' +
       '<ul class="groups">' + y.groups.map(function (g) {
         return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose') + '</li>';
-      }).join('') + '</ul>' + linkButtons(p) + confirmNotes(p.confirm))];
+      }).join('') + '</ul>' + linkButtons(p) + confirmNotes(p.confirm))].concat(arr(y.shots).map(shotSlide));
     // The picture beside the bullets: the Why's own shot if it has one, else the project cover.
     var pic = y.shot || p.cover;
     if (arr(y.points).length) return [slide('intro', 'Why I built this',
@@ -439,15 +440,17 @@
       half('how', 'How I built this', h.lead, h.points, svg) + '</div>' +
       linkButtons(p) + confirmNotes(p.confirm))];
   }
+  // One screenshot with its title and caption: { src, title, caption, tall?, wide? }
+  function shotSlide(s) {
+    return slide('shot' + (s.tall ? ' slide--tall' : '') + (s.wide ? ' slide--wide' : ''), '',
+      '<div class="shot">' + img(s.src, s.title + '. ' + s.caption, 'shot__img') +
+      '<div class="shot__text"><h2 class="slide__title">' + esc(s.title) + '</h2><p class="shot__caption">' + esc(s.caption) + '</p></div></div>');
+  }
   function simpleHow(p) {
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
     if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>'));
-    arr(h.shots).forEach(function (s) {
-      out.push(slide('shot' + (s.tall ? ' slide--tall' : '') + (s.wide ? ' slide--wide' : ''), '',
-        '<div class="shot">' + img(s.src, s.title + '. ' + s.caption, 'shot__img') +
-        '<div class="shot__text"><h2 class="slide__title">' + esc(s.title) + '</h2><p class="shot__caption">' + esc(s.caption) + '</p></div></div>'));
-    });
+    arr(h.shots).forEach(function (s) { out.push(shotSlide(s)); });
     if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
       list(h.practices, 'bullets prose notes') + (arr(h.stack).length ? '<h3 class="slide__sub">Built with</h3>' + chips(h.stack) : '')));
