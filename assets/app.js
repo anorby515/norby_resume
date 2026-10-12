@@ -431,17 +431,18 @@
   // Used when a project sets layout: 'halves'.
   function halves(p) {
     var y = p.why || {}, h = p.how || {};
-    function half(lens, title, lead, points, svg) {
+    function half(lens, title, lead, points, svg, extra) {
       return '<div class="half half--' + lens + '"><h2 class="slide__title">' + esc(title) + '</h2>' +
         (lead ? '<p class="intro__problem">' + esc(lead) + '</p>' : '') +
-        (arr(points).length ? list(points, 'bullets prose why__points') : '') +
+        (arr(points).length ? list(points, 'bullets prose why__points') : '') + (extra || '') +
         (svg ? '<div class="dgwrap half__dg">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>' : '') + '</div>';
     }
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
+    // Link buttons sit in the Why half, right under its bullets.
     return [slide('halves', '', '<div class="halves">' +
-      half('why', 'Why I built this', y.problem, y.points) +
+      half('why', 'Why I built this', y.problem, y.points, null, linkButtons(p)) +
       half('how', 'How I built this', h.lead, h.points, svg) + '</div>' +
-      linkButtons(p) + confirmNotes(p.confirm))];
+      confirmNotes(p.confirm))];
   }
   // One screenshot with its title and caption: { src, title, caption, tall?, wide? }
   function shotSlide(s) {
