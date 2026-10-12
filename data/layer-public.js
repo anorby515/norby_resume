@@ -265,7 +265,7 @@ PORTFOLIO.register({
             ]
           },
           {
-            title: 'Financial Dashboard', kind: ['app'],
+            title: 'Financial Dashboard', kind: ['app'], columns: 2,
             points: [
               'Net Worth Tracking',
               'Annual Budget Sankey Diagram',
@@ -280,12 +280,9 @@ PORTFOLIO.register({
           }
         ],
         shots: [
-          { src: 'assets/work/ai2fi/welcome.webp', wide: true, title: 'Version 1.0, on GitHub',
-            caption: 'Released May 12, 2026. Four steps: see what’s in the release, download it, install it, and start coaching.' },
-          { src: 'assets/work/ai2fi/networth.webp', wide: true, title: 'Net Worth',
-            caption: 'Net worth over time, what it’s made of, and the debt ratio against its target. Demo data.' },
-          { src: 'assets/work/ai2fi/budget.webp', wide: true, title: 'Annual Budget',
-            caption: 'Where the money comes in and where it goes, as a Sankey diagram. Click any flow to isolate it. Demo data.' }
+          { src: 'assets/work/ai2fi/welcome.webp', alt: 'AI2FI version 1.0 on GitHub' },
+          { src: 'assets/work/ai2fi/networth.webp', alt: 'Net Worth, demo data' },
+          { src: 'assets/work/ai2fi/budget.webp', alt: 'Annual Budget Sankey diagram, demo data' }
         ]
       },
       how: {

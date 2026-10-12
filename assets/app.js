@@ -399,16 +399,17 @@
   // Projects without a work file get a short deck from the main data.
   function simpleWhy(p) {
     var y = p.why || {}, out = [];
-    // A single full-width slide: a lead line, then named groups of bullets,
-    // followed by one slide per screenshot in why.shots.
+    // A single full-width slide: a lead line, named groups of bullets, then a row of why.shots.
     // Or a lead line and one list of bullets, beside the cover screenshot if there is one.
     // Link buttons sit beside the title, over the second group's column.
     if (arr(y.groups).length) return [{ kind: 'groups', title: 'Why I built this', html:
       '<div class="groups__head"><h2 class="slide__title">Why I built this</h2>' + linkButtons(p) + '</div>' +
       '<p class="intro__problem">' + esc(y.problem) + '</p>' +
       '<ul class="groups">' + y.groups.map(function (g) {
-        return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose') + '</li>';
-      }).join('') + '</ul>' + confirmNotes(p.confirm) }].concat(arr(y.shots).map(shotSlide));
+        return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose' + (g.columns === 2 ? ' bullets--2col' : '')) + '</li>';
+      }).join('') + '</ul>' +
+      (arr(y.shots).length ? '<div class="groups__shots">' + y.shots.map(function (s) { return img(s.src, s.alt || '', 'groups__shot'); }).join('') + '</div>' : '') +
+      confirmNotes(p.confirm) }];
     // The picture beside the bullets: the Why's own shot if it has one, else the project cover.
     var pic = y.shot || p.cover;
     if (arr(y.points).length) return [slide('intro', 'Why I built this',
