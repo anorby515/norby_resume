@@ -402,11 +402,13 @@
     // A single full-width slide: a lead line, then named groups of bullets,
     // followed by one slide per screenshot in why.shots.
     // Or a lead line and one list of bullets, beside the cover screenshot if there is one.
-    if (arr(y.groups).length) return [slide('groups', 'Why I built this',
+    // Link buttons sit beside the title, over the second group's column.
+    if (arr(y.groups).length) return [{ kind: 'groups', title: 'Why I built this', html:
+      '<div class="groups__head"><h2 class="slide__title">Why I built this</h2>' + linkButtons(p) + '</div>' +
       '<p class="intro__problem">' + esc(y.problem) + '</p>' +
       '<ul class="groups">' + y.groups.map(function (g) {
         return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose') + '</li>';
-      }).join('') + '</ul>' + linkButtons(p) + confirmNotes(p.confirm))].concat(arr(y.shots).map(shotSlide));
+      }).join('') + '</ul>' + confirmNotes(p.confirm) }].concat(arr(y.shots).map(shotSlide));
     // The picture beside the bullets: the Why's own shot if it has one, else the project cover.
     var pic = y.shot || p.cover;
     if (arr(y.points).length) return [slide('intro', 'Why I built this',

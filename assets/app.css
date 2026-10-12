@@ -241,6 +241,9 @@ button { font: inherit; color: inherit; }
 .groups > li { padding: clamp(12px, 2vh, 20px) 0; border-top: 2px solid var(--ink); }
 .groups > li:nth-child(n+3) { border-top-width: 1px; border-top-color: var(--rule); }
 .groups .bullets { color: var(--ink-2); }
+.groups__head { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; align-items: center; margin-bottom: clamp(20px, 3.5vh, 40px); }
+.groups__head .slide__title { margin-bottom: 0; }
+.groups__head .try { margin: 0; }
 
 /* Why / How on one page, split in half */
 .halves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
