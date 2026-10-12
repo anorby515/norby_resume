@@ -37,7 +37,7 @@ PORTFOLIO.register({
     {
       id: 'leader',
       name: 'Leader',
-      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
+      line: 'I lead through collaboration, high transparency and a focus on empowering my teams. I lead by example to build a shared consciousness of what\u2019s important, for myself and the organization. I grow my teams\u2019 capabilities through empowerment with accountability, and I share with them the Leadership Model I strive to live by: Coach, Mentor, Manage.'
     },
     {
       id: 'collaborator',
