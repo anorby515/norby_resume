@@ -98,6 +98,7 @@ PORTFOLIO.register({
       id: 'questions',
       type: 'placeholder',
       nav: 'Pre-Interview Questions',
+      hideInHeader: true, // still a scene in the swipe deck; just not a header link
       title: 'Pre-Interview Questions',
       lede: 'My answers to the three questions the panel shared ahead of the interview.',
       items: ['Question 1', 'Question 2', 'Question 3'],

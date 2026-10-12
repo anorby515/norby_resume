@@ -72,7 +72,7 @@
     var out = [], cur = null;
     store.sections.forEach(function (s) {
       if (s.type === 'hero' || s.nav || !cur) {
-        cur = { id: s.type === 'hero' ? '' : s.id, nav: s.nav, sections: [] };
+        cur = { id: s.type === 'hero' ? '' : s.id, nav: s.nav, hideInHeader: !!s.hideInHeader, sections: [] };
         out.push(cur);
       }
       cur.sections.push(s);
@@ -797,7 +797,7 @@
 
   function drawChrome() {
     var nav = document.getElementById('nav');
-    nav.innerHTML = screens().filter(function (s) { return s.nav && s.id; }).map(function (s) {
+    nav.innerHTML = screens().filter(function (s) { return s.nav && s.id && !s.hideInHeader; }).map(function (s) {
       return '<a href="' + link(s.id) + '" data-screen="' + esc(s.id) + '">' + esc(s.nav) + '</a>';
     }).join('');
     document.getElementById('bar-name').textContent = store.profile.name || '';
