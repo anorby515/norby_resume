@@ -531,6 +531,83 @@ def family_cos():
     b += arrow([(1000, 326), (1000, 356)])
     return svg(440, b, 'Norby Family CoS architecture')
 
+# --------------------------------------------------------------------------
+# Vehicles: the family app, its API, and the receipt-filing pipeline
+# (from the VehicleTracker repo: README, SETUP and docs/DATA_CONTRACT)
+# --------------------------------------------------------------------------
+def vehicles():
+    # ---- phones ----
+    b = zone(20, 30, 300, 200, 'Family iPhones')
+    b += node2(40, 68, 260, 52, 'Vehicles app', 'Home-screen web app',
+               'A home-screen web app (Vite, TypeScript, Preact) for the family’s drivers: what’s due on each car, service history, registration and insurance cards. Hosted on GitHub Pages.', 'key')
+    b += node(40, 134, 260, 80, 'On the phone',
+              'A receipt scanner that finds the page edges (OpenCV.js) and builds a PDF; an offline cache and upload queue that retries until the scan lands; and the push subscription.',
+              chips=['Scanner', 'Offline', 'Push'])
+
+    # ---- the App API and its two timed jobs ----
+    b += zone(360, 30, 470, 200, 'App API: Apps Script web app')
+    b += node2(380, 68, 190, 110, 'App API', 'Runs as Andrew',
+               'A standalone Apps Script web app. It checks sign-in, serves each car’s data and documents, takes chunked scan uploads and odometer readings, and is never allowed to write to the journal’s own tabs.', 'key')
+    b += clock_node(594, 64, 216, 52, 'Every 30 min', 'Scan status',
+                    'Follows each uploaded scan through the filing pipeline and tells the person who scanned it when it is filed or needs review.', 12, 30)
+    b += clock_node(594, 128, 216, 52, 'Daily 7:30 AM', 'Recalls and due dates',
+                    'Checks recalls, registration and warranty dates and service coming due, then sends notifications. Each is sent once, and never during quiet hours.', 7, 30)
+    b += arrow([(300, 94), (380, 94)], both=True)
+    b += label(340, 86, ['API'])
+
+    # ---- outside services ----
+    b += zone(870, 30, 310, 200, 'Services')
+    b += node2(890, 64, 270, 52, 'Push Worker', 'Cloudflare',
+               'Apps Script can’t sign Web Push messages, so the API hands each batch to this small Cloudflare Worker to sign, encrypt and deliver to the phones.', 'ext')
+    b += node2(890, 128, 270, 52, 'NHTSA', 'Recalls API',
+               'The federal recalls API, checked every day for each vehicle.', 'ext')
+    b += node(890, 190, 270, 32, 'Google sign-in',
+               'The app signs in with Google once. The API checks the token against the family allowlist and keeps a 60-day session; anyone else gets no data.', 'ext')
+    b += arrow([(810, 90), (890, 90)])
+    b += label(850, 82, ['notify'])
+    b += arrow([(810, 154), (890, 154)])
+    b += label(850, 146, ['recalls'])
+    # push notifications travel back over the top to the phones
+    b += arrow([(1025, 64), (1025, 14), (170, 14), (170, 68)])
+    b += label(600, 18, ['push notifications'])
+
+    # ---- receipt filing: the agent and the ingestion script ----
+    b += zone(20, 270, 1160, 214, 'Receipt filing')
+    b += node2(40, 312, 170, 56, 'Drive › Inbox', 'Every receipt lands here',
+               'The Drive folder every receipt lands in, whether it came from the app or from the Google Drive scanner. The app saves each scan as a new file only once the last byte arrives.', 'db')
+    b += node2(250, 302, 220, 76, 'Vehicles agent', 'Claude scheduled task',
+               'Reads each receipt, works out the vehicle and the services, writes a queue file for the ingestion script, then renames the receipt and files it. Also syncs Todoist and sends the driver emails.', 'ai')
+    b += node2(560, 312, 160, 56, 'Queue', 'JSON in Drive',
+               'One JSON file per receipt. The handoff between the agent and the spreadsheet, so the agent never edits the Sheet directly.', 'db')
+    b += clock_node(770, 312, 200, 56, 'Every 15 min', 'Ingestion script',
+                    'Apps Script bound to the Sheet. Every 15 minutes it applies the queue to the journal, then removes the queue file.', 12, 15)
+    b += node2(1010, 308, 150, 64, 'Journal', 'Google Sheet',
+               'The maintenance journal: vehicles, visits, services, documents, schedule and warranties. The single source of truth the app reads.', 'db')
+    b += arrow([(210, 340), (250, 340)])
+    b += arrow([(470, 340), (560, 340)])
+    b += label(515, 332, ['writes'])
+    b += arrow([(720, 340), (770, 340)])
+    b += arrow([(970, 340), (1010, 340)])
+
+    # what the agent produces
+    b += node2(100, 418, 170, 52, 'Vehicle folders', 'Renamed and filed',
+               'Each receipt renamed and moved into its vehicle’s Drive folder. Anything unreadable goes to a Needs Review folder for a person to look at.', 'db')
+    b += node2(290, 418, 150, 52, 'Driver emails', 'Service reminders',
+               'Emails to each car’s primary driver and me about service coming due, a month ahead.')
+    b += node2(460, 418, 150, 52, 'Todoist', 'Service tasks',
+               'Service tasks synced to my Todoist list.', 'ext')
+    b += arrow([(360, 378), (360, 396), (185, 396), (185, 418)])
+    b += arrow([(360, 396), (360, 418)])
+    b += arrow([(360, 396), (535, 396), (535, 418)])
+    b += '<circle class="dg-dot" cx="360" cy="396" r="3.5"/>'
+
+    # the API saves scans into the Inbox and reads the journal
+    b += arrow([(420, 178), (420, 254), (180, 254), (180, 312)])
+    b += label(300, 248, ['saves scans'])
+    b += arrow([(1085, 308), (1085, 244), (520, 244), (520, 178)])
+    b += label(800, 238, ['reads the journal'])
+    return svg(494, b, 'Vehicles app architecture')
+
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
@@ -548,4 +625,9 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('household', " + json.dumps({'arch': family_cos()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'vehicles.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('vehicles', " + json.dumps({'arch': vehicles()}, indent=1) + ');\n')
     print('wrote', os.path.relpath(out))
