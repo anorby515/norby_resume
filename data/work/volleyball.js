@@ -83,7 +83,10 @@ PORTFOLIO_WORK.register({
     /* ------------------------------------------------------------------ */
     {
       id: 'stats',
-      hero: { src: 'st-tracker.webp', tall: true, alt: 'The Stats App during a match' },
+      hero: [
+        { src: 'st-tracker.webp', tall: true, alt: 'The Stats Tracker during a match' },
+        { src: 'st-analyzer.webp', tall: true, alt: 'The Stats Analyzer: season record and attack stats (demo players)' }
+      ],
       name: 'Stats App',
       demo: { label: 'Demo the Stats App', href: 'https://volleyballtrackerdemo.netlify.app/' },
       line: 'Stat tracking for every team in the club, and analytics coaches use all season.',
@@ -136,7 +139,7 @@ PORTFOLIO_WORK.register({
     /* ------------------------------------------------------------------ */
     {
       id: 'tournament',
-      hero: { src: 'tp-tv.webp', alt: 'The Tournament Command Center on the gym TV' },
+      heroDiagram: 'tournamentHero', // tools/diagrams.py, tournament_hero()
       name: 'Tournament Suite',
       line: 'A collection of apps that made the Eclipse tournament run perfectly.',
       points: [

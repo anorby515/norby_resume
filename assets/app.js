@@ -257,6 +257,7 @@
 
   function crumbs(items) {
     return '<nav class="crumbs" aria-label="Breadcrumb">' + items.map(function (c, i) {
+      if (c.product) return '<span aria-current="page" data-crumb-product>' + esc(c.label) + '</span>';
       return i < items.length - 1 ? '<a href="' + c.href + '">' + esc(c.label) + '</a><span aria-hidden="true">/</span>' : '<span aria-current="page">' + esc(c.label) + '</span>';
     }).join('') + '</nav>';
   }
@@ -282,7 +283,9 @@
   function productTour(w, base) {
     return w.products.map(function (pr) {
       var heroes = [].concat(pr.hero || []);
-      var hero = heroes.length > 1
+      var heroSvg = pr.heroDiagram && (diagrams[w.id] || {})[pr.heroDiagram];
+      var hero = heroSvg ? '<div class="pslide__dg">' + heroSvg + '</div>'
+        : heroes.length > 1
         ? '<div class="pslide__imgs">' + heroes.map(function (h) { return img('assets/work/' + w.id + '/' + h.src, h.alt || pr.name, 'pslide__img' + (h.tall ? ' is-tall' : '')); }).join('') + '</div>'
         : heroes.length ? img('assets/work/' + w.id + '/' + heroes[0].src, heroes[0].alt || pr.name, 'pslide__img' + (heroes[0].tall ? ' is-tall' : '')) : '';
       return slide('product', '',
@@ -290,10 +293,8 @@
         '<h2 class="pslide__name">' + esc(pr.name) + '</h2>' +
         '<p class="pslide__line">' + esc(pr.line) + '</p>' +
         (arr(pr.points).length ? list(pr.points, 'pslide__points') : '') +
-        '<p class="pslide__go"><a class="go--why" href="' + link(base + '/' + pr.id + '/why') + '">Why I built this</a>' +
-        '<a class="go--how" href="' + link(base + '/' + pr.id + '/how') + '">How I built this</a>' +
-        (pr.demo ? '<a class="go--demo" href="' + esc(pr.demo.href) + '" target="_blank" rel="noopener">' + esc(pr.demo.label) + '</a>' : '') +
-        '</p></div>' + hero + '</div>');
+        (pr.demo ? '<p class="pslide__go"><a class="go--demo" href="' + esc(pr.demo.href) + '" target="_blank" rel="noopener">' + esc(pr.demo.label) + '</a></p>' : '') +
+        '</div>' + hero + '</div>');
     });
   }
 
@@ -421,7 +422,8 @@
     var base = opts.base;
     var pill = opts.views.length > 1 ? '<div class="pill" role="group" aria-label="View">' + opts.views.map(function (v) {
       var label = v === 'why' ? 'Why I built this' : 'How I built this';
-      return '<a href="' + link(base + '/' + v) + '"' + (v === opts.view ? ' aria-current="page"' : '') + '>' + label + '</a>';
+      var href = (opts.hrefs || {})[v] || link(base + '/' + v);
+      return '<a href="' + href + '" data-pill="' + v + '"' + (v === opts.view ? ' aria-current="page"' : '') + '>' + label + '</a>';
     }).join('') + '</div>' : '<div></div>';
     return '<div class="deck" data-deck>' +
       '<div class="deck__top">' + crumbs(opts.crumbs) + pill +
@@ -484,6 +486,14 @@
       if (c) c.textContent = deck.titles[deck.i] || '';
       if (!initial && history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#/' + id);
       return;
+    }
+    if (deck.products) {
+      var cur = deck.products[deck.i];
+      var how = document.querySelector('[data-pill="how"]'); if (how) how.setAttribute('href', link(deck.productBase + '/' + cur.id + '/how'));
+      var why = document.querySelector('[data-pill="why"]'); if (why) why.setAttribute('href', link(deck.path + '/' + (deck.i + 1)));
+      var crumb = document.querySelector('.deck__top .crumbs [data-crumb-product]');
+      if (crumb) crumb.textContent = cur.name;
+      document.title = cur.name + ' | ' + (store.profile.name || '');
     }
     if (!initial && history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#/' + deck.path + '/' + (deck.i + 1));
   }
@@ -567,18 +577,25 @@
       }
       var crumbs2 = crumbBase.concat(single ? [] : [{ label: w.title, href: link(base) }]);
       var opts;
+      if (product !== 'products' && view === 'why' && !single && byId(w.products, product)) {
+        location.replace('#/' + base + '/products/' + (w.products.indexOf(byId(w.products, product)) + 1)); return;
+      }
       if (product === 'products') {
-        opts = { slides: productTour(w, base), views: [], view: '', base: base + '/products',
-          name: w.title, kind: [], crumbs: crumbs2.concat([{ label: 'Products' }]) };
-        show(deckView(opts), { deck: true, view: 'why', screen: 'portfolio', title: w.title });
-        return startDeck(opts, Math.max(0, (parseInt(parts[3], 10) || 1) - 1));
+        var start = Math.min(w.products.length - 1, Math.max(0, (parseInt(parts[3], 10) || 1) - 1));
+        opts = { slides: productTour(w, base), views: ['why', 'how'], view: 'why', base: base + '/products',
+          hrefs: { why: link(base + '/products/' + (start + 1)), how: link(base + '/' + w.products[start].id + '/how') },
+          name: w.title, kind: [], crumbs: crumbs2.concat([{ label: w.products[start].name, product: true }]) };
+        show(deckView(opts), { deck: true, view: 'why', screen: 'portfolio', title: w.products[start].name });
+        startDeck(opts, start);
+        deck.products = w.products; deck.productBase = base; deck.path = base + '/products';
+        return go(start, true);
       }
       {
         var pr = byId(w.products, product);
         if (!pr) return notFound();
         opts = { slides: view === 'how' ? productHow(w, pr) : productWhy(w, pr), views: ['why', 'how'], view: view,
           base: base + '/' + pr.id, name: pr.name, kind: pr.kind,
-          crumbs: crumbs2.concat([{ label: pr.name, href: link(base + '/products/' + (w.products.indexOf(pr) + 1)) }, { label: view === 'how' ? 'How I built this' : 'Why I built this' }]) };
+          crumbs: crumbs2.concat(single ? [] : [{ label: pr.name }]) };
       }
       show(deckView(opts), { deck: true, view: view, screen: 'portfolio', title: opts.name });
       startDeck(opts, idx);

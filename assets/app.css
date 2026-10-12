@@ -423,6 +423,8 @@ button { font: inherit; color: inherit; }
 .pslide__imgs .pslide__img { flex: 0 1 auto; min-width: 0; }
 .pslide__go a:hover { filter: brightness(1.1); }
 .pslide__img { justify-self: center; }
+.pslide__dg { justify-self: center; width: 100%; display: flex; justify-content: center; }
+.pslide__dg .dg { width: auto; max-width: 100%; height: calc(100vh - var(--bar) - 200px); max-height: 720px; }
 .pslide__img img { max-height: calc(100vh - var(--bar) - 230px); width: auto; max-width: 100%; }
 .pslide__img.is-tall img { max-height: calc(100vh - var(--bar) - 260px); }
 @media (max-height: 780px) { .pslide__points li { font-size: .92rem; padding: 6px 0 6px 18px; } .pslide__line { margin: 12px 0; } }
@@ -556,3 +558,18 @@ a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .dgview__body { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 20px var(--gutter) 28px; }
 .dgview__body .dg { width: 100%; height: 100%; max-width: none; max-height: none; cursor: default; }
 .dgview .dg-tip { z-index: 2; }
+
+/* Deck header on phones: breadcrumb on its own line, then the Why/How toggle; the product name is already on the slide. */
+@media (max-width: 720px) {
+  .deck__top { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .deck__top .crumbs { flex-wrap: wrap; row-gap: 2px; font-size: .85rem; }
+  .deck__top .pill { justify-self: start; }
+  .deck__top .pill a { padding: 8px 14px; font-size: .88rem; }
+  .deck__name { display: none; }
+}
+@media (max-width: 720px) {
+  .pslide { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .pslide__dg .dg { height: auto; width: 100%; }
+  .pslide__img img, .pslide__img.is-tall img { max-height: 60vh; }
+  .pslide__imgs .pslide__img img { max-height: 46vh; }
+}
