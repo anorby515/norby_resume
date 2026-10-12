@@ -248,6 +248,17 @@ button { font: inherit; color: inherit; }
 .groups__shots .try a { white-space: nowrap; }
 .groups__shot img { height: clamp(130px, 21vh, 240px); width: auto; max-width: none; }
 
+/* showcase (one-slide Why: story on the left, link button and phone screenshots on the right) */
+.showcase { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(36px, 4.5vw, 72px); align-items: start; }
+.showcase .slide__sub { margin-top: clamp(16px, 2.6vh, 26px); margin-bottom: 6px; }
+.showcase .why__points { margin-top: 0; font-size: 1.05rem; }
+.showcase .why__points li + li { margin-top: .4em; }
+.showcase__side { display: flex; flex-direction: column; align-items: center; gap: clamp(16px, 2.6vh, 26px); }
+.showcase__shots { display: flex; gap: 16px; align-items: flex-start; }
+.showcase__shot img { height: clamp(260px, calc(100vh - var(--bar) - 330px), 480px); width: auto; max-width: none; }
+.try--big { margin: 0; justify-content: center; }
+.try--big a { font-size: 1.2rem; padding: 16px 30px; border-radius: 999px; box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
+
 /* Why / How on one page, split in half */
 .halves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
 .half { padding: clamp(8px, 2vh, 20px) clamp(32px, 4.5vw, 72px); }

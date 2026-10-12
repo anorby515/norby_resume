@@ -320,10 +320,10 @@
     }).join('') + '</ul>';
   }
 
-  function linkButtons(p) {
+  function linkButtons(p, cls) {
     var l = arr(p.links).concat(p.link && p.link.href ? [p.link] : []).filter(function (x) { return x.href; });
     if (!l.length) return '';
-    return '<p class="try">' + l.map(function (x) { return '<a href="' + esc(x.href) + '" target="_blank" rel="noopener">' + esc(x.label) + '</a>'; }).join('') + '</p>';
+    return '<p class="try' + (cls ? ' ' + cls : '') + '">' + l.map(function (x) { return '<a href="' + esc(x.href) + '" target="_blank" rel="noopener">' + esc(x.label) + '</a>'; }).join('') + '</p>';
   }
 
   function productWhy(w, p) {
@@ -410,6 +410,18 @@
       }).join('') + '</ul>' +
       (arr(y.shots).length ? '<div class="groups__shots">' + y.shots.map(function (s) { return img(s.src, s.alt || '', 'groups__shot'); }).join('') + linkButtons(p) + '</div>' : linkButtons(p)) +
       confirmNotes(p.confirm) }];
+    // Showcase: the story and a features list on the left; big link buttons and a row of phone
+    // screenshots (why.shots) on the right.
+    if (arr(y.shots).length) {
+      var sub = function (t, items) {
+        return arr(items).length ? '<div class="showcase__group">' + (t ? '<h3 class="slide__sub">' + esc(t) + '</h3>' : '') + list(items, 'bullets prose why__points') + '</div>' : '';
+      };
+      return [slide('intro', 'Why I built this',
+        '<div class="showcase"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
+        sub(y.pointsTitle, y.points) + sub(y.featuresTitle, y.features) + confirmNotes(p.confirm) + '</div>' +
+        '<div class="showcase__side">' + linkButtons(p, 'try--big') +
+        '<div class="showcase__shots">' + y.shots.map(function (s) { return img(s.src, s.alt || '', 'showcase__shot is-tall'); }).join('') + '</div></div></div>')];
+    }
     // The picture beside the bullets: the Why's own shot if it has one, else the project cover.
     var pic = y.shot || p.cover;
     if (arr(y.points).length) return [slide('intro', 'Why I built this',
