@@ -16,9 +16,11 @@ from html import escape
 
 W = 1200
 
-def zone(x, y, w, h, label):
+def zone(x, y, w, h, label, center=False):
+    """center=True puts the label mid-zone, clear of arrows entering on the left."""
+    lx, anchor = (x + w / 2, ' text-anchor="middle"') if center else (x + 16, '')
     return (f'<g class="dg-zone"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12"/>'
-            f'<text class="dg-zl" x="{x+16}" y="{y+26}">{escape(label)}</text></g>')
+            f'<text class="dg-zl" x="{lx}" y="{y+26}"{anchor}>{escape(label)}</text></g>')
 
 def node(x, y, w, h, title, tip, kind='n', chips=None):
     """kind: n component, key primary, db data store, ext external service, ai agent"""
@@ -658,6 +660,87 @@ def habits():
     return (f'<svg class="dg dg--half" viewBox="0 0 600 464" role="img" aria-label="Habit tracking app architecture" '
             f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
 
+# --------------------------------------------------------------------------
+# College Notes: handwritten class notes scanned into Drive, digitized by a
+# daily Claude agent, filed in Notion. Drawn narrow (600 wide) for the How
+# half of a one-page Why/How split.
+# --------------------------------------------------------------------------
+def college_notes():
+    # ---- Google Drive: the scanner fills a folder per class ----
+    b = zone(20, 20, 560, 196, 'Google Drive')
+    b += node2(40, 98, 170, 64, 'Drive app', 'Scanner on her phone',
+               'She scans each page with the scanner built into the Google Drive app and saves it to that class’s folder. Scanning is her only step; everything after it is automatic.', 'key')
+    b += group(250, 50, 310, 148, 'Inbox: a folder per class')
+    classes = ['Chemistry', 'Development Psych', 'Nutrition']
+    for i, c in enumerate(classes):
+        b += node(270, 80 + i * 36, 270, 28, c,
+                  'One Inbox folder per class. The folder a scan lands in tells the agent which class it belongs to.', 'db')
+    b += arrow([(210, 130), (236, 130), (236, 94), (270, 94)])
+    b += arrow([(236, 130), (270, 130)])
+    b += arrow([(236, 130), (236, 166), (270, 166)])
+    b += '<circle class="dg-dot" cx="236" cy="130" r="3.5"/>'
+    b += label(125, 182, ['saves the scan to', 'its class folder'])
+
+    # ---- Claude: the daily agent ----
+    b += node2(190, 270, 220, 64, 'Claude', 'Daily agent',
+               'A scheduled Claude task that runs every day. It picks up each new scan in the Inbox, converts the handwriting to digital text, and uses the scan’s folder as its class.', 'ai')
+    b += arrow([(380, 198), (380, 270)])
+    b += label(390, 240, ['new scans', '+ class'], 'start')
+
+    # ---- Notion: the notebook ----
+    b += zone(20, 380, 560, 140, 'Notion')
+    b += node(150, 410, 300, 90, 'Class Notes notebook',
+              'A page per scan, filed by class and date: the digitized note to read and search, with the original scan alongside it for anything the text misses.',
+              'db', chips=['Digitized note', 'Original scan'])
+    b += arrow([(300, 334), (300, 410)])
+    b += label(310, 356, ['digitized note', '+ original scan'], 'start')
+    return (f'<svg class="dg dg--half" viewBox="0 0 600 540" role="img" aria-label="College Notes architecture" '
+            f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
+
+# --------------------------------------------------------------------------
+# Document Agents: medical receipts and bank statements land in Drive inboxes,
+# a scheduled Claude agent renames and files them. Drawn narrow (600 wide) for
+# the How half of a one-page Why/How split.
+# --------------------------------------------------------------------------
+def documents():
+    # ---- how files arrive ----
+    b = node2(20, 20, 220, 64, 'Medical receipts', 'Scanned on my phone',
+              'I invest my HSA and pay medical expenses out of pocket, so I scan every receipt with my phone.', 'key')
+    b += node2(360, 20, 220, 64, 'Bank statements', 'Downloaded from the bank',
+               'I download each statement from the bank’s website.', 'key')
+
+    # ---- Google Drive inboxes ----
+    b += zone(20, 128, 560, 112, 'Google Drive: Inboxes', center=True)
+    b += node(30, 170, 200, 48, 'Medical Receipts',
+              'The Drive inbox every scanned receipt lands in.', 'db')
+    b += node(370, 170, 200, 48, 'Statements',
+              'The Drive inbox every downloaded statement lands in.', 'db')
+    b += arrow([(130, 84), (130, 170)])
+    b += label(140, 112, ['scan'], 'start')
+    b += arrow([(470, 84), (470, 170)])
+    b += label(480, 112, ['download'], 'start')
+
+    # ---- Claude: the scheduled agent ----
+    b += node2(190, 280, 220, 64, 'Claude', 'Scheduled agent',
+               'A scheduled Claude task. It reads each new file in either inbox, works out what it is, renames it and files it. I never touch them.', 'ai')
+    b += arrow([(130, 218), (130, 312), (190, 312)])
+    b += label(140, 270, ['new receipts'], 'start')
+    b += arrow([(470, 218), (470, 312), (410, 312)])
+    b += label(460, 270, ['new statements'], 'end')
+
+    # ---- Google Drive, filed ----
+    b += zone(20, 400, 560, 132, 'Google Drive: Filed', center=True)
+    b += node2(70, 446, 230, 64, 'Medical receipts', 'Renamed and filed',
+               'Each receipt renamed and filed, ready for HSA reimbursement.', 'db')
+    b += node2(330, 446, 230, 64, 'Bank statements', 'Renamed and filed',
+               'Each statement renamed by statement date, institution, account, account type and primary account holder, then filed.', 'db')
+    b += arrow([(300, 344), (300, 372), (185, 372), (185, 446)])
+    b += arrow([(300, 372), (445, 372), (445, 446)])
+    b += '<circle class="dg-dot" cx="300" cy="372" r="3.5"/>'
+    b += label(310, 364, ['renames and files'], 'start')
+    return (f'<svg class="dg dg--half" viewBox="0 0 600 552" role="img" aria-label="Document Agents architecture" '
+            f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
+
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
@@ -690,4 +773,14 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('habits', " + json.dumps({'arch': habits()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'college-notes.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('college-notes', " + json.dumps({'arch': college_notes()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'documents.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('documents', " + json.dumps({'arch': documents()}, indent=1) + ');\n')
     print('wrote', os.path.relpath(out))
