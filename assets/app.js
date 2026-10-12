@@ -394,6 +394,12 @@
   // Projects without a work file get a short deck from the main data.
   function simpleWhy(p) {
     var y = p.why || {}, out = [];
+    // A single full-width slide: a lead line, then named groups of bullets.
+    if (arr(y.groups).length) return [slide('groups', 'Why I built this',
+      '<p class="intro__problem">' + esc(y.problem) + '</p>' +
+      '<ul class="groups">' + y.groups.map(function (g) {
+        return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose') + '</li>';
+      }).join('') + '</ul>' + linkButtons(p) + confirmNotes(p.confirm))];
     out.push(slide('intro', 'Why I built this',
       '<div class="intro"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
       (arr(y.decisions).length ? '<h3 class="slide__sub">Decisions I made</h3>' + list(y.decisions, 'bullets prose') : '') +

@@ -302,12 +302,28 @@ PORTFOLIO.register({
       attributes: ['executor', 'collaborator'],
       summary: 'Agents that take paperwork off my family’s plate: notes, receipts, statements and the weekly calendar.',
       why: {
-        problem: 'Household admin is a stream of paper and dates that nobody wants to file.',
-        decisions: [
-          'The only manual step should be taking a photo. Everything after is automated.',
-          'Use the tools the family already has (Google Drive, phones) instead of new devices.'
-        ],
-        outcome: 'Filed, searchable records and reminders the family did not have to set up.'
+        problem: 'We’re adopting agents in the Norby house to help us stay in sync and automate the tedious.',
+        groups: [
+          { title: 'Weekly & daily planning agent', kind: ['agent'], points: [
+            '9 AM Sunday email of our schedule, Andy’s travel and the to-do list, plus a look two more weeks out for travel or major events.',
+            '6:30 AM daily email of the day’s events and to-dos.',
+            'Helps reduce miscommunication between Shauna and me, especially travel surprises.'
+          ] },
+          { title: 'Vehicle app & agent', kind: ['app', 'agent'], points: [
+            'Maintenance journal and schedule, registration, insurance cards, and what to do in case of an accident.',
+            'Scan and upload receipts, and the maintenance journal updates automatically.',
+            'One month ahead of maintenance, the agent emails service reminders to the primary driver and me.'
+          ] },
+          { title: 'College digital notes agent', kind: ['agent'], points: [
+            'My daughter wants to handwrite her notes and keep them digital, without paying $700 for a tablet and digital pencil.',
+            'She scans notes into a Google Drive folder per class; the agent converts them to digital and uploads them to a Notion notebook.',
+            'My son has started using it too.'
+          ] },
+          { title: 'Bank statements & medical receipts', kind: ['agent'], points: [
+            'I invest my HSA and pay medical expenses out of pocket. I scan receipts into a Medical Receipts inbox, and an agent renames and files them.',
+            'I download bank statements to an inbox, and the agent renames each by statement date, institution, account, account type and primary account holder, then files it.'
+          ] }
+        ]
       },
       how: {
         flow: [
@@ -321,13 +337,7 @@ PORTFOLIO.register({
           'Unreadable scans raise a task for a human instead of failing silently.',
           'A separate script for the family web app, so new features cannot break ingestion.'
         ]
-      },
-      components: [
-        { title: 'Class notes', kind: 'agent', text: 'Handwritten notes scanned by phone, transcribed and filed into a Notion notebook by class.' },
-        { title: 'Vehicle maintenance', kind: 'app', text: 'Receipts filed per vehicle into a shared journal, service reminders in Todoist, and a family phone app with Google sign-in.' },
-        { title: 'Weekly family brief', kind: 'agent', text: 'A Sunday email with the week ahead and the next three weeks, plus a daily brief of tasks.' },
-        { title: 'Document filing', kind: 'agent', text: 'Statements filed by date, account holder and institution; medical receipts filed for HSA claims.' }
-      ]
+      }
     },
 
     {

@@ -236,6 +236,12 @@ button { font: inherit; color: inherit; }
 .feature__name { display: flex; gap: 8px; align-items: baseline; font-weight: 730; font-size: 1.2rem; margin-bottom: 8px; }
 .features .prose { color: var(--ink-2); }
 
+/* groups (one-slide Why with named bullet groups) */
+.groups { list-style: none; margin: clamp(18px, 3.2vh, 34px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
+.groups > li { padding: clamp(12px, 2vh, 20px) 0; border-top: 2px solid var(--ink); }
+.groups > li:nth-child(n+3) { border-top-width: 1px; border-top-color: var(--rule); }
+.groups .bullets { color: var(--ink-2); }
+
 /* case */
 .case__model { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 650; font-stretch: 96%; line-height: 1.15; max-width: 26ch; margin: 0 0 32px; letter-spacing: -.01em; }
 .case__points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
