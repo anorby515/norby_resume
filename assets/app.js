@@ -62,6 +62,7 @@
       '<img src="' + esc(src) + '" alt="' + esc(alt) + '"></button>';
   }
   function link(path) { return '#/' + path; }
+  var V = window.PORTFOLIO_V ? '?v=' + window.PORTFOLIO_V : '';
 
   /* ---------------- screens from sections ---------------- */
 
@@ -492,12 +493,12 @@
   function loadWork(id, cb) {
     if (works[id]) return cb(works[id]);
     var s = document.createElement('script');
-    s.src = 'data/work/' + id + '.js';
+    s.src = 'data/work/' + id + '.js' + V;
     s.onload = function () {
       var w = works[id];
       if (!w || !w.diagrams) return cb(w || null);
       var d = document.createElement('script');
-      d.src = 'data/work/' + id + '.diagrams.js';
+      d.src = 'data/work/' + id + '.diagrams.js' + V;
       d.onload = d.onerror = function () { cb(w); };
       document.body.appendChild(d);
     };
@@ -553,7 +554,7 @@
     if (!p.page) {
       if (!(p.how || {}).svg || diagrams[p.id]) return simple();
       var ds = document.createElement('script');
-      ds.src = 'data/work/' + p.id + '.diagrams.js';
+      ds.src = 'data/work/' + p.id + '.diagrams.js' + V;
       ds.onload = ds.onerror = simple;
       return document.body.appendChild(ds);
     }
@@ -732,7 +733,7 @@
     (function next() {
       if (i >= names.length) return done();
       var s = document.createElement('script');
-      s.src = 'data/layer-' + names[i++] + '.js';
+      s.src = 'data/layer-' + names[i++] + '.js' + V;
       s.onload = next;
       s.onerror = function () { console.warn('Layer not found: ' + s.src); next(); };
       document.body.appendChild(s);
