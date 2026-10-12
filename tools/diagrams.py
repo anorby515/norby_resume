@@ -242,38 +242,44 @@ def agentic_os():
     b += arrow([(600, 62), (600, 42), (1084, 42), (1084, 62)])
     b += label(842, 34, ['imports CSVs'])
 
-    # ---- what each one produces ----
-    b += node2(278, 206, 160, 60, 'Google Calendar', 'Working draft',
+    # ---- what each one produces (dropped 40 below the actors to leave a lane for the email wire) ----
+    b += node2(278, 246, 160, 60, 'Google Calendar', 'Working draft',
                'The working draft of the club calendar: a mix of events that are set and events still being worked out.', 'ext')
-    b += arrow([(358, 132), (358, 206)])
-    b += label(366, 174, ['books'], 'start')
+    b += arrow([(358, 132), (358, 246)])
+    b += label(366, 214, ['books'], 'start')
 
-    b += zone(500, 180, 440, 216, 'Eclipse Agent: scheduled tasks')
-    b += node(516, 216, 250, 44, 'Weekly email',
+    b += zone(500, 220, 440, 216, 'Eclipse Agent: scheduled tasks')
+    b += node(516, 256, 250, 44, 'Weekly email',
               'Every week, to the athletic director and me: what is coming up, what needs attention this week, and anywhere the Google Calendar and the TeamSnap schedule disagree.', 'ai')
-    b += node(516, 274, 250, 44, 'Calendar watch',
+    b += node(516, 314, 250, 44, 'Calendar watch',
               'Watches the athletic director’s Google Calendar. When she changes something, it emails me and adds a to-do to my Todoist list.', 'ai')
-    b += node(516, 332, 250, 44, 'Schedule watch',
+    b += node(516, 372, 250, 44, 'Schedule watch',
               'Watches tournament and event schedules for changes. It emails and notifies me, creates the CSV updates and updates the volunteer spreadsheet automatically.', 'ai')
-    b += node2(784, 216, 140, 60, 'Eclipse skill', 'Club rules',
+    b += node2(784, 256, 140, 60, 'Eclipse skill', 'Club rules',
                'Team names, venues and edge cases in a versioned skill and script, so every unattended run behaves the same.', 'key')
-    b += node2(784, 316, 140, 60, 'Connectors', 'Google, Todoist',
+    b += node2(784, 356, 140, 60, 'Connectors', 'Google, Todoist',
                'Calendar, Drive and Gmail for the club’s data and email; Todoist for my to-dos.', 'ext')
-    b += arrow([(842, 132), (842, 180)])
-    b += label(850, 162, ['runs'], 'start')
-    b += arrow([(438, 236), (500, 236)])
-    b += label(469, 228, ['reads'])
+    b += arrow([(842, 132), (842, 220)])
+    b += label(850, 208, ['runs'], 'start')
+    b += arrow([(438, 276), (500, 276)])
+    b += label(469, 268, ['reads'])
 
-    b += zone(980, 180, 200, 216, 'Outputs')
-    b += node(996, 216, 168, 44, 'Volunteer sheets',
+    b += zone(980, 220, 200, 216, 'Outputs')
+    b += node(996, 256, 168, 44, 'Emails and alerts',
+              'The weekly email to the athletic director and me, plus change alerts and notifications to me.')
+    b += node(996, 314, 168, 44, 'Volunteer sheets',
               'Volunteer spreadsheets in Google Drive, one per event and shared with parents. Each includes a link to the TeamSnap CSV.', 'ext')
-    b += node(996, 274, 168, 44, 'Emails and alerts',
-              'The weekly email, change alerts and notifications to the athletic director and me.')
-    b += node(996, 332, 168, 44, 'Todoist to-dos',
+    b += node(996, 372, 168, 44, 'Todoist to-dos',
               'A to-do on my list whenever the calendar changes, so nothing waits on memory.')
-    b += arrow([(940, 288), (980, 288)])
-    b += label(960, 280, ['writes'])
-    return svg(410, b, 'Eclipse Agentic OS architecture')
+    b += arrow([(940, 328), (980, 328)])
+    b += label(960, 320, ['writes'])
+
+    # Emails go back up to the two people who act on them.
+    b += arrow([(1080, 256), (1080, 182), (400, 182), (400, 132)])
+    b += arrow([(640, 182), (640, 132)])
+    b += '<circle class="dg-dot" cx="640" cy="182" r="3.5"/>'
+    b += label(966, 176, ['weekly email, alerts'])
+    return svg(450, b, 'Eclipse Agentic OS architecture')
 
 
 # --------------------------------------------------------------------------

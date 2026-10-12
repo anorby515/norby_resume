@@ -263,15 +263,6 @@ PORTFOLIO_WORK.register({
           { stage: 'Rules', nodes: ['Claude skill', 'sync_check.py', 'Mapping rules'] },
           { stage: 'Outputs', nodes: ['Import CSV', 'Delete worklist', 'Todoist, push, email'] }
         ],
-        decisions: [
-          { title: 'Detect and analyse are separate', text: 'The scheduled run only notices and notifies. The analysis runs when I ask, after a fresh TeamSnap export, so a change is never marked handled before it is.' },
-          { title: 'A silent failure must not look like a quiet week', text: 'A failed read says so and stops, and a weekly heartbeat confirms the watch is still running.' },
-          { title: 'Some events belong to TeamSnap', text: 'Events I have enriched by hand are on an override list. Changes to them are flagged for review instead of regenerated.' },
-          { title: 'Rules live in a skill, not in a prompt', text: 'Team-name mapping, venues and edge cases are in a versioned skill and script, so every unattended run behaves the same.' }
-        ],
-        shots: [
-          { src: 'os-homenight.webp', title: 'A home night, planned with Claude', caption: 'Four courts, three clubs and eleven teams, revised three times. The agent flagged the conflict it found, then produced the TeamSnap import from the same plan.', tools: ['claude', 'cowork'] }
-        ],
         split: {
           vibe: 'The diff script and its tests.',
           agentic: 'Everything else: watching the calendar, analysing changes, writing imports and summaries, and the weekly email, all on a schedule.'
