@@ -579,3 +579,18 @@ a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .pslide__img img, .pslide__img.is-tall img { max-height: 60vh; }
   .pslide__imgs .pslide__img img { max-height: 46vh; }
 }
+
+/* Suite overview: story on the left, a compact product architecture on the right */
+.suite__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 4vw, 64px); align-items: start; }
+.suite__grid .suite__head { margin-bottom: 0; }
+.suite__grid .page__title { font-size: clamp(2.6rem, 4.6vw, 4.4rem); }
+.suite__side { position: sticky; top: calc(var(--bar) + 24px); }
+.suite__side .suite__launch { margin: 0 0 18px; justify-content: center; }
+.suite__thumb { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 14px; }
+.suite__thumb svg { display: block; width: 100%; height: auto; pointer-events: none; }
+.suite__thumb:hover, .suite__thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 900px) {
+  .suite__grid { grid-template-columns: minmax(0, 1fr); }
+  .suite__side { position: static; }
+}
+.page.suite { padding-bottom: 40px; }

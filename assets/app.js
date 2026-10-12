@@ -266,15 +266,20 @@
     var base = 'portfolio/' + p.id;
     return '<div class="page suite">' +
       crumbs([{ label: 'AI Portfolio', href: link('portfolio') }, { label: w.title }]) +
-      '<div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
+      '<div class="suite__grid"><div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
         '<p class="suite__kicker">' + esc(w.kicker) + '</p>' +
         [].concat(w.summary || []).map(function (s) { return '<p class="prose suite__summary">' + esc(s) + '</p>'; }).join('') +
         (w.summaryList ? (w.summaryListLead ? '<p class="prose suite__summary">' + esc(w.summaryListLead) + '</p>' : '') +
           '<ul class="prose suite__summary suite__list">' + w.summaryList.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '') +
         '</div>' +
-      '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a>' +
-        '<span>' + w.products.map(function (pr) { return esc(pr.name); }).join(', ') + '</span></p>' +
-      ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it. ' + FS_BTN + '</p></div>' : '') +
+      '<div class="suite__side">' +
+        '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a></p>' +
+        ((diagrams[w.id] || {}).suite ?
+          // A picture of the diagram: one click opens the live version full screen, where the tips are.
+          '<button type="button" class="suite__thumb" data-dg-open data-dg-key="' + esc(w.id) + ':suite" data-dg-name="' + esc(w.title) + ' \u2014 Product architecture" aria-label="Open the product architecture full screen">' +
+            diagrams[w.id].suite.replace(/ tabindex="0"/g, '').replace(/ role="link"/g, '') + '</button>' +
+          '<p class="dg-hint">Click the diagram to open it full screen, then hover over any piece to see what it does.</p>' : '') +
+      '</div></div>' +
     '</div>';
   }
 
@@ -611,14 +616,27 @@
   /* ---------------- full-screen diagram viewer ---------------- */
 
   function openDiagram(from) {
+    var v = document.getElementById('dgview');
+    var opener = from.closest('[data-dg-key]');
+    if (opener) {
+      var key = opener.getAttribute('data-dg-key').split(':');
+      var full = (diagrams[key[0]] || {})[key[1]];
+      if (!full) return;
+      v.querySelector('[data-dg-title]').textContent = opener.getAttribute('data-dg-name') || '';
+      v.querySelector('[data-dg-body]').innerHTML = full;
+      return showViewer(v);
+    }
     var host = from.closest('.slide, .suite__arch, .page') || document;
     var svg = host.querySelector('svg.dg');
     if (!svg) return;
-    var v = document.getElementById('dgview');
     var title = host.querySelector('.slide__title, .page__title') || document.querySelector('#main h1');
     var name = document.querySelector('.deck__product');
     v.querySelector('[data-dg-title]').textContent = [name && host.classList.contains('slide') ? name.textContent : '', title ? title.textContent : ''].filter(Boolean).join(' \u2014 ');
     v.querySelector('[data-dg-body]').innerHTML = svg.outerHTML;
+    showViewer(v);
+  }
+
+  function showViewer(v) {
     var tip = document.querySelector('.dg-tip'); if (tip) { tip.hidden = true; v.appendChild(tip); }
     v.showModal();
     v.querySelector('[data-dg-close]').focus();
@@ -653,6 +671,8 @@
     buildViewer();
     document.addEventListener('click', function (e) {
       if (swiped && e.target.closest('[data-viewport] a')) { e.preventDefault(); return; }
+      var th = e.target.closest && e.target.closest('.suite__thumb');
+      if (th) { openDiagram(th); return; }
       var dl = e.target.closest && e.target.closest('.dg [data-href]');
       if (dl) { var v = document.getElementById('dgview'); if (v.open) v.close(); location.hash = dl.getAttribute('data-href'); return; }
       var dv = document.getElementById('dgview');
@@ -719,7 +739,7 @@
       tip.style.left = left + 'px'; tip.style.top = top + 'px';
     }
     document.addEventListener('mousemove', function (e) {
-      var n = e.target.closest && e.target.closest('.dg [data-tip]');
+      var n = e.target.closest && !e.target.closest('.suite__thumb') && e.target.closest('.dg [data-tip]');
       if (n) showTip(n, e.clientX, e.clientY); else tip.hidden = true;
     });
     document.addEventListener('keydown', function (e) {
