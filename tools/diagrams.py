@@ -311,20 +311,21 @@ def tournament():
     b += arrow([(746, 280), (746, 216)], 'every 15 s', 754, 250, 'start')
     b += arrow([(352, 302), (186, 302), (186, 216)], 'every 15 s', 194, 250, 'start')
 
-    b += zone(910, 256, 270, 204, 'Google')
+    b += zone(910, 256, 270, 250, 'Google')
     b += node(926, 292, 238, 44, 'Waiver form', 'One waiver per athlete, linked from the Tournament App menu.', 'ext')
     b += node(926, 364, 238, 44, 'Responses sheet', 'Every signed waiver, with athlete, team and parent.', 'db')
     b += arrow([(1045, 336), (1045, 364)])
 
-    b += zone(20, 376, 870, 84, 'Claude')
-    b += node(120, 400, 482, 44, 'Tournament agent',
+    # The Claude lane is taller than the others so its three arrows each get their own track.
+    b += zone(20, 376, 870, 130, 'Claude')
+    b += node(120, 420, 400, 44, 'Tournament agent',
               'Built the schedule (courts and matchups from the rules and constraints), monitored waivers against visiting rosters, sent reminders and a daily status, and created the volunteer assignments.', 'ai')
-    b += node(618, 400, 256, 44, 'Reminders and status', 'Waiver reminders, and a daily status email to the athletic director and me.', 'ext')
-    b += arrow([(186, 400), (186, 358), (420, 358), (420, 324)], 'schedule', 300, 352)
-    b += arrow([(602, 422), (618, 422)])
-    b += arrow([(926, 386), (540, 386), (540, 400)], 'reads waivers', 740, 380)
-    b += arrow([(560, 444), (560, 470), (898, 470), (898, 240), (1037, 240), (1037, 216)], 'volunteer assignments', 730, 462)
-    return svg(482, b, 'Tournament Suite architecture')
+    b += node(618, 420, 256, 44, 'Reminders and status', 'Waiver reminders, and a daily status email to the athletic director and me.', 'ext')
+    b += arrow([(186, 420), (186, 358), (420, 358), (420, 324)], 'schedule', 300, 352)
+    b += arrow([(520, 442), (618, 442)])
+    b += arrow([(926, 386), (470, 386), (470, 420)], 'reads waivers', 700, 404)
+    b += arrow([(400, 464), (400, 488), (898, 488), (898, 240), (1037, 240), (1037, 216)], 'volunteer assignments', 650, 482)
+    return svg(520, b, 'Tournament Suite architecture')
 
 
 # --------------------------------------------------------------------------
