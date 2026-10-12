@@ -31,15 +31,9 @@ PORTFOLIO.register({
 
   attributes: [
     {
-      id: 'innovator',
-      name: 'Innovator',
-      line: 'Spots the problem nobody has automated yet, and ships the first working version.',
-      draft: true
-    },
-    {
-      id: 'learner',
-      name: 'Continuous learner',
-      line: 'Picks up a new tool when the problem calls for it, then teaches it forward.',
+      id: 'executor',
+      name: 'Executor',
+      line: 'Runs things in production, with monitoring, fallbacks and a test environment.',
       draft: true
     },
     {
@@ -49,9 +43,15 @@ PORTFOLIO.register({
       draft: true
     },
     {
-      id: 'executor',
-      name: 'Executor',
-      line: 'Runs things in production, with monitoring, fallbacks and a test environment.',
+      id: 'innovator',
+      name: 'Innovator',
+      line: 'Spots the problem nobody has automated yet, and ships the first working version.',
+      draft: true
+    },
+    {
+      id: 'learner',
+      name: 'Continuous learner',
+      line: 'Picks up a new tool when the problem calls for it, then teaches it forward.',
       draft: true
     }
   ],
