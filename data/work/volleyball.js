@@ -238,14 +238,6 @@ PORTFOLIO_WORK.register({
           { stage: 'Logic', nodes: ['tournament-data.js: pure derivations', 'Offline cache and retry queue'] },
           { stage: 'Supabase', nodes: ['Postgres: matches and sets for the event', 'Score tables upsert each point', 'Every screen polls every 15 seconds'] }
         ],
-        decisions: [
-          { title: 'The URL is the access control', text: 'Scoring has no link inside the app. It is reached only from the QR card taped to the table, so the person holding it is the person scoring.' },
-          { title: 'Supabase holds the taps, nothing else', text: 'Score tables write points to Supabase with an upsert keyed on match and set, so a retried write never duplicates. Standings, seeding and brackets are never stored; they are computed from those rows.' },
-          { title: 'Polling, not websockets', text: 'Phones and the TV read Supabase every 15 seconds instead of holding a live connection. Gym wifi drops websockets silently; a missed poll fixes itself on the next one.' },
-          { title: 'One tested module does the math', text: 'Standings, seeding and brackets live in one pure, fully tested module with no screen code in it.' },
-          { title: 'One writer per match', text: 'If a court already has a match open, a second phone is asked whether it is really theirs before it can score.' },
-          { title: 'Game day is decided by the calendar', text: 'The app switches from preview to live on the event date, with a two-day grace window. Test taps from weeks earlier cannot flip it.' }
-        ],
         shots: [
           { src: 'tp-hub.webp', tall: true, title: 'Family hub on game day', caption: 'What is on each court right now, how far behind it is running, and what is next.', tools: ['vanilla-js', 'supabase'] },
           { src: 'tp-score.webp', tall: true, title: 'Scorekeeper guard', caption: 'A second phone at a court with an open match is asked to confirm before it can score, so two people never write the same match.', tools: ['supabase'] },

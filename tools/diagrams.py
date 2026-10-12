@@ -317,7 +317,7 @@ def tournament():
     b += arrow([(1045, 336), (1045, 364)])
 
     b += zone(20, 376, 870, 84, 'Claude')
-    b += node(36, 400, 566, 44, 'Tournament agent',
+    b += node(120, 400, 482, 44, 'Tournament agent',
               'Built the schedule (courts and matchups from the rules and constraints), monitored waivers against visiting rosters, sent reminders and a daily status, and created the volunteer assignments.', 'ai')
     b += node(618, 400, 256, 44, 'Reminders and status', 'Waiver reminders, and a daily status email to the athletic director and me.', 'ext')
     b += arrow([(186, 400), (186, 358), (420, 358), (420, 324)], 'schedule', 300, 352)
