@@ -30,14 +30,14 @@ PORTFOLIO.register({
 
   attributes: [
     {
-      id: 'leader',
-      name: 'Leader',
-      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
-    },
-    {
       id: 'executor',
       name: 'Executor',
       line: 'Nearly 30 years delivering products, with leadership roles in some of Deere’s largest tech stack investments, including JDLink and the Gen4 Display. Most of my career has been in embedded software, followed by leading cross-functional electronics hardware organizations. Today I lead the Precision Upgrades product line, which now includes product management alongside engineering.'
+    },
+    {
+      id: 'leader',
+      name: 'Leader',
+      line: 'I lead transparently and focus on helping my teams grow stronger. I coach, I mentor, and I manage, and I know which one the moment calls for.'
     },
     {
       id: 'collaborator',
