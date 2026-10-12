@@ -362,6 +362,9 @@ button { font: inherit; color: inherit; }
 .dg-nt { font-size: 16px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
 .dg-sub { font-size: 12px; font-weight: 560; fill: var(--ink-2); text-anchor: middle; }
 .dg-ai .dg-sub { fill: var(--paper); opacity: .75; }
+.dg-ver { font-size: 30px; font-weight: 800; fill: var(--accent); }
+.dg-date { font-size: 14px; font-weight: 700; fill: var(--ink); }
+.dg-note { font-size: 13px; font-weight: 560; fill: var(--ink-2); }
 .dg-group { fill: none; stroke: var(--ink-2); stroke-width: 1.2; stroke-dasharray: 2 4; opacity: .8; }
 .dg-gl { font-size: 12px; font-weight: 650; fill: var(--ink-2); }
 .dg-chip { fill: var(--paper); stroke: var(--accent); stroke-width: 1.2; }

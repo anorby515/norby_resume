@@ -937,49 +937,57 @@ def hiking_countdown():
 # half of a one-page Why/How split.
 # --------------------------------------------------------------------------
 def vinyl_moon():
+    def version(cy, ver, date, notes):
+        """The version and date, outside the zone on the right, with a short note."""
+        top = cy - 8 * len(notes)
+        s = f'<text class="dg-ver" x="540" y="{top}">{escape(ver)}</text>'
+        s += f'<text class="dg-date" x="540" y="{top + 22}">{escape(date)}</text>'
+        s += ''.join(f'<text class="dg-note" x="540" y="{top + 44 + i*16}">{escape(t)}</text>' for i, t in enumerate(notes))
+        return s
+
     # ---- v1: ChatGPT, a JSON file, an Apple Shortcut and a Python script ----
-    b = zone(20, 20, 560, 206, 'v1 · Summer ’25')
-    b += label(564, 46, ['Two painful days. Worked once.'], 'end')
-    b += node2(36, 60, 160, 56, 'Album photo', 'Taken on my phone',
+    b = zone(20, 20, 500, 182, '')
+    b += node2(36, 36, 144, 56, 'Album photo', 'Taken on my phone',
                'The workflow starts with a picture of the record’s track list.', 'key')
-    b += node2(220, 60, 160, 56, 'ChatGPT', 'Reads the songs',
+    b += node2(198, 36, 144, 56, 'ChatGPT', 'Reads the songs',
                'My first vibe coding project. ChatGPT pulled the song and artist out of the photo.', 'ai')
-    b += node2(404, 60, 160, 56, 'JSON file', 'Song + artist',
+    b += node2(360, 36, 144, 56, 'JSON file', 'Song + artist',
                'ChatGPT wrote the track list out as a JSON file for the script to read.', 'db')
-    b += node2(36, 154, 160, 56, 'Apple Shortcut', 'Runs the script',
+    b += node2(36, 130, 144, 56, 'Apple Shortcut', 'Runs the script',
                'An Apple Shortcut kicked off the Python script with the JSON file.')
-    b += node2(220, 154, 160, 56, 'Python script', 'Calls Spotify',
+    b += node2(198, 130, 144, 56, 'Python script', 'Calls Spotify',
                'Read the JSON file and called the Spotify API, one song at a time. It took two painful days to get it working once, and it never worked again the next month.')
-    b += node2(404, 154, 160, 56, 'Spotify API', 'Builds the playlist',
+    b += node2(360, 130, 144, 56, 'Spotify API', 'Builds the playlist',
                'Spotify’s developer API: search each song, create the playlist, add the tracks.', 'ext')
-    b += arrow([(196, 88), (220, 88)])
-    b += arrow([(380, 88), (404, 88)])
-    b += arrow([(484, 116), (484, 135), (116, 135), (116, 154)])
-    b += arrow([(196, 182), (220, 182)])
-    b += arrow([(380, 182), (404, 182)])
+    b += arrow([(180, 64), (198, 64)])
+    b += arrow([(342, 64), (360, 64)])
+    b += arrow([(432, 92), (432, 111), (108, 111), (108, 130)])
+    b += arrow([(180, 158), (198, 158)])
+    b += arrow([(342, 158), (360, 158)])
+    b += version(111, 'v1', 'Summer ’25', ['Two painful days.', 'Worked once.'])
 
     # ---- v2: Claude reads the photo, Spotify's AI Playlist Creator does the rest ----
-    b += zone(20, 246, 560, 120, 'v2 · Feb ’26')
-    b += label(564, 272, ['Copy, paste, done.'], 'end')
-    b += node2(36, 290, 150, 56, 'Claude app', 'Photo in, songs out',
+    b += zone(20, 222, 500, 88, '')
+    b += node2(36, 238, 144, 56, 'Claude app', 'Photo in, songs out',
                'I take the picture in the Claude mobile app, and it gives back the list of songs and artists.', 'ai')
-    b += node2(225, 290, 150, 56, 'Me', 'Copy and paste',
+    b += node2(198, 238, 144, 56, 'Me', 'Copy and paste',
                'The one manual step left: copy Claude’s list and paste it into Spotify.', 'key')
-    b += node2(414, 290, 150, 56, 'Spotify', 'AI Playlist Creator',
+    b += node2(360, 238, 144, 56, 'Spotify', 'AI Playlist Creator',
                'Spotify’s own AI Playlist Creator turns the pasted list into a playlist.', 'ext')
-    b += arrow([(186, 318), (225, 318)])
-    b += arrow([(375, 318), (414, 318)])
+    b += arrow([(180, 266), (198, 266)])
+    b += arrow([(342, 266), (360, 266)])
+    b += version(266, 'v2', 'Feb ’26', ['Copy, paste, done.'])
 
     # ---- v3: Claude creates the playlist in Spotify through MCP ----
-    b += zone(20, 386, 560, 120, 'v3 · Aug ’26')
-    b += label(564, 412, ['One step.'], 'end')
-    b += node2(36, 430, 200, 56, 'Claude app', 'Photo in',
+    b += zone(20, 330, 500, 88, '')
+    b += node2(36, 346, 180, 56, 'Claude app', 'Photo in',
                'I take the picture in the Claude mobile app. That is the whole job on my end.', 'ai')
-    b += node2(364, 430, 200, 56, 'Spotify', 'Playlist created',
+    b += node2(324, 346, 180, 56, 'Spotify', 'Playlist created',
                'Claude creates the playlist in my Spotify account directly, through the Spotify MCP integration.', 'ext')
-    b += arrow([(236, 458), (364, 458)])
-    b += label(300, 448, ['via MCP'])
-    return (f'<svg class="dg dg--half" viewBox="0 0 600 526" role="img" aria-label="Vinyl Moon: three versions of the workflow" '
+    b += arrow([(216, 374), (324, 374)])
+    b += label(270, 364, ['via MCP'])
+    b += version(374, 'v3', 'Aug ’26', ['One step.'])
+    return (f'<svg class="dg dg--half" viewBox="0 0 680 438" role="img" aria-label="Vinyl Moon: three versions of the workflow" '
             f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
 
 if __name__ == '__main__':
