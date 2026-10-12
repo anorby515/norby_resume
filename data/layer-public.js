@@ -12,7 +12,7 @@ PORTFOLIO.register({
   profile: {
     name: 'Andy Norby',
     location: 'Des Moines, Iowa',
-    headline: 'Approaching 30 years of Tech Stack product delivery in Deere',
+    headline: 'Approaching 30 years of Solving Customer Problems through Deere Tech Stack Product Delivery',
     intro:
       'Twenty-six years in technology and engineering. Today I lead both the engineers who build products and the product managers who decide what is worth building. Outside work I build too: apps, agents and automations that run real operations for a youth sports club, a music discovery platform and my own household.',
     introDraft: true,
