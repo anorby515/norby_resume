@@ -10,15 +10,15 @@ PORTFOLIO_WORK.register({
   title: 'Eclipse Volleyball',
   kicker: 'Three products for one youth volleyball club',
   summary: [
-    'Des Moines Eclipse is a homeschool volleyball organization for kids 5th grade through high school. We’ve grown to 11 teams, girls and boys, powered by volunteers. While I’m an assistant coach, I’m also the Digital Director. It takes a lot of work to manage practices, games and events across 11 teams.',
-    'We use a combination of a paid platform called TeamSnap, plus several custom vibe-coded apps and agents that help our Athletic Director and me run our program.'
+    'Des Moines Eclipse is an 11-team homeschool organization for 5th grade through high school. I’m a coach and Digital Director. I’ve designed the Eclipse OS to save our Athletic Director and me hundreds of hours managing our program.'
   ],
-  summaryListLead: 'The Eclipse Volleyball Ecosystem consists of:',
+  summaryListLead: 'The Eclipse Volleyball OS consists of:',
   summaryList: [
-    'TeamSnap',
-    'Custom Stats Tracking App & Analyzer for our coaches',
-    'Custom website and apps for our Des Moines Eclipse Invitational Tournament',
-    'Agentic automation layer that integrates events and tournament schedules with TeamSnap, sends our AD and me weekly reminders, and is constantly helping us keep everything organized'
+    'Eclipse Chief of Staff – agent and automation to highly automate scheduling',
+    'TeamSnap – the paid platform Eclipse CoS automates data into',
+    'Tournament Suite – website, Scorekeeper app and Game Day Live TV',
+    'Stats Tracking App and Stats Analyzer App',
+    'Automation of our volunteer sign-up'
   ],
 
   why: {
