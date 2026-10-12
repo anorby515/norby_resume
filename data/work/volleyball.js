@@ -44,10 +44,10 @@ PORTFOLIO_WORK.register({
       name: 'Eclipse Agentic OS',
       line: 'An agent I orchestrate that runs the club’s entire schedule.',
       points: [
-        'Reads upcoming events and tournaments, then creates the TeamSnap imports and volunteer sign-ups automatically.',
         'Monitors our plans and emails the athletic director and me every week with upcoming events and anything still open.',
-        'Builds game-night schedules and court assignments.',
-        'Monitors live tournaments: as new games are added, it updates volunteer assignments across every team, creates the TeamSnap imports and notifies me, so parents’ schedules stay current.'
+        'Builds complex game-night schedules, manages court assignments.',
+        'Reads upcoming events and tournaments, then creates the TeamSnap imports and volunteer sign-ups automatically.',
+        'Scheduled prompts monitor live tournaments: as new games are added, they update volunteer assignments across every team, create the TeamSnap imports and notify me, so parents’ schedules stay current.'
       ],
       kind: ['agent'],
       why: {
