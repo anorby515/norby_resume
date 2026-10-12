@@ -140,11 +140,11 @@ PORTFOLIO.register({
       apps: [
         { id: 'family-cos', name: 'Norby Family CoS', icon: 'home', href: '#/portfolio/household' },
         { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp' },
-        { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/household' },
+        { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/vehicles' },
         { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
         { id: 'habits', name: 'Habit Tracking App', note: '(Apple HealthKit integrated)', icon: 'flame', href: '#/portfolio/habits' },
-        { id: 'college-notes', name: 'College Notes', icon: 'notebook', href: '#/portfolio/household' },
-        { id: 'document-agent', name: 'Document Agent', icon: 'folder', href: '#/portfolio/household' }
+        { id: 'college-notes', name: 'College Notes', icon: 'notebook', href: '#/portfolio/college-notes' },
+        { id: 'document-agent', name: 'Document Agents', icon: 'folder', href: '#/portfolio/documents' }
       ]
     },
     {
@@ -300,43 +300,100 @@ PORTFOLIO.register({
       title: 'Norby Family CoS',
       kind: ['agent'],
       attributes: ['executor', 'collaborator'],
-      summary: 'Agents that take paperwork off my family’s plate: notes, receipts, statements and the weekly calendar.',
+      summary: 'A Sunday and a daily email that keep the Norby house in sync on schedules, travel and to-dos.',
       why: {
         problem: 'We’re adopting agents in the Norby house to help us stay in sync and automate the tedious.',
-        groups: [
-          { title: 'Weekly & daily planning agent', kind: ['agent'], points: [
-            '9 AM Sunday email of our schedule, Andy’s travel and the to-do list, plus a look two more weeks out for travel or major events.',
-            '6:30 AM daily email of the day’s events and to-dos.',
-            'Helps reduce miscommunication between Shauna and me, especially travel surprises.'
-          ] },
-          { title: 'Vehicle app & agent', kind: ['app', 'agent'], points: [
-            'Maintenance journal and schedule, registration, insurance cards, and what to do in case of an accident.',
-            'Scan and upload receipts, and the maintenance journal updates automatically.',
-            'One month ahead of maintenance, the agent emails service reminders to the primary driver and me.'
-          ] },
-          { title: 'College digital notes agent', kind: ['agent'], points: [
-            'My daughter wants to handwrite her notes and keep them digital, without paying $700 for a tablet and digital pencil.',
-            'She scans notes into a Google Drive folder per class; the agent converts them to digital and uploads them to a Notion notebook.',
-            'My son has started using it too.'
-          ] },
-          { title: 'Bank statements & medical receipts', kind: ['agent'], points: [
-            'I invest my HSA and pay medical expenses out of pocket. I scan receipts into a Medical Receipts inbox, and an agent renames and files them.',
-            'I download bank statements to an inbox, and the agent renames each by statement date, institution, account, account type and primary account holder, then files it.'
-          ] }
+        points: [
+          '9 AM Sunday email of our schedule, Andy’s travel and the to-do list, plus a look two more weeks out for travel or major events.',
+          '6:30 AM daily email of the day’s events and to-dos.',
+          'Helps reduce miscommunication between Shauna and me, especially travel surprises.'
         ]
       },
       how: {
         flow: [
-          { label: 'Phone scan', detail: 'Drive app scanner into an inbox' },
-          { label: 'Scheduled agent', detail: 'Reads, renames, files' },
-          { label: 'Record', detail: 'Sheet, Notion or folder' },
-          { label: 'Nudge', detail: 'Reminders and exceptions' }
+          { label: 'Sources', detail: 'Family calendars and to-do list' },
+          { label: 'Scheduled agent', detail: 'Sunday 9 AM and daily 6:30 AM' },
+          { label: 'Email', detail: 'Week ahead, today, and travel two weeks out' }
         ],
-        stack: ['cowork', 'drive', 'apps-script', 'sheets', 'notion', 'todoist', 'gmail', 'gcal', 'gh-pages'],
+        stack: ['cowork', 'gcal', 'todoist', 'gmail']
+      },
+      confirm: ['Confirm the How stack: Claude scheduled tasks, Google Calendar, Todoist, Gmail.']
+    },
+
+    {
+      id: 'vehicles',
+      title: 'Vehicles',
+      kind: ['app', 'agent'],
+      attributes: ['executor'],
+      summary: 'A family app for every vehicle, with receipts filed and service reminders sent automatically.',
+      why: {
+        problem: 'Everything about our vehicles in one family app, kept current by an agent.',
+        points: [
+          'Maintenance journal and schedule, registration, insurance cards, and what to do in case of an accident.',
+          'Scan and upload receipts, and the maintenance journal updates automatically.',
+          'One month ahead of maintenance, the agent emails service reminders to the primary driver and me.'
+        ]
+      },
+      how: {
+        flow: [
+          { label: 'Phone scan', detail: 'Receipt into a Drive inbox' },
+          { label: 'Scheduled agent', detail: 'Reads it and files it to the right vehicle' },
+          { label: 'Journal', detail: 'Maintenance journal and schedule' },
+          { label: 'Reminder', detail: 'Email a month before service is due' }
+        ],
+        stack: ['cowork', 'drive', 'apps-script', 'sheets', 'gmail', 'gh-pages'],
         practices: [
           'Unreadable scans raise a task for a human instead of failing silently.',
           'A separate script for the family web app, so new features cannot break ingestion.'
         ]
+      },
+      confirm: ['Add a Vehicles App screenshot (cover).']
+    },
+
+    {
+      id: 'college-notes',
+      title: 'College Notes',
+      kind: ['agent'],
+      attributes: ['executor'],
+      summary: 'Handwritten class notes scanned, converted to digital and filed into Notion by class.',
+      why: {
+        problem: 'Handwritten notes, kept digital, without a $700 tablet.',
+        points: [
+          'My daughter wants to handwrite her notes and keep them digital, without paying $700 for a tablet and digital pencil.',
+          'She scans notes into a Google Drive folder per class; the agent converts them to digital and uploads them to a Notion notebook.',
+          'My son has started using it too.'
+        ]
+      },
+      how: {
+        flow: [
+          { label: 'Phone scan', detail: 'Into a Drive folder per class' },
+          { label: 'Scheduled agent', detail: 'Converts handwriting to digital text' },
+          { label: 'Notion', detail: 'A notebook per class' }
+        ],
+        stack: ['cowork', 'drive', 'notion']
+      }
+    },
+
+    {
+      id: 'documents',
+      title: 'Document Agents',
+      kind: ['agent'],
+      attributes: ['executor'],
+      summary: 'Medical receipts and bank statements renamed and filed automatically.',
+      why: {
+        problem: 'Bank statements and medical receipts, renamed and filed without me touching them.',
+        points: [
+          'I invest my HSA and pay medical expenses out of pocket. I scan receipts into a Medical Receipts inbox, and an agent renames and files them.',
+          'I download bank statements to an inbox, and the agent renames each by statement date, institution, account, account type and primary account holder, then files it.'
+        ]
+      },
+      how: {
+        flow: [
+          { label: 'Inbox', detail: 'Scanned receipts or downloaded statements' },
+          { label: 'Scheduled agent', detail: 'Reads and renames each file' },
+          { label: 'Filed', detail: 'Into the right folder' }
+        ],
+        stack: ['cowork', 'drive']
       }
     },
 

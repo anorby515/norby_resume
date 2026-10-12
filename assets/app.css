@@ -242,6 +242,11 @@ button { font: inherit; color: inherit; }
 .groups > li:nth-child(n+3) { border-top-width: 1px; border-top-color: var(--rule); }
 .groups .bullets { color: var(--ink-2); }
 
+.intro--solo { grid-template-columns: minmax(0, 1fr); }
+.intro--solo .intro__text { max-width: 60em; }
+.why__points { margin-top: clamp(18px, 3vh, 30px); font-size: 1.12rem; color: var(--ink-2); }
+.why__points li + li { margin-top: .7em; }
+
 /* case */
 .case__model { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 650; font-stretch: 96%; line-height: 1.15; max-width: 26ch; margin: 0 0 32px; letter-spacing: -.01em; }
 .case__points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
