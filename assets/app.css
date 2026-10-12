@@ -161,6 +161,10 @@ button { font: inherit; color: inherit; }
 .suite__head { max-width: 860px; margin-bottom: 44px; }
 .suite__kicker { font-size: 1.45rem; font-weight: 500; font-stretch: 94%; color: var(--accent); margin: 16px 0 12px; }
 .suite__summary { color: var(--ink-2); font-size: 1.12rem; }
+.suite__summary + .suite__summary { margin-top: .8em; }
+.suite__list { margin: .5em 0 0; padding-left: 1.3em; }
+.suite__list li { margin: .3em 0; }
+.suite__list li::marker { color: var(--accent); }
 .suite__products { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; }
 .suite__deep { margin: 56px 0 0; display: flex; gap: 18px; align-items: baseline; padding-top: 20px; border-top: 1px solid var(--rule); }
 .suite__deep a { font-weight: 700; color: var(--cobalt); text-underline-offset: 4px; font-size: 1.05rem; }

@@ -266,7 +266,10 @@
       crumbs([{ label: 'AI Portfolio', href: link('portfolio') }, { label: w.title }]) +
       '<div class="suite__head"><h1 class="page__title">' + esc(w.title) + '</h1>' +
         '<p class="suite__kicker">' + esc(w.kicker) + '</p>' +
-        '<p class="prose suite__summary">' + esc(w.summary) + '</p></div>' +
+        [].concat(w.summary || []).map(function (s) { return '<p class="prose suite__summary">' + esc(s) + '</p>'; }).join('') +
+        (w.summaryList ? (w.summaryListLead ? '<p class="prose suite__summary">' + esc(w.summaryListLead) + '</p>' : '') +
+          '<ul class="prose suite__summary suite__list">' + w.summaryList.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '') +
+        '</div>' +
       ((diagrams[w.id] || {}).suite ? '<div class="suite__arch">' + diagrams[w.id].suite + '<p class="dg-hint">Hover over any piece to see what it does. Click a product to explore it. ' + FS_BTN + '</p></div>' : '') +
       '<p class="suite__launch"><a href="' + link(base + '/products/1') + '">Explore the products</a>' +
         '<span>' + w.products.map(function (pr) { return esc(pr.name); }).join(', ') + '</span></p>' +
