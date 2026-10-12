@@ -427,14 +427,16 @@
   // Used when a project sets layout: 'halves'.
   function halves(p) {
     var y = p.why || {}, h = p.how || {};
-    function half(lens, title, lead, points) {
+    function half(lens, title, lead, points, svg) {
       return '<div class="half half--' + lens + '"><h2 class="slide__title">' + esc(title) + '</h2>' +
         (lead ? '<p class="intro__problem">' + esc(lead) + '</p>' : '') +
-        (arr(points).length ? list(points, 'bullets prose why__points') : '') + '</div>';
+        (arr(points).length ? list(points, 'bullets prose why__points') : '') +
+        (svg ? '<div class="dgwrap half__dg">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>' : '') + '</div>';
     }
+    var svg = h.svg && (diagrams[p.id] || {})[h.svg];
     return [slide('halves', '', '<div class="halves">' +
       half('why', 'Why I built this', y.problem, y.points) +
-      half('how', 'How I built this', h.lead, h.points) + '</div>' +
+      half('how', 'How I built this', h.lead, h.points, svg) + '</div>' +
       linkButtons(p) + confirmNotes(p.confirm))];
   }
   function simpleHow(p) {

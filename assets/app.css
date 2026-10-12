@@ -252,6 +252,8 @@ button { font: inherit; color: inherit; }
 .half .slide__title { font-size: clamp(2rem, 3vw, 2.8rem); }
 .half .intro__problem { margin-bottom: 4px; }
 .half .why__points:first-of-type { margin-top: clamp(14px, 2.4vh, 24px); }
+.half__dg { margin-top: clamp(16px, 3vh, 32px); }
+.half__dg .dg { max-width: 600px; max-height: calc(100vh - var(--bar) - 300px); }
 .intro--solo { grid-template-columns: minmax(0, 1fr); }
 .intro--solo .intro__text { max-width: 60em; }
 .why__points { margin-top: clamp(18px, 3vh, 30px); font-size: 1.12rem; color: var(--ink-2); }
