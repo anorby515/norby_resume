@@ -93,16 +93,6 @@ PORTFOLIO.register({
       lede: 'Apps and agents I have built, grouped by who they serve. Open one to see why and how.',
       items: 'appRows',
       footnote: 'CoS is short for Chief of Staff.'
-    },
-    {
-      id: 'questions',
-      type: 'placeholder',
-      nav: 'Pre-Interview Questions',
-      hideInHeader: true, // still a scene in the swipe deck; just not a header link
-      title: 'Pre-Interview Questions',
-      lede: 'My answers to the three questions the panel shared ahead of the interview.',
-      items: ['Question 1', 'Question 2', 'Question 3'],
-      note: 'Shared in person.'
     }
   ],
 
