@@ -242,6 +242,16 @@ button { font: inherit; color: inherit; }
 .groups > li:nth-child(n+3) { border-top-width: 1px; border-top-color: var(--rule); }
 .groups .bullets { color: var(--ink-2); }
 
+/* Why / How on one page, split in half */
+.halves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+.half { padding: clamp(8px, 2vh, 20px) clamp(32px, 4.5vw, 72px); }
+.half:first-child { padding-left: 0; }
+.half + .half { border-left: 1px solid var(--rule); padding-right: 0; }
+.half--why { --accent: var(--ochre); --wash: var(--ochre-wash); }
+.half--how { --accent: var(--cobalt); --wash: var(--cobalt-wash); }
+.half .slide__title { font-size: clamp(2rem, 3vw, 2.8rem); }
+.half .intro__problem { margin-bottom: 4px; }
+.half .why__points:first-of-type { margin-top: clamp(14px, 2.4vh, 24px); }
 .intro--solo { grid-template-columns: minmax(0, 1fr); }
 .intro--solo .intro__text { max-width: 60em; }
 .why__points { margin-top: clamp(18px, 3vh, 30px); font-size: 1.12rem; color: var(--ink-2); }

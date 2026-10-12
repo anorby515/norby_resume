@@ -94,6 +94,8 @@ To add one:
 
 Projects without a `page` file get a short two-slide deck from their entry in the layer file.
 
+Set `layout: 'halves'` on a project to show one page instead, split in half: Why I built this (`why.problem` as the lead line, then `why.points`) on the left and How I built this (`how.lead?`, then `how.points`) on the right. There is no Why/How pill on that page.
+
 Never use screenshots that show real players' names or faces. Capture demo builds instead.
 
 ## App icons

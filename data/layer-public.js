@@ -136,10 +136,9 @@ PORTFOLIO.register({
     },
     {
       id: 'family', title: 'Family & Home', tone: 'family',
-      confirm: ['Personal Assistant has no deck yet, so its icon does not open anything.'],
       apps: [
         { id: 'family-cos', name: 'Norby Family CoS', icon: 'home', href: '#/portfolio/household' },
-        { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp' },
+        { id: 'muse', name: 'Personal Assistant', note: '(via Muse)', img: 'assets/icons/muse.webp', href: '#/portfolio/muse' },
         { id: 'vehicles', name: 'Vehicles', img: 'assets/icons/vehicles.webp', href: '#/portfolio/vehicles' },
         { id: 'siri-todoist', name: 'Siri → Todoist', img: 'assets/icons/todo.webp' },
         { id: 'habits', name: 'Habit Tracking App', note: '(Apple HealthKit integrated)', icon: 'flame', href: '#/portfolio/habits' },
@@ -314,6 +313,27 @@ PORTFOLIO.register({
         shots: [
           { src: 'assets/work/household/weekly-email.webp', title: 'The Sunday email',
             caption: 'What lands in both our inboxes at 9 AM: the week day by day, travel flagged, to-dos with due dates, and what is coming in the two weeks after. Sample data.' }
+        ]
+      }
+    },
+
+    {
+      id: 'muse',
+      title: 'Muse Personal Agent',
+      layout: 'halves', // one page: Why on the left, How on the right
+      kind: ['agent'],
+      attributes: ['learner'],
+      summary: 'A personal agent that handles my recurring purchases and errands.',
+      why: {
+        problem: 'I didn’t, Meta did!',
+        points: ['But I did want an agent to help me with recurring purchases.']
+      },
+      how: {
+        points: [
+          'My hair stylist is always booked. So Muse books appointments 6 weeks in advance.',
+          'Muse buys me a 5 lb bag of coffee beans from my roaster every 3 weeks so I don’t have to.',
+          'Muse has helped find all the parts I needed for a household project, including putting it in a cart at Lowe’s.',
+          'Muse found me the best place to buy tires for my car.'
         ]
       }
     },

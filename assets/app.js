@@ -421,6 +421,20 @@
       }).join('') + '</ul>'));
     return out;
   }
+  // One page split in half: Why I built this on the left, How I built this on the right.
+  // Used when a project sets layout: 'halves'.
+  function halves(p) {
+    var y = p.why || {}, h = p.how || {};
+    function half(lens, title, lead, points) {
+      return '<div class="half half--' + lens + '"><h2 class="slide__title">' + esc(title) + '</h2>' +
+        (lead ? '<p class="intro__problem">' + esc(lead) + '</p>' : '') +
+        (arr(points).length ? list(points, 'bullets prose why__points') : '') + '</div>';
+    }
+    return [slide('halves', '', '<div class="halves">' +
+      half('why', 'Why I built this', y.problem, y.points) +
+      half('how', 'How I built this', h.lead, h.points) + '</div>' +
+      linkButtons(p) + confirmNotes(p.confirm))];
+  }
   function simpleHow(p) {
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
@@ -575,7 +589,9 @@
 
     function simple() {
       if (!product) { location.replace('#/' + base + '/main/why'); return; }
-      var opts = { slides: view === 'how' ? simpleHow(p) : simpleWhy(p), views: ['why', 'how'], view: view,
+      var split = p.layout === 'halves';
+      if (split) view = 'why';
+      var opts = { slides: split ? halves(p) : view === 'how' ? simpleHow(p) : simpleWhy(p), views: split ? [] : ['why', 'how'], view: view,
         base: base + '/main', name: p.title, kind: p.kind, crumbs: crumbBase.concat([{ label: p.title }]) };
       if (!opts.slides.length) opts.slides = [slide('lead', '', '<p class="lead">More detail coming.</p>')];
       show(deckView(opts), { deck: true, view: view, screen: 'portfolio', title: p.title });
