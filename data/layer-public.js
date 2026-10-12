@@ -42,7 +42,7 @@ PORTFOLIO.register({
     {
       id: 'collaborator',
       name: 'Collaborator',
-      line: 'A career in the tech stack has given me a broad network across product lines and functions. People know me as authentic and trustworthy; trust is the fastest way to execute enterprise-wide programs.'
+      line: 'Trust is the most efficient and effective path to delivering enterprise-wide programs. A career in the tech stack has given me a broad network across product lines and functions. I want my personal brand to be built on authenticity, trustworthiness and following through on commitments.'
     },
     {
       id: 'innovator',
