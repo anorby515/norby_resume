@@ -87,13 +87,14 @@ PORTFOLIO_WORK.register({
         { src: 'st-tracker.webp', tall: true, alt: 'The Stats Tracker during a match' },
         { src: 'st-analyzer.webp', tall: true, alt: 'The Stats Analyzer: season record and attack stats (demo players)' }
       ],
-      name: 'Stats App',
+      name: 'Stats App & Stats Analyzer',
       demo: { label: 'Demo the Stats App', href: 'https://volleyballtrackerdemo.netlify.app/' },
       line: 'Stat tracking for every team in the club, and analytics coaches use all season.',
       points: [
-        'Tracks stats across all of the club’s teams in one app.',
+        'A Stat Tracking App with a UX so intuitive any parent can take stats on their phone.',
         'An analyzer coaches use on game day and throughout the season.',
-        'A tracker so intuitive any parent can take stats on their phone.'
+        'Tracks stats across all of the club’s teams in one app.',
+        'Exports to Excel for further analysis.'
       ],
       kind: ['app'],
       why: {
