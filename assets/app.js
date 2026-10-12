@@ -406,10 +406,12 @@
       '<ul class="groups">' + y.groups.map(function (g) {
         return '<li><span class="feature__name">' + esc(g.title) + ' ' + kinds(g.kind) + '</span>' + list(g.points, 'bullets prose') + '</li>';
       }).join('') + '</ul>' + linkButtons(p) + confirmNotes(p.confirm))];
+    // The picture beside the bullets: the Why's own shot if it has one, else the project cover.
+    var pic = y.shot || p.cover;
     if (arr(y.points).length) return [slide('intro', 'Why I built this',
-      '<div class="intro' + (p.cover ? '' : ' intro--solo') + '"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
+      '<div class="intro' + (pic ? '' : ' intro--solo') + '"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
       list(y.points, 'bullets prose why__points') + linkButtons(p) + confirmNotes(p.confirm) + '</div>' +
-      (p.cover ? img(p.cover.src, p.title, 'slide__hero' + (p.cover.tall ? ' is-tall' : '')) : '') + '</div>')];
+      (pic ? img(pic.src, pic.alt || p.title, 'slide__hero' + (pic.tall ? ' is-tall' : '')) : '') + '</div>')];
     out.push(slide('intro', 'Why I built this',
       '<div class="intro"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
       (arr(y.decisions).length ? '<h3 class="slide__sub">Decisions I made</h3>' + list(y.decisions, 'bullets prose') : '') +
