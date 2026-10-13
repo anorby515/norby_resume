@@ -111,6 +111,14 @@ button { font: inherit; color: inherit; }
 .timeline > li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
 .timeline__when { font-weight: 720; color: var(--accent); font-size: 1.1rem; }
 .timeline h3 { font-size: 1.45rem; font-weight: 730; margin-bottom: 8px; }
+.timeline--compact > li { grid-template-columns: 150px minmax(0, 1fr); gap: 28px; padding: 14px 0; }
+.timeline--compact .timeline__when { font-size: 1rem; padding-top: 3px; font-variant-numeric: tabular-nums; }
+.timeline--compact h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.timeline--compact h3:last-child { margin-bottom: 0; }
+.timeline--compact .prose { font-size: 1rem; max-width: 80ch; color: var(--ink-2); }
+@media (max-width: 720px) {
+  .timeline > li, .timeline--compact > li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
 
 .qa { border-top: 2px solid var(--ink); }
 .qa__item { border-bottom: 1px solid var(--rule); }
