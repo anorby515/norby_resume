@@ -124,12 +124,15 @@
 
   render.timeline = function (s, first) {
     var items = arr(store.collections[s.items]);
-    return (first ? sectionHead(s) : subHead(s)) +
-      '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '">' + items.map(function (t) {
+    var head = first ? sectionHead(s) : subHead(s);
+    var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '">' + items.map(function (t) {
         return '<li><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
           (t.text ? '<p class="prose">' + esc(t.text) + '</p>' : '') + (arr(t.points).length ? list(t.points, 'bullets prose') : '') +
           confirmNotes(t.confirm) + '</div></li>';
       }).join('') + '</ol>';
+    // split: heading and lede on the left half, the list on the right half
+    if (s.split) return '<div class="career-split"><div class="career-split__head">' + head + confirmNotes(s.confirm) + '</div>' + rows + '</div>';
+    return head + rows;
   };
 
   render.qa = function (s, first) {

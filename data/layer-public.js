@@ -62,9 +62,9 @@ PORTFOLIO.register({
       lede: 'Nearly 30 years at John Deere. I have led embedded software teams, the electronics and hardware platforms beneath them, and the product-level engineering and product management above them.',
       items: 'roles',
       compact: true,
+      split: true,
       confirm: [
-        'Gen4 and PLMT dates: resume says Program Manager 2011–2014, bio says PLMT Manager from 2013. Shown as 2011–2013 and 2013–2014.',
-        'Add a line for PLMT Manager, Systems Engineer and Combines if you want one.'
+        'Gen4 and PLMT dates: resume says Program Manager 2011–2014, bio says PLMT Manager from 2013. Shown as 2011–2013 and 2013–2014.'
       ]
     },
     {
@@ -490,23 +490,19 @@ PORTFOLIO.register({
   roles: [
     {
       id: 'pu-pm', period: '2026 – Present',
-      title: 'Manager, Engineering & Product Management · Precision Upgrades',
-      text: 'Added product management to the Precision Upgrades role, so I now lead both the engineers who build our products and the product managers who decide what is worth building.'
+      title: 'Manager, Engineering & Product Management · Precision Upgrades'
     },
     {
       id: 'pu', period: '2024 – 2026',
-      title: 'Engineering Manager · Precision Upgrades',
-      text: 'Led a retrofit technology group bringing new technology to machines already in the field across all product lines: product engineering, validation, safety and compliance, quality, manufacturing engineering and embedded software.'
+      title: 'Engineering Manager · Precision Upgrades'
     },
     {
       id: 'electronics', period: '2020 – 2024',
-      title: 'Engineering Manager · ISG Electronic & Electrification Systems',
-      text: 'Led a global organization of 400+ engineers in the US, Mexico and India designing the ruggedized electronics in Deere machines: displays, controllers, sensors, telematics and high-end compute for automation and autonomy, plus electrification modules.'
+      title: 'Engineering Manager · ISG Electronic & Electrification Systems'
     },
     {
       id: 'software-delivery', period: '2014 – 2020',
-      title: 'Engineering Manager · EEG Software Delivery',
-      text: 'Led embedded software delivery for Ag & Turf product lines. Grew the global team across the US, Germany, India and Mexico from about 200 to more than 800, and set strategy for Agile, quality and engineering practices.'
+      title: 'Engineering Manager · EEG Software Delivery'
     },
     {
       id: 'plmt', period: '2013 – 2014',
@@ -514,13 +510,11 @@ PORTFOLIO.register({
     },
     {
       id: 'gen4', period: '2011 – 2013',
-      title: 'Lead Program Manager · Gen4 Displays',
-      text: 'Led the first production launch of the Generation 4 display, software and hardware platform, integral to the 7R, 8R and 9R tractor introductions. Drove delivery across five engineering organizations, with 200+ engineers at peak.'
+      title: 'Lead Program Manager · Gen4 Displays'
     },
     {
       id: 'supervisor', period: '2007 – 2011',
-      title: 'Embedded Software Supervisor · ISG',
-      text: 'Software lead on the telematics gateway for the JDLink launch and on the Command Center launch for the 8R. One of the early change leaders of the Agile transformation.'
+      title: 'Embedded Software Supervisor · ISG'
     },
     {
       id: 'systems', period: '2006 – 2007',
@@ -528,8 +522,7 @@ PORTFOLIO.register({
     },
     {
       id: 'robotics', period: '2004 – 2006',
-      title: 'Embedded Software Engineer · Turf Advanced Engineering, Charlotte, NC',
-      text: 'Advanced robotics projects, including the R-Gator and an autonomous fairway mower.'
+      title: 'Embedded Software Engineer · Turf Advanced Engineering, Charlotte, NC'
     },
     {
       id: 'combines', period: '2003 – 2004',
@@ -541,8 +534,7 @@ PORTFOLIO.register({
     },
     {
       id: 'intern', period: '1997 – 2000',
-      title: 'Intern & Part-time Student · JDES Embedded Software',
-      text: 'Started writing embedded software while finishing a BS in Electrical Engineering at North Dakota State.'
+      title: 'Intern & Part-time Student · JDES Embedded Software'
     }
   ],
 
