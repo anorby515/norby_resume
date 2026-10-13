@@ -485,12 +485,12 @@ PORTFOLIO.register({
       title: 'Engineering Manager · Precision Upgrades'
     },
     {
-      id: 'pi515-mentorship', period: '2023', milestone: true,
-      title: 'Founded Tech Mentorship Program · Pi515 Collaboration'
-    },
-    {
       id: 'swe-nomination', period: '2023', milestone: true,
       title: 'SWE Nomination: Advocating for Women in Engineering Award'
+    },
+    {
+      id: 'pi515-mentorship', period: '2022', milestone: true,
+      title: 'Founded Tech Mentorship Program · Pi515 Collaboration'
     },
     {
       id: 'jd-techcon', period: '2022', milestone: true,
