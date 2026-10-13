@@ -486,11 +486,11 @@ PORTFOLIO.register({
     },
     {
       id: 'swe-nomination', period: '2023', milestone: true,
-      title: 'SWE Nomination: Advocating for Women in Engineering Award'
+      title: 'SWE Advocating for Women in Engineering Nomination'
     },
     {
       id: 'pi515-mentorship', period: '2022', milestone: true,
-      title: 'Founded Tech Mentorship Program · Pi515 Collaboration'
+      title: 'Founded Tech Mentorship Program · Pi515'
     },
     {
       id: 'jd-techcon', period: '2022', milestone: true,
