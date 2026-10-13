@@ -3,7 +3,7 @@
 
   Routes (hash):
     #/                                   home: name and attributes
-    #/<section-id>                       a screen from the top menu (career, beyond, portfolio)
+    #/<section-id>                       a screen from the top menu (career, portfolio)
     #/portfolio/<project>                suite overview, or straight into the deck for a single product
     #/portfolio/<project>/<product>/<why|how>/<slide>
 

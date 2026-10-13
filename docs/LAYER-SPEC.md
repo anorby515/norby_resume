@@ -27,9 +27,9 @@ Each layer file calls `PORTFOLIO.register({...})` once. Later layers add to or o
 The site is one page with hash routes. Sections become screens:
 
 - A section with a `nav` label starts a screen. The `hero` section is the first screen.
-- Sections without `nav` join the screen before them (for example `about` joins Beyond Work).
+- Sections without `nav` join the screen before them (for example a sub-section placed after `career` joins My Career).
 - Use `after: '<id>'` in another layer to place a section.
-- The opening is one horizontal deck: each screen is a scene, in section order (Andy Norby, My Career, Beyond Work, AI Portfolio, Pre-Interview Questions). The top menu, dots, arrows, arrow keys and swipe move between scenes; a scene taller than the window scrolls on its own.
+- The opening is one horizontal deck: each screen is a scene, in section order (Andy Norby, My Career, AI Portfolio, Pre-Interview Questions). The top menu, dots, arrows, arrow keys and swipe move between scenes; a scene taller than the window scrolls on its own.
 
 | type | Reads | Use for |
 |---|---|---|

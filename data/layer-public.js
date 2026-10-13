@@ -71,21 +71,6 @@ PORTFOLIO.register({
       ]
     },
     {
-      id: 'beyond',
-      type: 'cards',
-      nav: 'Beyond Work',
-      title: 'Beyond Work',
-      lede: 'Where I spend the rest of my time.',
-      items: 'community'
-    },
-    {
-      id: 'about',
-      type: 'prose',
-      title: 'Outside the résumé',
-      body: [],
-      confirm: ['Personal section is empty. Add family, interests, what drives you.']
-    },
-    {
       id: 'portfolio',
       type: 'apps',
       nav: 'AI Portfolio',
@@ -538,28 +523,6 @@ PORTFOLIO.register({
     {
       id: 'intern', period: '1997 – 2000',
       title: 'Intern & Part-time Student · JDES Embedded Software'
-    }
-  ],
-
-  community: [
-    {
-      id: 'pi515',
-      title: 'Tech mentorship with PI 515',
-      meta: 'Founded the program about 5 years ago',
-      text:
-        'PI 515 is a Des Moines nonprofit bringing STEM access to students in underserved schools. I founded a mentorship program that partners engineers from my employer with PI 515: students come on site twice a week, learn hands-on skills and earn college credit. I recruit the volunteer teachers, and we built the platform the program runs on. Each year, 12 to 18 students graduate.',
-      confirm: [
-        'Add impact stats and a scholarship story or two.',
-        'Board of directors: mention publicly yet?',
-        'OK to say "my employer", or name Deere?'
-      ]
-    },
-    {
-      id: 'coaching',
-      title: 'Youth volleyball',
-      meta: 'About 8 years',
-      text:
-        'Assistant coach and digital coordinator for an 11-team club. I coach on the court and run every digital system the club uses, which is where the Eclipse Volleyball apps in my AI Portfolio came from.'
     }
   ]
 });
