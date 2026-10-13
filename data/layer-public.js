@@ -59,7 +59,7 @@ PORTFOLIO.register({
       type: 'timeline',
       nav: 'My Career',
       title: 'My Career',
-      lede: 'Nearly 30 years at John Deere. I have led embedded software teams, the electronics and hardware platforms beneath them, and the product-level engineering and product management above them.',
+      lede: 'My career started at John Deere as an intern in 1997. I’ve been part of the Tech Stack since before the Tech Stack was cool. I have led the electronics and hardware platforms at the foundation of the Tech Stack, and I currently lead the Precision Upgrades teams adopting it, recently adding product management. The vast majority of my career has been leading delivery of embedded software, from vehicle software and controls to precision tech displays to telematics.',
       items: 'roles',
       compact: true,
       split: true,
