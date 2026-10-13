@@ -98,7 +98,7 @@
 
   function sectionHead(s) {
     return '<div class="page__head"><h1 class="page__title">' + esc(s.title) + '</h1>' +
-      (s.lede ? '<p class="page__lede prose">' + esc(s.lede) + '</p>' : '') + '</div>';
+      arr(s.lede).map(function (l) { return '<p class="page__lede prose">' + esc(l) + '</p>'; }).join('') + '</div>';
   }
   function subHead(s) {
     return '<div class="page__sub"><h2>' + esc(s.title) + '</h2>' + (s.lede ? '<p class="prose page__lede">' + esc(s.lede) + '</p>' : '') + '</div>';
