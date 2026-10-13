@@ -60,8 +60,8 @@ PORTFOLIO.register({
       nav: 'My Career',
       title: 'My Career',
       lede: [
-        'My career started at John Deere as an intern in 1997. I’ve been part of the Tech Stack since before the Tech Stack was cool. I have led the electronics and hardware platforms at the foundation of the Tech Stack, and I currently lead the Precision Upgrades teams adopting it, recently adding product management. The vast majority of my career has been leading delivery of embedded software, from vehicle software and controls to precision tech displays to telematics.',
-        'Beyond my direct teams, I’ve built things that reach across the company. I established JD TechCon, our internal technology conference, in 2021 and founded the John Deere Tech Mentorship Program with Pi515, which brings high school students on site to learn coding and earn college credit. For ten years I’ve spoken internally and advocated for women in the workplace, which led to a Society of Women Engineers award nomination. Recently I taught The Leadership Switch as part of Upgrade U, a training where I shared my leadership model with our students: Coach, Mentor, Manage. My passion project has been creating the AI Development Lab series to help teams put AI into practice at work.'
+        'My career started at John Deere as an intern. I’ve been part of the Tech Stack since before the Tech Stack was cool. I have led the electronics and hardware platforms at the foundation of the Tech Stack, and I currently lead the Precision Upgrades teams adopting it, recently adding product management. The vast majority of my career has been leading delivery of embedded software, from vehicle software and controls to precision tech displays to telematics.',
+        'Beyond my direct teams, I’ve built things that reach across the company. I established JD TechCon, our internal technology conference, and founded the John Deere Tech Mentorship Program with Pi515, which brings high school students on site to learn coding and earn college credit. For ten years I’ve spoken internally and advocated for women in the workplace, which led to a Society of Women Engineers award nomination. Recently I taught The Leadership Switch as part of Upgrade U, a training where I shared my leadership model with our students: Coach, Mentor, Manage. My passion project has been creating the AI Development Lab series to help teams put AI into practice at work.'
       ],
       items: 'roles',
       compact: true,
@@ -474,7 +474,7 @@ PORTFOLIO.register({
     }
   ],
 
-  /* My Career timeline, newest first. */
+  /* My Career timeline, newest first. milestone:true marks work beyond the role (title in a second color). */
   roles: [
     {
       id: 'pu-pm', period: '2026 – Present',
@@ -483,6 +483,18 @@ PORTFOLIO.register({
     {
       id: 'pu', period: '2024 – 2026',
       title: 'Engineering Manager · Precision Upgrades'
+    },
+    {
+      id: 'pi515-mentorship', period: '2023', milestone: true,
+      title: 'Founded Tech Mentorship Program · Pi515 Collaboration'
+    },
+    {
+      id: 'swe-nomination', period: '2023', milestone: true,
+      title: 'SWE Nomination: Advocating for Women in Engineering Award'
+    },
+    {
+      id: 'jd-techcon', period: '2022', milestone: true,
+      title: 'Launched JD TechCon'
     },
     {
       id: 'electronics', period: '2020 – 2024',

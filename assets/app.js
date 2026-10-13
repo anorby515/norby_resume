@@ -126,7 +126,7 @@
     var items = arr(store.collections[s.items]);
     var head = first ? sectionHead(s) : subHead(s);
     var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '">' + items.map(function (t) {
-        return '<li><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
+        return '<li' + (t.milestone ? ' class="timeline__milestone"' : '') + '><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
           (t.text ? '<p class="prose">' + esc(t.text) + '</p>' : '') + (arr(t.points).length ? list(t.points, 'bullets prose') : '') +
           confirmNotes(t.confirm) + '</div></li>';
       }).join('') + '</ol>';

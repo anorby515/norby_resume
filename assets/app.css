@@ -121,6 +121,7 @@ button { font: inherit; color: inherit; }
 .career-split .timeline--compact > li { grid-template-columns: 130px minmax(0, 1fr); gap: 20px; padding: 12px 0; }
 .career-split .timeline--compact h3 { font-size: 1.05rem; margin: 0; }
 .career-split .timeline--compact .timeline__when { padding-top: 1px; }
+.timeline__milestone h3 { color: var(--cobalt); }
 @media (max-width: 960px) {
   .career-split { grid-template-columns: minmax(0, 1fr); gap: 8px; }
 }
