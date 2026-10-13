@@ -474,7 +474,7 @@ PORTFOLIO.register({
     }
   ],
 
-  /* My Career timeline, newest first. milestone:true marks work beyond the role (title in a second color). */
+  /* My Career timeline, newest first. milestone:true marks work beyond the role (title in John Deere green). */
   roles: [
     {
       id: 'pu-pm', period: '2026 – Present',

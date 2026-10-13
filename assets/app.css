@@ -9,6 +9,7 @@
   --rule: #C9CEC6;
   --ochre: #96650B;
   --cobalt: #2249B8;
+  --deere: #367C2B; /* John Deere green */
   --ochre-wash: #F3E6C9;
   --cobalt-wash: #DCE4F7;
   --review: #FFF1A8;
@@ -26,13 +27,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #151A19; --paper-2: #1E2524; --ink: #E7EAE4; --ink-2: #A6B0AC; --rule: #34403D;
-    --ochre: #E0AE4E; --cobalt: #8EA9FF; --ochre-wash: #3A2E16; --cobalt-wash: #1E2A4D; --review: #5A4E12;
+    --ochre: #E0AE4E; --cobalt: #8EA9FF; --deere: #7CC26A; --ochre-wash: #3A2E16; --cobalt-wash: #1E2A4D; --review: #5A4E12;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #151A19; --paper-2: #1E2524; --ink: #E7EAE4; --ink-2: #A6B0AC; --rule: #34403D;
-  --ochre: #E0AE4E; --cobalt: #8EA9FF; --ochre-wash: #3A2E16; --cobalt-wash: #1E2A4D; --review: #5A4E12;
+  --ochre: #E0AE4E; --cobalt: #8EA9FF; --deere: #7CC26A; --ochre-wash: #3A2E16; --cobalt-wash: #1E2A4D; --review: #5A4E12;
   color-scheme: dark;
 }
 
@@ -121,7 +122,7 @@ button { font: inherit; color: inherit; }
 .career-split .timeline--compact > li { grid-template-columns: 130px minmax(0, 1fr); gap: 20px; padding: 12px 0; }
 .career-split .timeline--compact h3 { font-size: 1.05rem; margin: 0; }
 .career-split .timeline--compact .timeline__when { padding-top: 1px; }
-.timeline__milestone h3 { color: var(--cobalt); }
+.timeline__milestone h3 { color: var(--deere); }
 @media (max-width: 960px) {
   .career-split { grid-template-columns: minmax(0, 1fr); gap: 8px; }
 }
