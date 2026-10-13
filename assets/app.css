@@ -122,7 +122,14 @@ button { font: inherit; color: inherit; }
 .career-split .timeline--compact > li { grid-template-columns: 130px minmax(0, 1fr); gap: 20px; padding: 12px 0; }
 .career-split .timeline--compact h3 { font-size: 1.05rem; margin: 0; }
 .career-split .timeline--compact .timeline__when { padding-top: 1px; }
-.timeline__milestone h3 { color: var(--deere); }
+.timeline__highlight h3 { color: var(--deere); }
+.timeline[data-view="roles"] > .timeline__highlight,
+.timeline[data-view="highlights"] > li:not(.timeline__highlight) { display: none; }
+.tlview { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); }
+.tlview__btn { font: inherit; font-size: .92rem; font-weight: 650; color: var(--ink-2); background: none; border: 0; border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+.tlview__btn:hover { color: var(--ink); }
+.tlview__btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.tlview__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 960px) {
   .career-split { grid-template-columns: minmax(0, 1fr); gap: 8px; }
 }

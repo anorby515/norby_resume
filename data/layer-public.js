@@ -474,7 +474,8 @@ PORTFOLIO.register({
     }
   ],
 
-  /* My Career timeline, newest first. milestone:true marks work beyond the role (title in John Deere green). */
+  /* My Career timeline. Roles and highlights (highlight: true) share one list;
+     the page sorts newest first and the Roles / Highlights / All switch filters it. */
   roles: [
     {
       id: 'pu-pm', period: '2026 – Present',
@@ -483,18 +484,6 @@ PORTFOLIO.register({
     {
       id: 'pu', period: '2024 – 2026',
       title: 'Engineering Manager · Precision Upgrades'
-    },
-    {
-      id: 'swe-nomination', period: '2023', milestone: true,
-      title: 'SWE Advocating for Women in Engineering Nomination'
-    },
-    {
-      id: 'pi515-mentorship', period: '2022', milestone: true,
-      title: 'Founded Tech Mentorship Program · Pi515'
-    },
-    {
-      id: 'jd-techcon', period: '2022', milestone: true,
-      title: 'Launched JD TechCon'
     },
     {
       id: 'electronics', period: '2020 – 2024',
@@ -535,6 +524,74 @@ PORTFOLIO.register({
     {
       id: 'intern', period: '1997 – 2000',
       title: 'Intern & Part-time Student · JDES Embedded Software'
+    },
+    {
+      id: 'discovery-labs', period: '2026', highlight: true,
+      title: 'Discovery Labs (Oxford)'
+    },
+    {
+      id: 'product-operating-model', period: '2025', highlight: true,
+      title: 'Leading the Product Operating Model in Precision Upgrades'
+    },
+    {
+      id: 'product-engineering', period: '2024', highlight: true,
+      title: 'Leading Product Engineering teams'
+    },
+    {
+      id: 'swe-nomination', period: '2023', highlight: true,
+      title: 'SWE Advocating for Women in Engineering Nomination'
+    },
+    {
+      id: 'jd-techcon', period: '2022 – 2025', highlight: true,
+      title: 'Launched JD TechCon and Executive Sponsor'
+    },
+    {
+      id: 'pi515-mentorship', period: '2022', highlight: true,
+      title: 'Founded Tech Mentorship Program · Pi515'
+    },
+    {
+      id: 'electronics-pvv', period: '2020 – 2024', highlight: true,
+      title: 'Leading Electronics and PVV teams'
+    },
+    {
+      id: 'autosar', period: '2020', highlight: true,
+      title: 'Launched and co-led a small team to re-evaluate AUTOSAR, the start of Embedded32'
+    },
+    {
+      id: 'coaching', period: '2018', highlight: true,
+      title: 'Essential Coaching Skills for Leaders (18 months)'
+    },
+    {
+      id: 'eeg-growth', period: '2016 – 2020', highlight: true,
+      title: 'Led EEG Software for A&T Platforms · 4x growth in global workforce'
+    },
+    {
+      id: 'booth', period: '2016', highlight: true,
+      title: 'Executive Development Program · Chicago Booth'
+    },
+    {
+      id: 'gen4-ft4', period: '2014', highlight: true,
+      title: 'Led Gen4 Command Center™ initial launch with FT4 tractors'
+    },
+    {
+      id: 'jdlink', period: '2011', highlight: true,
+      title: 'Software Lead on MTG for JDLink iT4 launch'
+    },
+    {
+      id: 'bsp', period: '2010', highlight: true,
+      title: 'Bootstrapped the first BSP team · Innovation Award'
+    },
+    {
+      id: 'cc-8r', period: '2009', highlight: true,
+      title: 'Software Lead on Command Center launch on 8R (first ISG display in base)'
+    },
+    {
+      id: 'team-lead', period: '2007', highlight: true,
+      title: 'Software Supervisor & Team Lead for ISG'
+    },
+    {
+      id: 'rgator', period: '2004', highlight: true,
+      title: 'Robotic Gator and Autonomous Stadium Mower'
     }
   ]
 });

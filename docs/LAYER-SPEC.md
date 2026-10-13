@@ -39,7 +39,7 @@ The site is one page with hash routes. Sections become screens:
 | `portfolio` | all `projects` | Horizontal rail of project covers (not used on the current site) |
 | `prose` | `body: [paragraphs]` | Free text. Hidden publicly when empty |
 | `cards` | `items: '<collection>'` | Beyond work, programs |
-| `timeline` | `items: '<collection>'` with `{ id, period, title, text, points? }` | Career history |
+| `timeline` | `items: '<collection>'` with `{ id, period, title, text?, points?, highlight? }`; `compact?`, `split?` | Career history. Sorted newest first by start year. If any item has `highlight: true`, a Roles / Highlights / All switch appears and highlight titles show in John Deere green |
 | `qa` | `items: '<collection>'` with `{ id, question, answer: [paragraphs], points?, evidence?: [project ids] }` | Prepared answers |
 
 Routes:

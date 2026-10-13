@@ -122,18 +122,38 @@
       }).join('') + '</div>';
   };
 
+  // Roles / Highlights / All switch for timelines that mix both. Kept across re-renders.
+  var timelineView = 'roles';
+  var TIMELINE_VIEWS = [['roles', 'Roles'], ['highlights', 'Highlights'], ['all', 'All']];
+  function startYear(t) { var m = /\d{4}/.exec(t.period || ''); return m ? +m[0] : 0; }
+
   render.timeline = function (s, first) {
-    var items = arr(store.collections[s.items]);
+    var items = arr(store.collections[s.items]).map(function (t, i) { return { t: t, i: i }; });
+    var mixed = items.some(function (x) { return x.t.highlight || x.t.milestone; });
+    // newest first; on the same start year a role comes before its highlights
+    items.sort(function (a, b) {
+      var ha = !!(a.t.highlight || a.t.milestone), hb = !!(b.t.highlight || b.t.milestone);
+      return (startYear(b.t) - startYear(a.t)) || (ha - hb) || (a.i - b.i);
+    });
     var head = first ? sectionHead(s) : subHead(s);
-    var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '">' + items.map(function (t) {
-        return '<li' + (t.milestone ? ' class="timeline__milestone"' : '') + '><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
+    var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '"' + (mixed ? ' data-tl-list data-view="' + timelineView + '"' : '') + '>' + items.map(function (x) {
+        var t = x.t;
+        return '<li' + (t.highlight || t.milestone ? ' class="timeline__highlight"' : '') + '><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
           (t.text ? '<p class="prose">' + esc(t.text) + '</p>' : '') + (arr(t.points).length ? list(t.points, 'bullets prose') : '') +
           confirmNotes(t.confirm) + '</div></li>';
       }).join('') + '</ol>';
+    var toggle = mixed ? '<div class="tlview" role="group" aria-label="Show">' + TIMELINE_VIEWS.map(function (v) {
+        return '<button type="button" class="tlview__btn" data-tl-view="' + v[0] + '" aria-pressed="' + (v[0] === timelineView) + '">' + v[1] + '</button>';
+      }).join('') + '</div>' : '';
     // split: heading and lede on the left half, the list on the right half
-    if (s.split) return '<div class="career-split"><div class="career-split__head">' + head + confirmNotes(s.confirm) + '</div>' + rows + '</div>';
-    return head + rows;
+    if (s.split) return '<div class="career-split"><div class="career-split__head">' + head + confirmNotes(s.confirm) + '</div><div class="career-split__list">' + toggle + rows + '</div></div>';
+    return head + toggle + rows;
   };
+  function setTimelineView(view) {
+    timelineView = view;
+    document.querySelectorAll('[data-tl-list]').forEach(function (l) { l.setAttribute('data-view', view); });
+    document.querySelectorAll('[data-tl-view]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-tl-view') === view)); });
+  }
 
   render.qa = function (s, first) {
     var items = arr(store.collections[s.items]);
@@ -725,6 +745,8 @@
     buildViewer();
     document.addEventListener('click', function (e) {
       if (swiped && e.target.closest('[data-viewport] a')) { e.preventDefault(); return; }
+      var tv = e.target.closest && e.target.closest('[data-tl-view]');
+      if (tv) { setTimelineView(tv.getAttribute('data-tl-view')); return; }
       var th = e.target.closest && e.target.closest('.suite__thumb');
       if (th) { openDiagram(th); return; }
       var dl = e.target.closest && e.target.closest('.dg [data-href]');
