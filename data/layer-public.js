@@ -510,7 +510,7 @@ PORTFOLIO.register({
     },
     {
       id: 'gen4', period: '2011 – 2013',
-      title: 'Lead Program Manager · Gen4 Displays'
+      title: 'Lead Program Manager + Engineering Manager · Gen4 Displays'
     },
     {
       id: 'supervisor', period: '2007 – 2011',
