@@ -54,8 +54,12 @@
     if (!arr(ids).length) return '';
     return '<ul class="chips">' + arr(ids).map(function (t) { return '<li>' + esc(toolName(t, w)) + '</li>'; }).join('') + '</ul>';
   }
+  // An item is a string, or { text, sub: [strings] } for a bullet with sub-bullets.
   function list(items, cls) {
-    return '<ul class="' + (cls || 'bullets') + '">' + arr(items).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    return '<ul class="' + (cls || 'bullets') + '">' + arr(items).map(function (x) {
+      if (x && typeof x === 'object') return '<li>' + esc(x.text) + list(x.sub, 'bullets bullets--sub') + '</li>';
+      return '<li>' + esc(x) + '</li>';
+    }).join('') + '</ul>';
   }
   function img(src, alt, cls) {
     return '<button type="button" class="zoom ' + (cls || '') + '" data-zoom="' + esc(src) + '" data-cap="' + esc(alt) + '">' +

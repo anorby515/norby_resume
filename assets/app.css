@@ -52,6 +52,8 @@ button { font: inherit; color: inherit; }
 .bullets { padding-left: 1.1em; margin: 0; }
 .bullets li + li { margin-top: .4em; }
 .bullets li::marker { color: var(--accent); }
+.bullets--sub { margin-top: .4em; list-style: circle; }
+.bullets--sub li + li, .why__points .bullets--sub li + li { margin-top: .25em; }
 .noscript { padding: var(--gutter); }
 
 /* ---------- bar ---------- */
