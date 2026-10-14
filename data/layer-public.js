@@ -695,6 +695,10 @@ PORTFOLIO.register({
       title: 'Founded Tech Mentorship Program · Pi515'
     },
     {
+      id: 'electronics-module-teams', period: '', highlight: true, parent: 'electronics',
+      title: 'Transformed the organization from an internal supplier model to a module-team-based organization, building strong connections to the rest of ISG'
+    },
+    {
       id: 'electronics-pvv', period: '', highlight: true, parent: 'electronics',
       title: 'Leading cross-functional teams: Electronics, Software, Mechanical, Manufacturing Test and PVV'
     },
