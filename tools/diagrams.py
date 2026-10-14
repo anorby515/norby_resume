@@ -1024,7 +1024,7 @@ def cos():
     b = zone(20, 20, 220, H - 20, 'Microsoft 365')
     b += group(32, 56, 196, 162, 'Read by Copilot skills')
     for i, (t, tip) in enumerate([
-        ('OneNote', 'OneNote notebooks, including my core team’s. /prep-for-meeting and the Product Council Primer read them for recent, relevant notes.'),
+        ('OneNote', 'OneNote notebooks, including my core team’s. /prep-for-meeting and the Product Council Prep read them for recent, relevant notes.'),
         ('SharePoint', 'Team sites and documents. /prep-for-meeting searches the last 30 days for anything relevant to the meeting or person.'),
         ('OneDrive', 'Documents beyond the Second Brain. /prep-for-meeting searches the last 30 days for anything relevant.')]):
         b += node(44, 80 + i * 46, 172, 36, t, tip, 'ext')
@@ -1072,37 +1072,37 @@ def cos():
                'Reads my Second Brain for the meeting or person, then looks for anything relevant from the last 30 days in Outlook, Teams chats, Teams recaps, OneNote, SharePoint and OneDrive. Then it asks me questions to refine my preparation.')
     b += arrow([(330, 130), (232, 130)])
     b += label(281, 122, ['last 30 days'])
-    b += arrow([(480, 100), (480, 80), (755, 80)], dashed=True)
+    b += arrow([(480, 100), (480, 80), (751, 80)], dashed=True)
     b += label(610, 72, ['asks me questions'])
 
     # ---- Copilot ----
-    b += zone(740, 20, 180, H - 20, 'Microsoft Copilot')
-    b += node2(755, 56, 150, 48, 'Me', 'Calls a skill',
+    b += zone(740, 20, 172, H - 20, 'Microsoft Copilot')
+    b += node2(751, 56, 150, 48, 'Me', 'Calls a skill',
                'I work with Copilot in chat, calling skills like /prep-for-meeting before Product Councils, Champions meetings and 1:1s.', 'key')
-    b += arrow([(830, 104), (830, 176)])
-    b += label(822, 146, ['/prep-for-meeting'], 'end')
-    b += node2(755, 176, 150, 120, 'Copilot', 'Skills and automations',
+    b += arrow([(826, 104), (826, 176)])
+    b += label(818, 146, ['/prep-for-meeting'], 'end')
+    b += node2(751, 176, 150, 120, 'Copilot', 'Skills and automations',
                'Microsoft Copilot runs my skills when I ask and my automations on a schedule. It reads and writes the Second Brain through skills, and hosts Command Center and CoS Budget as managed apps.', 'ai')
-    b += arrow([(755, 200), (680, 200), (680, 140), (630, 140)])
+    b += arrow([(751, 200), (680, 200), (680, 140), (630, 140)])
     b += label(712, 192, ['runs'])
-    b += arrow([(755, 270), (700, 270)], dashed=True)
+    b += arrow([(751, 270), (700, 270)], dashed=True)
     b += label(728, 262, ['hosts'])
 
     # ---- automations, on the far right ----
-    b += zone(950, 20, 230, H - 20, 'Automations')
+    b += zone(936, 20, 244, H - 20, 'Automations')
     autos = [
         ('Your Daily Plan', 'Daily, 6:30 AM', 'Every day at 6:30 AM, an email of my tasks, to-dos, and email and Teams chat follow-ups.', 6, 30),
         ('Daily Wind Down', 'Daily, 4 PM', 'At 4 PM, an email of the tasks, to-dos, and email and Teams chat follow-ups I should finish before I leave for the day.', 16, 0),
         ('Travel to Home', 'Daily check', 'Share Travel to Home: a daily check for travel added to my work calendar. It sends a copy to my personal calendar so my wife knows.', None, 0),
         ('Norby’s Week', 'Sundays, 9 AM', 'Norby’s Upcoming/Prior Week: every Sunday at 9 AM, it drafts an email recapping the past week and the two weeks ahead, with a TL;DR. I share it with my entire organization.', 9, 0),
         ('Next Week’s Plan', 'Thursdays, 6 PM', 'Every Thursday at 6 PM, it sends me an email on the week ahead.', 18, 0),
-        ('Council Primer', 'Wednesdays', 'Precision Upgrades Product Council Primer: every Wednesday, it checks the agenda for Thursday’s Product Council, then pulls the most recent, relevant information for it from the Second Brain, the core team’s OneNote, Outlook and other sources.', None, 0)]
+        ('Product Council Prep', 'Wednesdays', 'Precision Upgrades Product Council Prep: every Wednesday, it checks the agenda for Thursday’s Product Council, then pulls the most recent, relevant information for it from the Second Brain, the core team’s OneNote, Outlook and other sources.', None, 0)]
     for i, (t, sub, tip, hr, mn) in enumerate(autos):
         y = 60 + i * 96
-        b += sched_node(962, y, 206, 56, t, sub, tip, hr, mn)
-        b += arrow([(935, y + 28), (962, y + 28)])
-    b += '<path class="dg-e" d="M905,236 L935,236 M935,88 L935,568"/>'
-    b += '<circle class="dg-dot" cx="935" cy="236" r="3.5"/>'
+        b += sched_node(946, y, 228, 56, t, sub, tip, hr, mn)
+        b += arrow([(924, y + 28), (946, y + 28)])
+    b += '<path class="dg-e" d="M901,236 L924,236 M924,88 L924,568"/>'
+    b += '<circle class="dg-dot" cx="924" cy="236" r="3.5"/>'
 
     # ---- the Second Brain, underneath everything ----
     top = H + 30
@@ -1120,8 +1120,8 @@ def cos():
     # My Notebook reads and edits the Second Brain, down the gap beside Copilot
     b += arrow([(684, 351), (720, 351), (720, top)], both=True)
     b += label(712, 546, ['reads & edits'], 'end')
-    b += arrow([(870, 296), (870, top)], both=True)
-    b += label(862, 470, ['reads & writes'], 'end')
+    b += arrow([(866, 296), (866, top)], both=True)
+    b += label(858, 470, ['reads & writes'], 'end')
     return svg(top + 132, b, 'CoS Operating System architecture')
 
 if __name__ == '__main__':
