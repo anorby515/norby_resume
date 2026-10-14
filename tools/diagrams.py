@@ -1022,27 +1022,27 @@ def cos():
     H = 640  # bottom of the top row of zones
     # ---- Microsoft 365, on the left ----
     b = zone(20, 20, 220, H - 20, 'Microsoft 365')
-    b += group(32, 56, 196, 162, 'Read by Copilot skills')
+    b += group(32, 56, 196, 162, 'Read by Copilot')
     for i, (t, tip) in enumerate([
         ('OneNote', 'OneNote notebooks, including my core team’s. /prep-for-meeting and the Product Council Prep read them for recent, relevant notes.'),
         ('SharePoint', 'Team sites and documents. /prep-for-meeting searches the last 30 days for anything relevant to the meeting or person.'),
         ('OneDrive', 'Documents beyond the Second Brain. /prep-for-meeting searches the last 30 days for anything relevant.')]):
         b += node(44, 80 + i * 46, 172, 36, t, tip, 'ext')
-    b += group(32, 236, 196, 292, 'Two-way sync')
+    b += group(32, 338, 196, 292, 'Two-way sync')
     ms = [
         ('To-Do', 'Microsoft To-Do. Two-way with Command Center, so tasks stay in sync between My Week and To-Do.'),
         ('Outlook', 'Email and calendar. Two-way with Command Center. /prep-for-meeting also reads the last 30 days of email.'),
         ('Teams', 'Two-way with Command Center. /prep-for-meeting also reads the last 30 days of Teams chats and Teams meeting recaps.'),
         ('Microsoft Graph', 'Microsoft Graph, the API into Microsoft 365. Two-way with Command Center.')]
     for i, (t, tip) in enumerate(ms):
-        b += node(44, 262 + i * 66, 172, 46, t, tip, 'ext')
-    b += group(32, 544, 196, 84, 'Read by CoS Budget')
-    b += node(44, 568, 172, 46, 'Excel',
+        b += node(44, 364 + i * 66, 172, 46, t, tip, 'ext')
+    b += group(32, 236, 196, 84, 'Read by CoS Budget')
+    b += node(44, 262, 172, 46, 'Excel',
               'Our budget files: the raw inputs. Complex, hard to read and easy to make mistakes in, so CoS Budget reads them for people instead.', 'ext')
 
     # ---- Copilot managed apps, in the middle: Command Center and CoS Budget ----
-    b += zone(280, 226, 420, H - 226, 'Copilot managed apps')
-    b += node2(292, 262, 160, 244, 'Command Center', 'Web app',
+    b += zone(280, 226, 420, H - 226, 'Hosted in Copilot as managed apps')
+    b += node2(292, 364, 160, 244, 'Command Center', 'Web app',
                'A web app hosted in Copilot as a managed app. It sits on the Second Brain and stays in sync with To-Do, Outlook, Teams and Microsoft Graph.', 'key')
     feats = [
         ('My Week', 'Actions, meetings, projects',
@@ -1054,39 +1054,39 @@ def cos():
         ('My Network', 'Network graph',
          'A network graph of the people in my system.')]
     for i, (t, sub, tip) in enumerate(feats):
-        y = 262 + i * 66
+        y = 364 + i * 66
         b += node2(484, y, 200, 46, t, sub, tip)
         b += arrow([(452, y + 23), (484, y + 23)])
     for i in range(4):
-        y = 262 + i * 66 + 23
+        y = 364 + i * 66 + 23
         b += arrow([(216, y), (292, y)], both=True)
-    b += node2(292, 568, 160, 46, 'CoS Budget', 'Web app',
+    b += node2(292, 262, 160, 46, 'CoS Budget', 'Web app',
                'A vibe-coded web app hosted in Copilot as a managed app. It reads our budget files so people can see the summary without access to the raw inputs.', 'key')
-    b += node2(484, 568, 200, 46, 'Slice, filter, visualize', 'Access by team',
+    b += node2(484, 262, 200, 46, 'Slice, filter, visualize', 'Access by team',
                'Investments by product line, region, investment theme and investment type, without hand-built lookups and pivot tables. Finance, Engineering and Program Management each have the right access.')
-    b += arrow([(216, 591), (292, 591)])
-    b += arrow([(452, 591), (484, 591)])
+    b += arrow([(216, 285), (292, 285)])
+    b += arrow([(452, 285), (484, 285)])
 
     # ---- the /prep-for-meeting skill, above the managed apps ----
     b += node2(330, 100, 300, 60, '/prep-for-meeting', 'Copilot skill',
-               'Reads my Second Brain for the meeting or person, then looks for anything relevant from the last 30 days in Outlook, Teams chats, Teams recaps, OneNote, SharePoint and OneDrive. Then it asks me questions to refine my preparation.')
-    b += arrow([(330, 130), (232, 130)])
-    b += label(281, 122, ['last 30 days'])
+               'Reads my Second Brain for the meeting or person, then looks across Microsoft 365 for anything relevant from the last 30 days: Outlook, Teams chats and recaps, OneNote, SharePoint, OneDrive and more. Then it asks me questions to refine my preparation.')
+    b += arrow([(330, 130), (240, 130)])
+    b += label(285, 106, ['all of M365,', 'last 30 days'])
+    # it also reads the Second Brain, down the gap beside Copilot (shared with My Notebook below)
+    b += arrow([(630, 150), (720, 150), (720, 453), (720, H + 30)], both=True)
+    b += label(675, 142, ['reads'])
     b += arrow([(480, 100), (480, 80), (751, 80)], dashed=True)
     b += label(610, 72, ['asks me questions'])
 
     # ---- Copilot ----
     b += zone(740, 20, 172, H - 20, 'Microsoft Copilot')
-    b += node2(751, 56, 150, 48, 'Me', 'Calls a skill',
+    b += node2(751, 56, 150, 48, 'Me', 'Calls /prep-for-meeting',
                'I work with Copilot in chat, calling skills like /prep-for-meeting before Product Councils, Champions meetings and 1:1s.', 'key')
     b += arrow([(826, 104), (826, 176)])
-    b += label(818, 146, ['/prep-for-meeting'], 'end')
     b += node2(751, 176, 150, 120, 'Copilot', 'Skills and automations',
                'Microsoft Copilot runs my skills when I ask and my automations on a schedule. It reads and writes the Second Brain through skills, and hosts Command Center and CoS Budget as managed apps.', 'ai')
-    b += arrow([(751, 200), (680, 200), (680, 140), (630, 140)])
-    b += label(712, 192, ['runs'])
-    b += arrow([(751, 270), (700, 270)], dashed=True)
-    b += label(728, 262, ['hosts'])
+    b += arrow([(776, 176), (776, 118), (630, 118)])
+    b += label(700, 110, ['runs'])
 
     # ---- automations, on the far right ----
     b += zone(936, 20, 244, H - 20, 'Automations')
@@ -1118,10 +1118,11 @@ def cos():
     for i, (t, tip) in enumerate(folders):
         b += folder(280 + i * 178, top + 36, 166, 70, t, tip)
     # My Notebook reads and edits the Second Brain, down the gap beside Copilot
-    b += arrow([(684, 351), (720, 351), (720, top)], both=True)
-    b += label(712, 546, ['reads & edits'], 'end')
+    b += arrow([(720, 453), (684, 453)])
+    b += '<circle class="dg-dot" cx="720" cy="453" r="3.5"/>'
+    b += label(728, 457, ['reads & edits'], 'start')
     b += arrow([(866, 296), (866, top)], both=True)
-    b += label(858, 470, ['reads & writes'], 'end')
+    b += label(858, 560, ['reads & writes'], 'end')
     return svg(top + 132, b, 'CoS Operating System architecture')
 
 if __name__ == '__main__':
