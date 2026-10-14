@@ -255,7 +255,15 @@ PORTFOLIO.register({
       why: {
         problem: 'The Chief of Staff Command Center is my one-stop shop to help me context switch, stay organized, and keep better notes than ever.',
         points: [
-          'Command Center integrates my calendar, my to-do lists, my meeting note taking and my program notes into a single interface, so I’m not switching across Outlook, OneNote, Teams and more.'
+          { text: 'My Week', sub: [
+            'Integrates my calendar and my to-do lists in one spot, by day or topic.',
+            'I can create meeting notes for each meeting.',
+            'If it’s a recurring meeting, I also have direct access to prior notes and history.',
+            'I also have direct access to my ongoing notes per program or initiative, alongside my to-do lists.'
+          ] },
+          { text: 'My 1:1s', sub: ['A chronological list of all upcoming 1:1s, with quick filters for Direct Reports, Boss & Peers, and All Others.'] },
+          { text: 'My Notes', sub: ['A OneNote-like editor for all my notes in my Second Brain repository.'] },
+          { text: 'My Network', sub: ['A network graph as a visual way to see my network and access 1:1s.'] }
         ]
       },
       how: {
