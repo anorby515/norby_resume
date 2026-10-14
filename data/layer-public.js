@@ -319,11 +319,11 @@ PORTFOLIO.register({
         points: [
           { text: 'Three topics:', sub: ['Accountability & Responsibility', 'Grit & AQ', 'Building Trust: Coach, Mentor, Manage'] },
           'The students had three weeks of pre-work sessions with a combination of HBR, TED Talks and other resources.',
-          'I also wanted to introduce the students to Gemini notebooks and Copilot Notebooks, AI tools for learning and synthesizing information into the learning modes of their choice.'
+          'I also wanted to introduce the students to Gemini Notebooks and Copilot Notebooks, AI tools for learning and synthesizing information into the learning modes of their choice.'
         ]
       },
       how: {
-        lead: 'I used Copilot, Visual Studio Code, Gemini notebooks, Copilot Notebooks, Nano Banana and 20 years of my leadership experience.',
+        lead: 'I used Copilot, Visual Studio Code, Gemini Notebooks, Copilot Notebooks, Nano Banana and 20 years of my leadership experience.',
         points: [
           'This was one of my first times brainstorming with Copilot mostly by dictation.',
           'We brainstormed the sessions, the agenda and the pre-work content.'
