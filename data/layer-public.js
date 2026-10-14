@@ -623,12 +623,8 @@ PORTFOLIO.register({
      period it borrows the role's period in the Highlights view. */
   roles: [
     {
-      id: 'pu-pm', period: '2026 – Present',
+      id: 'pu', period: '2024 – Present',
       title: 'Manager, Engineering & Product Management · Precision Upgrades'
-    },
-    {
-      id: 'pu', period: '2024 – 2026',
-      title: 'Engineering Manager · Precision Upgrades'
     },
     {
       id: 'electronics', period: '2020 – 2024',
@@ -673,6 +669,10 @@ PORTFOLIO.register({
     {
       id: 'discovery-labs', period: '2026', highlight: true,
       title: 'Discovery Labs (Oxford)'
+    },
+    {
+      id: 'pu-pm', period: '2026', highlight: true, parent: 'pu',
+      title: 'Took on Product Management responsibilities'
     },
     {
       id: 'product-operating-model', period: '', highlight: true, parent: 'pu',
