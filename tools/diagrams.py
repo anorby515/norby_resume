@@ -1035,6 +1035,9 @@ def cos():
     labels += arrow([(436, 88), (436, AY + 22)])
     labels += arrow([(790, 88), (790, AY + 22)])
     labels += label(782, 102, ['/prep-for-meeting,', 'asks me questions'], 'end')
+    # the automations' emails come back to me, over the top
+    labels += arrow([(1063, 96), (1063, 44), (516, 44)])
+    labels += label(790, 36, ['emails me'])
 
     # ---- CoS Budget ----
     b += zone(20, AY, 200, AH, '')
