@@ -509,6 +509,10 @@
   function simpleHow(p) {
     var h = p.how || {}, out = [];
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
+    // A lead line and bullets, for projects whose How is a story rather than a diagram.
+    if (arr(h.points).length) out.push(slide('intro', 'How I built this',
+      '<div class="intro intro--solo"><div class="intro__text">' + (h.lead ? '<p class="intro__problem">' + esc(h.lead) + '</p>' : '') +
+      list(h.points, 'bullets prose why__points') + '</div></div>'));
     if (svg) out.push(slide('arch slide--svg', 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>'));
     arr(h.shots).forEach(function (s) { out.push(shotSlide(s)); });
     if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
