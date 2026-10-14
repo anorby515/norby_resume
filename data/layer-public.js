@@ -310,6 +310,7 @@ PORTFOLIO.register({
     {
       id: 'leadership-switch',
       title: 'The Leadership Switch',
+      layout: 'halves', // one page: Why on the left, How on the right
       context: 'work',
       attributes: ['leader', 'innovator'],
       summary: 'The final session of Upgrade U, on leadership skills, with AI notebooks for the pre-work.',
