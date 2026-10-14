@@ -466,6 +466,8 @@
       };
       return [slide('intro', 'Why I built this',
         '<div class="showcase"><div class="intro__text"><p class="intro__problem">' + esc(y.problem) + '</p>' +
+        // Phones show the link button right under the opening line; desktop keeps it beside the screenshots.
+        linkButtons(p, 'try--big try--phone') +
         sub(y.pointsTitle, y.points) + sub(y.featuresTitle, y.features) + confirmNotes(p.confirm) + '</div>' +
         '<div class="showcase__side">' + linkButtons(p, 'try--big') +
         '<div class="showcase__shots">' + y.shots.map(function (s) { return img(s.src, s.alt || '', 'showcase__shot is-tall'); }).join('') + '</div></div></div>')];

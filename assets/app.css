@@ -299,6 +299,7 @@ button { font: inherit; color: inherit; }
 .showcase__shots { display: flex; gap: 16px; align-items: flex-start; }
 .showcase__shot img { height: clamp(260px, calc(100vh - var(--bar) - 330px), 480px); width: auto; max-width: none; }
 .try--big { margin: 0; justify-content: center; }
+.showcase .try--phone { display: none; }
 .try--big a { font-size: 1.2rem; padding: 16px 30px; border-radius: 999px; box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
 
 /* Why / How on one page, split in half */
@@ -731,6 +732,8 @@ a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .showcase__shots { justify-content: center; gap: 12px; }
   .showcase__shot { flex: 1 1 0; min-width: 0; }
   .showcase__shot img { height: auto; width: 100%; max-width: 100%; }
+  .showcase .try--phone { display: flex; justify-content: flex-start; margin: 22px 0 4px; }
+  .showcase__side > .try { display: none; }
   .groups__shots { flex-direction: column; align-items: stretch; gap: 14px; }
   .groups__shots .try { margin: 4px 0 0; }
   .groups__shot img { height: auto; width: 100%; max-width: 100%; }
