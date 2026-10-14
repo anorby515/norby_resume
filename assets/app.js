@@ -149,9 +149,11 @@
       if (!t.highlight) entries.push({ t: t, i: i, kind: 'role' });
       else entries.push({ t: t, i: i, kind: attached ? 'flat' : 'highlight', period: t.period || (attached ? byId[t.parent].period : '') });
     });
-    // newest first; on the same start year a role comes before highlights
+    // newest first; on the same start year a role comes before highlights.
+    // A standalone highlight with below: '<role id>' sorts with that role, right after it and its highlights.
+    function sortYear(x) { var r = x.kind === 'highlight' && x.t.below && byId[x.t.below]; return startYear(r ? r : { period: x.period || x.t.period }); }
     entries.sort(function (a, b) {
-      var ya = startYear({ period: a.period || a.t.period }), yb = startYear({ period: b.period || b.t.period });
+      var ya = sortYear(a), yb = sortYear(b);
       return (yb - ya) || ((a.kind !== 'role') - (b.kind !== 'role')) || (a.i - b.i);
     });
     var head = first ? sectionHead(s) : subHead(s);

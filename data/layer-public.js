@@ -667,10 +667,6 @@ PORTFOLIO.register({
       title: 'Intern & Part-time Student · JDES Embedded Software'
     },
     {
-      id: 'discovery-labs', period: '2026', highlight: true,
-      title: 'Discovery Labs (Oxford)'
-    },
-    {
       id: 'pu-pm', period: '2026', highlight: true, parent: 'pu',
       title: 'Took on Product Management responsibilities'
     },
@@ -681,6 +677,10 @@ PORTFOLIO.register({
     {
       id: 'product-engineering', period: '', highlight: true, parent: 'pu',
       title: 'Leading Product Engineering teams'
+    },
+    {
+      id: 'discovery-labs', period: '2026', highlight: true, below: 'pu', // listed after the current role
+      title: 'Discovery Labs (Oxford)'
     },
     {
       id: 'swe-nomination', period: '2023', highlight: true,
