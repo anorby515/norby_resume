@@ -533,7 +533,7 @@
     }).join('') + '</div>' : '<div></div>';
     return '<div class="deck" data-deck>' +
       '<div class="deck__top">' + crumbs(opts.crumbs) + pill +
-        '<div class="deck__name"><span class="deck__product">' + esc(opts.name) + '</span>' + kinds(opts.kind) + '</div></div>' +
+        '<div class="deck__name"></div></div>' + // name lives in the breadcrumb; kept empty to hold the grid
       '<div class="deck__viewport" data-viewport><div class="deck__track" data-track>' +
         slides.map(function (s, i) { return '<section class="slide slide--' + s.kind + '" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + slides.length + '">' + s.html + '</section>'; }).join('') +
       '</div></div>' +
