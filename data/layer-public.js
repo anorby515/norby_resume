@@ -323,17 +323,12 @@ PORTFOLIO.register({
         ]
       },
       how: {
-        lead: 'This was one of my first times brainstorming with Copilot mostly by dictation.',
+        lead: 'I used Copilot, Visual Studio Code, Gemini notebooks, Copilot Notebooks, Nano Banana and 20 years of my leadership experience.',
         points: [
-          'We brainstormed the sessions, the agenda and the pre-work content.',
-          'At the time, Copilot was pretty poor at PowerPoint creation, so I used a combination of tools.',
-          'I used Visual Studio Code and Claude to generate the framework and styling in PowerPoint.',
-          'I used Gemini with the public articles and videos to create infographics for many of my slides.',
-          'For Coach, Mentor and Manage, I felt pictures would tell a better story. I used Nano Banana to generate photorealistic images illustrating how a leader works with team members in the mode of Coach, Mentor or Manager.',
-          'Then I finished with a clip from the final episode of The Bear, because it’s one of the greatest shows of all time!'
+          'This was one of my first times brainstorming with Copilot mostly by dictation.',
+          'We brainstormed the sessions, the agenda and the pre-work content.'
         ]
-      },
-      confirm: ['You wrote “Gemini Co-Pilot” for the infographics. Shown as “Gemini”. Should it be Gemini notebooks, or Gemini and Copilot?']
+      }
     },
 
     {
