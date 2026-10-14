@@ -125,6 +125,13 @@ button { font: inherit; color: inherit; }
 .timeline__highlight h3 { color: var(--deere); }
 .timeline[data-view="roles"] > .timeline__highlight,
 .timeline[data-view="highlights"] > li:not(.timeline__highlight) { display: none; }
+/* attached highlights: under their role in All, as their own rows in Highlights */
+.timeline:not([data-view="all"]) .timeline__sub,
+.timeline:not([data-view="highlights"]) > .timeline__flat { display: none; }
+.career-split .timeline--compact > li, .timeline > li { row-gap: 8px; }
+.timeline__sub.timeline__when { font-size: .88rem; padding-top: 2px; }
+.timeline__subtext { margin: 0; font-family: var(--display); font-size: .98rem; font-weight: 600; line-height: 1.35; color: var(--deere); }
+.timeline__when + div + .timeline__sub { margin-top: 6px; }
 .tlview { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 14px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); }
 .tlview__btn { font: inherit; font-size: .92rem; font-weight: 650; color: var(--ink-2); background: none; border: 0; border-radius: 999px; padding: 6px 16px; cursor: pointer; }
 .tlview__btn:hover { color: var(--ink); }

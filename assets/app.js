@@ -128,19 +128,34 @@
   function startYear(t) { var m = /\d{4}/.exec(t.period || ''); return m ? +m[0] : 0; }
 
   render.timeline = function (s, first) {
-    var items = arr(store.collections[s.items]).map(function (t, i) { return { t: t, i: i }; });
-    var mixed = items.some(function (x) { return x.t.highlight || x.t.milestone; });
-    // newest first; on the same start year a role comes before its highlights
-    items.sort(function (a, b) {
-      var ha = !!(a.t.highlight || a.t.milestone), hb = !!(b.t.highlight || b.t.milestone);
-      return (startYear(b.t) - startYear(a.t)) || (ha - hb) || (a.i - b.i);
+    var all = arr(store.collections[s.items]);
+    var mixed = all.some(function (t) { return t.highlight; });
+    var byId = {}, kids = {};
+    all.forEach(function (t) { if (!t.highlight) byId[t.id] = t; });
+    all.forEach(function (t) { if (t.highlight && t.parent && byId[t.parent]) (kids[t.parent] = kids[t.parent] || []).push(t); });
+    // One row per role, per standalone highlight, and a flat copy of each attached highlight
+    // (shown only in the Highlights view, dated with the role's period when it has none).
+    var entries = [];
+    all.forEach(function (t, i) {
+      var attached = t.highlight && t.parent && byId[t.parent];
+      if (!t.highlight) entries.push({ t: t, i: i, kind: 'role' });
+      else entries.push({ t: t, i: i, kind: attached ? 'flat' : 'highlight', period: t.period || (attached ? byId[t.parent].period : '') });
+    });
+    // newest first; on the same start year a role comes before highlights
+    entries.sort(function (a, b) {
+      var ya = startYear({ period: a.period || a.t.period }), yb = startYear({ period: b.period || b.t.period });
+      return (yb - ya) || ((a.kind !== 'role') - (b.kind !== 'role')) || (a.i - b.i);
     });
     var head = first ? sectionHead(s) : subHead(s);
-    var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '"' + (mixed ? ' data-tl-list data-view="' + timelineView + '"' : '') + '>' + items.map(function (x) {
+    var rows = '<ol class="timeline' + (s.compact ? ' timeline--compact' : '') + '"' + (mixed ? ' data-tl-list data-view="' + timelineView + '"' : '') + '>' + entries.map(function (x) {
         var t = x.t;
-        return '<li' + (t.highlight || t.milestone ? ' class="timeline__highlight"' : '') + '><span class="timeline__when">' + esc(t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
+        var cls = x.kind === 'role' ? '' : x.kind === 'flat' ? ' class="timeline__highlight timeline__flat"' : ' class="timeline__highlight"';
+        var subs = x.kind === 'role' ? arr(kids[t.id]).map(function (k) {
+          return '<span class="timeline__when timeline__sub">' + esc(k.period) + '</span><p class="timeline__sub timeline__subtext">' + esc(k.title) + '</p>';
+        }).join('') : '';
+        return '<li' + cls + '><span class="timeline__when">' + esc(x.period != null ? x.period : t.period) + '</span><div><h3>' + esc(t.title) + '</h3>' +
           (t.text ? '<p class="prose">' + esc(t.text) + '</p>' : '') + (arr(t.points).length ? list(t.points, 'bullets prose') : '') +
-          confirmNotes(t.confirm) + '</div></li>';
+          confirmNotes(t.confirm) + '</div>' + subs + '</li>';
       }).join('') + '</ol>';
     var toggle = mixed ? '<div class="tlview" role="group" aria-label="Show">' + TIMELINE_VIEWS.map(function (v) {
         return '<button type="button" class="tlview__btn" data-tl-view="' + v[0] + '" aria-pressed="' + (v[0] === timelineView) + '">' + v[1] + '</button>';

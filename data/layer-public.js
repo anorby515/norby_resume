@@ -475,7 +475,9 @@ PORTFOLIO.register({
   ],
 
   /* My Career timeline. Roles and highlights (highlight: true) share one list;
-     the page sorts newest first and the Roles / Highlights / All switch filters it. */
+     the page sorts newest first and the Roles / Highlights / All switch filters it.
+     A highlight with parent: '<role id>' sits under that role (in list order); with no
+     period it borrows the role's period in the Highlights view. */
   roles: [
     {
       id: 'pu-pm', period: '2026 – Present',
@@ -530,11 +532,11 @@ PORTFOLIO.register({
       title: 'Discovery Labs (Oxford)'
     },
     {
-      id: 'product-operating-model', period: '2025', highlight: true,
+      id: 'product-operating-model', period: '', highlight: true, parent: 'pu',
       title: 'Leading the Product Operating Model in Precision Upgrades'
     },
     {
-      id: 'product-engineering', period: '2024', highlight: true,
+      id: 'product-engineering', period: '', highlight: true, parent: 'pu',
       title: 'Leading Product Engineering teams'
     },
     {
@@ -550,11 +552,11 @@ PORTFOLIO.register({
       title: 'Founded Tech Mentorship Program · Pi515'
     },
     {
-      id: 'electronics-pvv', period: '2020 – 2024', highlight: true,
-      title: 'Leading Electronics and PVV teams'
+      id: 'electronics-pvv', period: '', highlight: true, parent: 'electronics',
+      title: 'Leading cross-functional teams: Electronics, Software, Mechanical, Manufacturing Test and PVV'
     },
     {
-      id: 'autosar', period: '2020', highlight: true,
+      id: 'autosar', period: '2020', highlight: true, parent: 'software-delivery',
       title: 'Launched and co-led a small team to re-evaluate AUTOSAR, the start of Embedded32'
     },
     {
@@ -562,7 +564,7 @@ PORTFOLIO.register({
       title: 'Essential Coaching Skills for Leaders (18 months)'
     },
     {
-      id: 'eeg-growth', period: '2016 – 2020', highlight: true,
+      id: 'eeg-growth', period: '2016 – 2020', highlight: true, parent: 'software-delivery',
       title: 'Led EEG Software for A&T Platforms · 4x growth in global workforce'
     },
     {
@@ -570,19 +572,19 @@ PORTFOLIO.register({
       title: 'Executive Development Program · Chicago Booth'
     },
     {
-      id: 'gen4-ft4', period: '2014', highlight: true,
+      id: 'gen4-ft4', period: '2014', highlight: true, parent: 'gen4',
       title: 'Led Gen4 Command Center™ initial launch with FT4 tractors'
     },
     {
-      id: 'jdlink', period: '2011', highlight: true,
+      id: 'jdlink', period: '2011', highlight: true, parent: 'supervisor',
       title: 'Software Lead on MTG for JDLink iT4 launch'
     },
     {
-      id: 'bsp', period: '2010', highlight: true,
+      id: 'bsp', period: '2010', highlight: true, parent: 'supervisor',
       title: 'Bootstrapped the first BSP team · Innovation Award'
     },
     {
-      id: 'cc-8r', period: '2009', highlight: true,
+      id: 'cc-8r', period: '2009', highlight: true, parent: 'supervisor',
       title: 'Software Lead on Command Center launch on 8R (first ISG display in base)'
     },
     {
@@ -590,7 +592,7 @@ PORTFOLIO.register({
       title: 'Software Supervisor & Team Lead for ISG'
     },
     {
-      id: 'rgator', period: '2004', highlight: true,
+      id: 'rgator', period: '', highlight: true, parent: 'robotics',
       title: 'Robotic Gator and Autonomous Stadium Mower'
     }
   ]
