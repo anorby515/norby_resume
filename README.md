@@ -1,6 +1,6 @@
 # Andy Norby — portfolio
 
-A static site with no build step, designed for desktop. Content lives in `data/`; the page code reads it.
+A static site with no build step, designed for desktop. Phones get their own layout from the phone block at the end of `assets/app.css`, which never applies at desktop widths. Content lives in `data/`; the page code reads it.
 
 ## View locally
 

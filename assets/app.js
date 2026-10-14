@@ -19,6 +19,10 @@
   var review = /[?&]review\b/.test(location.search);
   var KIND = { app: 'App', agent: 'Agent', product: 'Product' };
   var deck = null; // active slide deck state
+  // Phones and tablets: no hover, so diagram hints say "tap" and the full-screen viewer pans and zooms.
+  var TOUCH = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+  var HINT = TOUCH ? 'Tap the diagram to open it, then tap any box to see what it does.' : 'Hover over any box to see what it does.';
+  var tipShow = function () {}; // set in bind()
   var FS_BTN = '<button type="button" class="dg-open" data-dg-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>';
 
   /* ---------------- helpers ---------------- */
@@ -322,7 +326,7 @@
           // A picture of the diagram: one click opens the live version full screen, where the tips are.
           '<button type="button" class="suite__thumb" data-dg-open data-dg-key="' + esc(w.id) + ':suite" data-dg-name="' + esc(w.title) + ' \u2014 Product architecture" aria-label="Open the product architecture full screen">' +
             diagrams[w.id].suite.replace(/ tabindex="0"/g, '').replace(/ role="link"/g, '') + '</button>' +
-          '<p class="dg-hint">Click the diagram to open it full screen, then hover over any piece to see what it does.</p>' : '') +
+          '<p class="dg-hint">' + (TOUCH ? 'Tap the diagram to open it full screen, then tap any piece to see what it does.' : 'Click the diagram to open it full screen, then hover over any piece to see what it does.') + '</p>' : '') +
       '</div></div>' +
     '</div>';
   }
@@ -404,7 +408,7 @@
     var e = ((w.how || {}).products || {})[p.id] || {}, out = [];
     var svg = (diagrams[w.id] || {})[p.id];
     var builtWith = arr(e.tools).length ? '<div class="builtwith"><span class="builtwith__k">Built with</span>' + chips(e.tools, w) + '</div>' : '';
-    if (svg) out.push(slide('arch slide--svg' + (builtWith ? ' slide--tools' : ''), 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>' + builtWith));
+    if (svg) out.push(slide('arch slide--svg' + (builtWith ? ' slide--tools' : ''), 'Architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">' + HINT + ' ' + FS_BTN + '</p>' + builtWith));
     else if (arr(e.diagram).length) out.push(slide('arch', 'Architecture', diagram(e.diagram)));
     if (arr(e.decisions).length) out.push(slide('decisions', 'Decisions that shaped it', decisions(e.decisions)));
     arr(e.shots).forEach(function (s) {
@@ -491,7 +495,7 @@
       return '<div class="half half--' + lens + '"><h2 class="slide__title">' + esc(title) + '</h2>' +
         (lead ? '<p class="intro__problem">' + esc(lead) + '</p>' : '') +
         (arr(points).length ? list(points, 'bullets prose why__points') : '') + (extra || '') +
-        (svg ? '<div class="dgwrap half__dg">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does.</p>' : '') + '</div>';
+        (svg ? '<div class="dgwrap half__dg">' + svg + '</div><p class="dg-hint">' + HINT + '</p>' : '') + '</div>';
     }
     var svg = h.svg && (diagrams[p.id] || {})[h.svg];
     // Link buttons sit in the Why half, right under its bullets.
@@ -513,7 +517,7 @@
     if (arr(h.points).length) out.push(slide('intro', 'How I built this',
       '<div class="intro intro--solo"><div class="intro__text">' + (h.lead ? '<p class="intro__problem">' + esc(h.lead) + '</p>' : '') +
       list(h.points, 'bullets prose why__points') + '</div></div>'));
-    if (svg) out.push(slide('arch slide--svg', h.svgTitle || 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">Hover over any box to see what it does. ' + FS_BTN + '</p>'));
+    if (svg) out.push(slide('arch slide--svg', h.svgTitle || 'Engineering architecture', '<div class="dgwrap">' + svg + '</div><p class="dg-hint">' + HINT + ' ' + FS_BTN + '</p>'));
     arr(h.shots).forEach(function (s) { out.push(shotSlide(s)); });
     if (arr(h.flow).length) out.push(slide('arch', h.flowTitle || 'How it fits together', diagram(h.flow.map(function (s) { return { stage: s.label, nodes: [s.detail] }; }))));
     if (arr(h.practices).length || arr(h.stack).length) out.push(slide('decisions', 'Engineering notes',
@@ -737,19 +741,71 @@
     var tip = document.querySelector('.dg-tip'); if (tip) { tip.hidden = true; v.appendChild(tip); }
     v.showModal();
     v.querySelector('[data-dg-close]').focus();
+    if (v.fitDiagram) v.fitDiagram();
     // Fill the whole screen, not just the window, where the browser allows it.
     if (v.requestFullscreen && !document.fullscreenElement) {
       v.requestFullscreen().then(function () { v.dataset.fs = '1'; }).catch(function () {});
     }
   }
 
+  // Touch screens: the diagram opens at a readable size; drag to pan, pinch or +/- to zoom, tap a box for its tip.
+  function touchViewer(v) {
+    v.classList.add('is-touch');
+    var body = v.querySelector('[data-dg-body]');
+    var vbW = 0, fit = 1, scale = 1, pinch = null;
+    function svg() { return body.querySelector('svg.dg'); }
+    function setScale(next, cx, cy) {
+      var el = svg(); if (!el || !vbW) return;
+      next = Math.max(fit, Math.min(2.5, next));
+      var r = body.getBoundingClientRect();
+      if (cx == null) { cx = r.width / 2; cy = r.height / 2; }
+      var px = (body.scrollLeft + cx) / scale, py = (body.scrollTop + cy) / scale;
+      scale = next; el.style.width = Math.round(vbW * scale) + 'px';
+      body.scrollLeft = px * scale - cx; body.scrollTop = py * scale - cy;
+    }
+    v.fitDiagram = function () {
+      var el = svg(); if (!el) return;
+      vbW = (el.viewBox && el.viewBox.baseVal && el.viewBox.baseVal.width) || el.getBoundingClientRect().width;
+      var pad = 24, w = body.clientWidth - pad, h = body.clientHeight - pad;
+      var vbH = (el.viewBox && el.viewBox.baseVal && el.viewBox.baseVal.height) || vbW;
+      fit = Math.min(w / vbW, h / vbH, 1);
+      scale = 1; body.scrollLeft = body.scrollTop = 0;
+      // Start where the box labels are readable (about 12px), or the whole diagram if it already fits.
+      scale = Math.min(1, Math.max(fit, 0.75));
+      el.style.width = Math.round(vbW * scale) + 'px';
+    };
+    window.addEventListener('resize', function () { if (v.open) v.fitDiagram(); });
+    v.addEventListener('click', function (e) {
+      var z = e.target.closest('[data-dg-zoom]');
+      if (z) { setScale(scale * (z.getAttribute('data-dg-zoom') === '1' ? 1.4 : 1 / 1.4)); return; }
+      var tip = v.querySelector('.dg-tip'); if (!tip) return;
+      var n = e.target.closest && e.target.closest('.dg [data-tip]');
+      if (n && !n.hasAttribute('data-href')) tipShow(n, e.clientX, e.clientY); else tip.hidden = true;
+    });
+    body.addEventListener('scroll', function () { var tip = v.querySelector('.dg-tip'); if (tip) tip.hidden = true; }, { passive: true });
+    function dist(t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); }
+    body.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 2) pinch = { d: dist(e.touches), s: scale };
+    }, { passive: true });
+    body.addEventListener('touchmove', function (e) {
+      if (!pinch || e.touches.length !== 2) return;
+      e.preventDefault();
+      var r = body.getBoundingClientRect();
+      setScale(pinch.s * dist(e.touches) / pinch.d,
+        (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left, (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top);
+    }, { passive: false });
+    body.addEventListener('touchend', function (e) { if (e.touches.length < 2) pinch = null; }, { passive: true });
+  }
+
   function buildViewer() {
     var v = document.createElement('dialog');
     v.id = 'dgview'; v.className = 'dgview'; v.setAttribute('aria-label', 'Diagram, full screen');
     v.innerHTML = '<div class="dgview__bar"><span class="dgview__title" data-dg-title></span>' +
-      '<span class="dgview__help">Hover over any box to see what it does. Esc to close.</span>' +
+      '<span class="dgview__help">' + (TOUCH ? 'Drag to move, pinch to zoom, tap a box for details. Turn your phone sideways for a wider view.' : 'Hover over any box to see what it does. Esc to close.') + '</span>' +
+      (TOUCH ? '<span class="dgview__zoom"><button type="button" data-dg-zoom="-1" aria-label="Zoom out">\u2212</button><button type="button" data-dg-zoom="1" aria-label="Zoom in">+</button></span>' : '') +
       '<button type="button" class="dgview__close" data-dg-close>Close</button></div>' +
       '<div class="dgview__body" data-dg-body></div>';
+    if (TOUCH) touchViewer(v);
     // Esc leaves browser full screen first; treat that as closing the viewer too.
     document.addEventListener('fullscreenchange', function () {
       if (!document.fullscreenElement && v.dataset.fs) { delete v.dataset.fs; if (v.open) v.close(); }
@@ -828,6 +884,7 @@
     var tip = document.createElement('div');
     tip.className = 'dg-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true;
     document.body.appendChild(tip);
+    tipShow = showTip;
     function showTip(el, x, y) {
       tip.innerHTML = '<strong>' + esc(el.querySelector('.dg-nt').textContent) + '</strong>' + esc(el.getAttribute('data-tip'));
       tip.hidden = false;
