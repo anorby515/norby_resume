@@ -122,9 +122,9 @@
       }).join('') + '</div>';
   };
 
-  // Roles / Highlights / All switch for timelines that mix both. Kept across re-renders.
-  var timelineView = 'roles';
-  var TIMELINE_VIEWS = [['roles', 'Roles'], ['highlights', 'Highlights'], ['all', 'All']];
+  // All / Roles / Highlights switch (All is the default) for timelines that mix both. Kept across re-renders.
+  var timelineView = 'all';
+  var TIMELINE_VIEWS = [['all', 'All'], ['roles', 'Roles'], ['highlights', 'Highlights']];
   function startYear(t) { var m = /\d{4}/.exec(t.period || ''); return m ? +m[0] : 0; }
 
   render.timeline = function (s, first) {
