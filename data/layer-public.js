@@ -671,11 +671,11 @@ PORTFOLIO.register({
       title: 'Took on Product Management responsibilities'
     },
     {
-      id: 'product-operating-model', period: '', highlight: true, parent: 'pu',
+      id: 'product-operating-model', period: '2025 – Present', highlight: true, parent: 'pu',
       title: 'Leading the Product Operating Model in Precision Upgrades'
     },
     {
-      id: 'product-engineering', period: '', highlight: true, parent: 'pu',
+      id: 'product-engineering', period: '2024 – Present', highlight: true, parent: 'pu',
       title: 'Leading Product Engineering teams'
     },
     {
