@@ -86,9 +86,9 @@ PORTFOLIO.register({
   appRows: [
     {
       id: 'work', title: 'AI at Work', tone: 'work',
-      confirm: ['Placeholders on the public site. The internal build replaces this row with real icons and links.'],
+      confirm: ['AI Dev Labs is live. The rest are placeholders on the public site; the internal build replaces them with real icons and links.'],
       apps: [
-        { id: 'labs', name: 'AI Dev Labs', placeholder: true },
+        { id: 'labs', name: 'AI Dev Labs', icon: 'flask', href: '#/portfolio/labs' },
         { id: 'cos-os', name: 'CoS OS', placeholder: true },
         { id: 'cos-agent', name: 'CoS Agent', placeholder: true },
         { id: 'cos-command', name: 'CoS Command Center', placeholder: true },
@@ -197,6 +197,31 @@ PORTFOLIO.register({
         { title: 'Tournament Suite', kind: 'app', text: 'A family app, a scorekeeper at every court, a live TV wall and waiver tracking. Reused for a four-court Senior Night a week later.' },
         { title: 'Eclipse Agentic OS', kind: 'agent', text: 'Agents that watch the club calendar, write TeamSnap imports, and send a weekly read on what is still open.' }
       ],
+    },
+
+    {
+      id: 'labs',
+      title: 'AI Dev Labs',
+      layout: 'halves', // one page: Why on the left, How on the right
+      context: 'work',
+      attributes: ['innovator', 'learner', 'leader'],
+      summary: 'A learning series, “Agency with Urgency”, that made AI accessible, exciting and fun across my organization.',
+      why: {
+        problem: 'During the December 2025 shutdown, I discovered AI was having its breakthrough moment.',
+        points: [
+          'Over the next two months, I experimented and learned.',
+          'I recognized the gap between what I was experiencing and the general sentiment about the current state of the art in AI.',
+          'I started a learning series with the tagline “Agency with Urgency.” The goal was to make learning AI accessible, exciting and fun.',
+          'I created and curated four training sessions exploring many aspects of AI harnesses, agents and workflows.'
+        ]
+      },
+      how: {
+        lead: 'Each session focused on what’s happening in the industry, taught new skills, and provided more resources.',
+        points: [
+          'We started with a “WOW” session, where a colleague and I demoed several solutions we had built with different AI tools and showed how we built them.',
+          'Each session, I brought in new people from the organization to demonstrate what they’d built, to keep inspiring more builders.'
+        ]
+      }
     },
 
     {
@@ -586,10 +611,6 @@ PORTFOLIO.register({
     {
       id: 'cc-8r', period: '2009', highlight: true, parent: 'supervisor',
       title: 'Software Lead on Command Center launch on 8R (first ISG display in base)'
-    },
-    {
-      id: 'team-lead', period: '2007', highlight: true,
-      title: 'Software Supervisor & Team Lead for ISG'
     },
     {
       id: 'rgator', period: '', highlight: true, parent: 'robotics',
