@@ -61,7 +61,7 @@ PORTFOLIO.register({
       title: 'My Career',
       lede: [
         'My career started at John Deere as an intern. I’ve been part of the Tech Stack since before the Tech Stack was cool. I have led the electronics and hardware platforms at the foundation of the Tech Stack, and I currently lead the Precision Upgrades teams adopting it, recently adding product management. The vast majority of my career has been leading delivery of embedded software, from vehicle software and controls to precision tech displays to telematics.',
-        'Beyond my direct teams, I’ve built things that reach across the company. I established JD TechCon, our internal technology conference, and founded the John Deere Tech Mentorship Program with Pi515, which brings high school students on site to learn coding and earn college credit. For ten years I’ve spoken internally and advocated for women in the workplace, which led to a Society of Women Engineers award nomination. Recently I taught The Leadership Switch as part of Upgrade U, a training where I shared my leadership model with our students: Coach, Mentor, Manage. Lately, my passion project has been creating the AI Development Lab series to help teams put AI into practice at work.'
+        'Beyond my direct teams, I’ve built things that reach across the company. I established JD TechCon, our internal technology conference, and founded the John Deere Tech Mentorship Program with Pi515, which brings high school students on site to learn coding and earn college credit. For ten years I’ve spoken internally and advocated for women in the workplace, which led to a Society of Women Engineers award nomination. Recently I taught The Leadership Switch as part of Upgrade U, a training where I shared my leadership model with our students: Coach, Mentor, Manage. Lately, my passion project has been creating the AI Advantage Lab series to help teams put AI into practice at work.'
       ],
       items: 'roles',
       compact: true,
@@ -86,9 +86,9 @@ PORTFOLIO.register({
   appRows: [
     {
       id: 'work', title: 'AI at Work', tone: 'work',
-      confirm: ['AI Dev Labs is live. The rest are placeholders on the public site; the internal build replaces them with real icons and links.'],
+      confirm: ['AI Advantage Lab is live. The rest are placeholders on the public site; the internal build replaces them with real icons and links.'],
       apps: [
-        { id: 'labs', name: 'AI Dev Labs', icon: 'flask', href: '#/portfolio/labs' },
+        { id: 'labs', name: 'AI Advantage Lab', icon: 'flask', href: '#/portfolio/labs' },
         { id: 'cos-os', name: 'CoS OS', placeholder: true },
         { id: 'cos-agent', name: 'CoS Agent', placeholder: true },
         { id: 'cos-command', name: 'CoS Command Center', placeholder: true },
@@ -201,7 +201,7 @@ PORTFOLIO.register({
 
     {
       id: 'labs',
-      title: 'AI Dev Labs',
+      title: 'AI Advantage Lab',
       layout: 'halves', // one page: Why on the left, How on the right
       context: 'work',
       attributes: ['innovator', 'learner', 'leader'],
@@ -211,7 +211,7 @@ PORTFOLIO.register({
         points: [
           'Over the next two months, I experimented and learned.',
           'I recognized the gap between what I was experiencing and the general sentiment about the current state of the art in AI.',
-          'I started a learning series with the tagline “Agency with Urgency.” The goal was to make learning AI accessible, exciting and fun.',
+          'I started the AI Advantage Lab learning series with the tagline “Agency with Urgency.” The goal was to make learning AI accessible, exciting and fun.',
           'I created and curated four training sessions exploring many aspects of AI harnesses, agents and workflows.'
         ]
       },
