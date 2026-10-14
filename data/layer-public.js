@@ -668,14 +668,14 @@ PORTFOLIO.register({
     },
     {
       id: 'pu-pm', period: '2026', highlight: true, parent: 'pu',
-      title: 'Took on Product Management responsibilities'
+      title: 'Added Product Management responsibilities'
     },
     {
-      id: 'product-operating-model', period: '2025 – Present', highlight: true, parent: 'pu',
+      id: 'product-operating-model', period: '2025', highlight: true, parent: 'pu',
       title: 'Leading the Product Operating Model in Precision Upgrades'
     },
     {
-      id: 'product-engineering', period: '2024 – Present', highlight: true, parent: 'pu',
+      id: 'product-engineering', period: '2024', highlight: true, parent: 'pu',
       title: 'Leading Product Engineering teams'
     },
     {
