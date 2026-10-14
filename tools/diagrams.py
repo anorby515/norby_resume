@@ -1022,13 +1022,11 @@ def cos():
     H = 640  # bottom of the top row of zones
     # ---- Microsoft 365, on the left ----
     b = zone(20, 20, 220, H - 20, 'Microsoft 365')
-    b += group(32, 56, 196, 162, 'Read by Copilot')
     for i, (t, tip) in enumerate([
         ('OneNote', 'OneNote notebooks, including my core team’s. /prep-for-meeting and the Product Council Prep read them for recent, relevant notes.'),
         ('SharePoint', 'Team sites and documents. /prep-for-meeting searches the last 30 days for anything relevant to the meeting or person.'),
         ('OneDrive', 'Documents beyond the Second Brain. /prep-for-meeting searches the last 30 days for anything relevant.')]):
-        b += node(44, 80 + i * 46, 172, 36, t, tip, 'ext')
-    b += group(32, 338, 196, 292, 'Two-way sync')
+        b += node(44, 64 + i * 66, 172, 46, t, tip, 'ext')
     ms = [
         ('To-Do', 'Microsoft To-Do. Two-way with Command Center, so tasks stay in sync between My Week and To-Do.'),
         ('Outlook', 'Email and calendar. Two-way with Command Center. /prep-for-meeting also reads the last 30 days of email.'),
@@ -1036,7 +1034,6 @@ def cos():
         ('Microsoft Graph', 'Microsoft Graph, the API into Microsoft 365. Two-way with Command Center.')]
     for i, (t, tip) in enumerate(ms):
         b += node(44, 364 + i * 66, 172, 46, t, tip, 'ext')
-    b += group(32, 236, 196, 84, 'Read by CoS Budget')
     b += node(44, 262, 172, 46, 'Excel',
               'Our budget files: the raw inputs. Complex, hard to read and easy to make mistakes in, so CoS Budget reads them for people instead.', 'ext')
 
