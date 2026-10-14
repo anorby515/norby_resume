@@ -253,7 +253,7 @@ PORTFOLIO.register({
       attributes: ['executor', 'innovator'],
       summary: 'One web app for my calendar, to-dos, meeting notes and program notes, hosted in Copilot.',
       why: {
-        problem: 'A one-stop shop to help me context switch, stay organized, and keep better notes than ever.',
+        problem: 'The Chief of Staff Command Center is my one-stop shop to help me context switch, stay organized, and keep better notes than ever.',
         points: [
           'Command Center integrates my calendar, my to-do lists, my meeting note taking and my program notes into a single interface, so I’m not switching across Outlook, OneNote, Teams and more.'
         ]
