@@ -598,7 +598,7 @@ PORTFOLIO.register({
     },
     {
       id: 'gen4-ft4', period: '2014', highlight: true, parent: 'gen4',
-      title: 'Led Gen4 Command Center™ initial launch with FT4 tractors'
+      title: 'Led Gen4 Command Center™ initial launch with FT4 tractors. Largest technology platform investment at the time.'
     },
     {
       id: 'jdlink', period: '2011', highlight: true, parent: 'supervisor',
