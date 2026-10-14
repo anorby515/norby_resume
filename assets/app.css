@@ -675,6 +675,8 @@ a.app:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .dg-dot { fill: var(--accent); }
 .dg-clock { fill: var(--paper); stroke: var(--accent); stroke-width: 2; }
 .dg-hand { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+.dg-folder { fill: var(--paper); stroke: var(--accent); stroke-width: 1.6; transition: stroke-width .15s, filter .15s; }
+.dg-fold:hover .dg-folder, .dg-fold:focus-visible .dg-folder { stroke-width: 3; filter: drop-shadow(0 4px 10px rgba(20, 30, 28, .18)); }
 /* AI2FI diagram: dashboard modules, workbook tabs, stacked report files */
 .dg-mod .dg-nt { font-size: 12.5px; }
 .dg-tab { font-size: 13.5px; fill: var(--ink); text-anchor: middle; font-family: var(--serif); }

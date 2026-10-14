@@ -990,6 +990,140 @@ def vinyl_moon():
     return (f'<svg class="dg dg--half" viewBox="0 0 680 438" role="img" aria-label="Vinyl Moon: three versions of the workflow" '
             f'xmlns="http://www.w3.org/2000/svg">{DEFS}{b}</svg>')
 
+# --------------------------------------------------------------------------
+# CoS OS: my Chief of Staff Operating System at work. One diagram shared by
+# every CoS app: Microsoft 365 on the left, Command Center in the middle,
+# Copilot with its skills and automations on the right, the Second Brain
+# underneath everything.
+# --------------------------------------------------------------------------
+def sched_node(x, y, w, h, title, sub, tip, hour=None, minute=0):
+    """A scheduled automation: a clock set to its run time, or a calendar when it runs on a day, not a time."""
+    if hour is not None:
+        return clock_node(x, y, w, h, title, sub, tip, hour, minute)
+    cx, cy = x + 30, y + h / 2
+    return (f'<g class="dg-node dg-key" tabindex="0" data-tip="{escape(tip)}" '
+            f'aria-label="{escape(title)}, {escape(sub)}: {escape(tip)}">'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"/>'
+            f'<path class="dg-clock" d="M{cx-13},{cy-10} h26 v22 h-26 z"/>'
+            f'<path class="dg-hand" d="M{cx-13},{cy-4} h26 M{cx-6},{cy-14} v6 M{cx+6},{cy-14} v6"/>'
+            f'<text class="dg-nt" x="{x+56}" y="{y+h/2-2}" text-anchor="start" style="text-anchor:start">{escape(title)}</text>'
+            f'<text class="dg-sub" x="{x+56}" y="{y+h/2+15}" style="text-anchor:start">{escape(sub)}</text></g>')
+
+def folder(x, y, w, h, title, tip):
+    """A folder in the Second Brain, drawn as a folder with a tab."""
+    d = (f'M{x},{y+h} L{x},{y+4} Q{x},{y} {x+4},{y} L{x+48},{y} L{x+56},{y+10} '
+         f'L{x+w-4},{y+10} Q{x+w},{y+10} {x+w},{y+14} L{x+w},{y+h} Z')
+    return (f'<g class="dg-node dg-fold" tabindex="0" data-tip="{escape(tip)}" '
+            f'aria-label="{escape(title)} folder: {escape(tip)}">'
+            f'<path class="dg-folder" d="{d}"/>'
+            f'<text class="dg-nt" x="{x+w/2}" y="{y+(h+10)/2+5}">{escape(title)}</text></g>')
+
+def cos():
+    H = 640  # bottom of the top row of zones
+    # ---- Microsoft 365, on the left ----
+    b = zone(20, 20, 220, H - 20, 'Microsoft 365')
+    b += group(32, 56, 196, 162, 'Read by Copilot skills')
+    for i, (t, tip) in enumerate([
+        ('OneNote', 'OneNote notebooks, including my core team’s. /prep-for-meeting and the Product Council Primer read them for recent, relevant notes.'),
+        ('SharePoint', 'Team sites and documents. /prep-for-meeting searches the last 30 days for anything relevant to the meeting or person.'),
+        ('OneDrive', 'Documents beyond the Second Brain. /prep-for-meeting searches the last 30 days for anything relevant.')]):
+        b += node(44, 80 + i * 46, 172, 36, t, tip, 'ext')
+    b += group(32, 236, 196, 292, 'Two-way sync')
+    ms = [
+        ('To-Do', 'Microsoft To-Do. Two-way with Command Center, so tasks stay in sync between My Week and To-Do.'),
+        ('Outlook', 'Email and calendar. Two-way with Command Center. /prep-for-meeting also reads the last 30 days of email.'),
+        ('Teams', 'Two-way with Command Center. /prep-for-meeting also reads the last 30 days of Teams chats and Teams meeting recaps.'),
+        ('Microsoft Graph', 'Microsoft Graph, the API into Microsoft 365. Two-way with Command Center.')]
+    for i, (t, tip) in enumerate(ms):
+        b += node(44, 262 + i * 66, 172, 46, t, tip, 'ext')
+    b += group(32, 544, 196, 84, 'Read by CoS Budget')
+    b += node(44, 568, 172, 46, 'Excel',
+              'Our budget files: the raw inputs. Complex, hard to read and easy to make mistakes in, so CoS Budget reads them for people instead.', 'ext')
+
+    # ---- Copilot managed apps, in the middle: Command Center and CoS Budget ----
+    b += zone(280, 226, 420, H - 226, 'Copilot managed apps')
+    b += node2(292, 262, 160, 244, 'Command Center', 'Web app',
+               'A web app hosted in Copilot as a managed app. It sits on the Second Brain and stays in sync with To-Do, Outlook, Teams and Microsoft Graph.', 'key')
+    feats = [
+        ('My Week', 'Actions, meetings, projects',
+         'Top action list, daily meetings and task list, meeting note taking, and projects with their task lists and master plans.'),
+        ('My Notebook', 'Edit the Second Brain',
+         'Shows the Markdown files in the Second Brain, organized by folder, and lets me edit them. It looks like OneNote.'),
+        ('My 1:1s', 'Filtered by relationship',
+         'Every one-on-one meeting, filtered by direct reports, boss and peers, or everyone else.'),
+        ('My Network', 'Network graph',
+         'A network graph of the people in my system.')]
+    for i, (t, sub, tip) in enumerate(feats):
+        y = 262 + i * 66
+        b += node2(484, y, 200, 46, t, sub, tip)
+        b += arrow([(452, y + 23), (484, y + 23)])
+    for i in range(4):
+        y = 262 + i * 66 + 23
+        b += arrow([(216, y), (292, y)], both=True)
+    b += node2(292, 568, 160, 46, 'CoS Budget', 'Web app',
+               'A vibe-coded web app hosted in Copilot as a managed app. It reads our budget files so people can see the summary without access to the raw inputs.', 'key')
+    b += node2(484, 568, 200, 46, 'Slice, filter, visualize', 'Access by team',
+               'Investments by product line, region, investment theme and investment type, without hand-built lookups and pivot tables. Finance, Engineering and Program Management each have the right access.')
+    b += arrow([(216, 591), (292, 591)])
+    b += arrow([(452, 591), (484, 591)])
+
+    # ---- the /prep-for-meeting skill, above the managed apps ----
+    b += node2(330, 100, 300, 60, '/prep-for-meeting', 'Copilot skill',
+               'Reads my Second Brain for the meeting or person, then looks for anything relevant from the last 30 days in Outlook, Teams chats, Teams recaps, OneNote, SharePoint and OneDrive. Then it asks me questions to refine my preparation.')
+    b += arrow([(330, 130), (232, 130)])
+    b += label(281, 122, ['last 30 days'])
+    b += arrow([(480, 100), (480, 80), (755, 80)], dashed=True)
+    b += label(610, 72, ['asks me questions'])
+
+    # ---- Copilot ----
+    b += zone(740, 20, 180, H - 20, 'Microsoft Copilot')
+    b += node2(755, 56, 150, 48, 'Me', 'Calls a skill',
+               'I work with Copilot in chat, calling skills like /prep-for-meeting before Product Councils, Champions meetings and 1:1s.', 'key')
+    b += arrow([(830, 104), (830, 176)])
+    b += label(822, 146, ['/prep-for-meeting'], 'end')
+    b += node2(755, 176, 150, 120, 'Copilot', 'Skills and automations',
+               'Microsoft Copilot runs my skills when I ask and my automations on a schedule. It reads and writes the Second Brain through skills, and hosts Command Center and CoS Budget as managed apps.', 'ai')
+    b += arrow([(755, 200), (680, 200), (680, 140), (630, 140)])
+    b += label(712, 192, ['runs'])
+    b += arrow([(755, 270), (700, 270)], dashed=True)
+    b += label(728, 262, ['hosts'])
+
+    # ---- automations, on the far right ----
+    b += zone(950, 20, 230, H - 20, 'Automations')
+    autos = [
+        ('Your Daily Plan', 'Daily, 6:30 AM', 'Every day at 6:30 AM, an email of my tasks, to-dos, and email and Teams chat follow-ups.', 6, 30),
+        ('Daily Wind Down', 'Daily, 4 PM', 'At 4 PM, an email of the tasks, to-dos, and email and Teams chat follow-ups I should finish before I leave for the day.', 16, 0),
+        ('Travel to Home', 'Daily check', 'Share Travel to Home: a daily check for travel added to my work calendar. It sends a copy to my personal calendar so my wife knows.', None, 0),
+        ('Norby’s Week', 'Sundays, 9 AM', 'Norby’s Upcoming/Prior Week: every Sunday at 9 AM, it drafts an email recapping the past week and the two weeks ahead, with a TL;DR. I share it with my entire organization.', 9, 0),
+        ('Next Week’s Plan', 'Thursdays, 6 PM', 'Every Thursday at 6 PM, it sends me an email on the week ahead.', 18, 0),
+        ('Council Primer', 'Wednesdays', 'Precision Upgrades Product Council Primer: every Wednesday, it checks the agenda for Thursday’s Product Council, then pulls the most recent, relevant information for it from the Second Brain, the core team’s OneNote, Outlook and other sources.', None, 0)]
+    for i, (t, sub, tip, hr, mn) in enumerate(autos):
+        y = 60 + i * 96
+        b += sched_node(962, y, 206, 56, t, sub, tip, hr, mn)
+        b += arrow([(935, y + 28), (962, y + 28)])
+    b += '<path class="dg-e" d="M905,236 L935,236 M935,88 L935,568"/>'
+    b += '<circle class="dg-dot" cx="935" cy="236" r="3.5"/>'
+
+    # ---- the Second Brain, underneath everything ----
+    top = H + 30
+    b += zone(20, top, 1160, 120, 'Second Brain')
+    b += node2(40, top + 36, 200, 70, 'Second Brain', 'OneDrive folder',
+               'A OneDrive folder that is the repository for my Markdown files and skills. Command Center and Copilot both read and write it, so it remembers far more than I would on my own.', 'key')
+    folders = [
+        ('Master Plans', 'Master plans for my projects.'),
+        ('Programs', 'A Markdown file for each program I lead.'),
+        ('Recurring Meetings', 'Context for each recurring meeting.'),
+        ('One-on-Ones', 'Notes for each person I meet with one-on-one.'),
+        ('Skills', 'Copilot skills like /prep-for-meeting, kept as files alongside the notes.')]
+    for i, (t, tip) in enumerate(folders):
+        b += folder(280 + i * 178, top + 36, 166, 70, t, tip)
+    # My Notebook reads and edits the Second Brain, down the gap beside Copilot
+    b += arrow([(684, 351), (720, 351), (720, top)], both=True)
+    b += label(712, 546, ['reads & edits'], 'end')
+    b += arrow([(870, 296), (870, top)], both=True)
+    b += label(862, 470, ['reads & writes'], 'end')
+    return svg(top + 132, b, 'CoS Operating System architecture')
+
 if __name__ == '__main__':
     here = os.path.dirname(os.path.abspath(__file__))
     out = os.path.join(here, '..', 'data', 'work', 'volleyball.diagrams.js')
@@ -1047,4 +1181,15 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
         f.write("PORTFOLIO_WORK.diagrams('vinyl-moon', " + json.dumps({'arch': vinyl_moon()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    out = os.path.join(here, '..', 'data', 'work', 'cos.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('cos', " + json.dumps({'arch': cos()}, indent=1) + ');\n')
+    print('wrote', os.path.relpath(out))
+    # CoS Budget has its own Why page and shares the same architecture diagram.
+    out = os.path.join(here, '..', 'data', 'work', 'cos-budget.diagrams.js')
+    with open(out, 'w') as f:
+        f.write('/* Generated by tools/diagrams.py. Edit that file, not this one. */\n')
+        f.write("PORTFOLIO_WORK.diagrams('cos-budget', " + json.dumps({'arch': cos()}, indent=1) + ');\n')
     print('wrote', os.path.relpath(out))
