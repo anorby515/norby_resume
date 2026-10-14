@@ -20,6 +20,14 @@
   var KIND = { app: 'App', agent: 'Agent', product: 'Product' };
   var deck = null; // active slide deck state
   // Phones and tablets: no hover, so diagram hints say "tap" and the full-screen viewer pans and zooms.
+  // Phones: measure the visible height ourselves. Some phone browsers report it wrong on first load
+  // (leaving a gap under the slide arrows) until the phone is rotated. Only the phone CSS reads --app-h.
+  function setAppHeight() { document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px'); }
+  setAppHeight();
+  ['resize', 'orientationchange', 'pageshow', 'load'].forEach(function (ev) {
+    window.addEventListener(ev, function () { setAppHeight(); setTimeout(setAppHeight, 350); });
+  });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', setAppHeight);
   var TOUCH = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
   var HINT = TOUCH ? 'Tap the diagram to open it, then tap any box to see what it does.' : 'Hover over any box to see what it does.';
   var tipShow = function () {}; // set in bind()
